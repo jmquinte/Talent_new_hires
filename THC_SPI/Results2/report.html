@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THC_SPI NVL-Hx Variability Charts — Signal Integrity Report</title>
+    <style>
+        :root {
+            --intel-blue: #0071c5;
+            --intel-dark: #00285a;
+            --bg: #f4f6f9;
+            --card-bg: #ffffff;
+            --border: #d0d7de;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --green: #16a34a;
+            --red: #dc2626;
+            --amber: #d97706;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, var(--intel-dark), var(--intel-blue));
+            color: white;
+            padding: 2rem 2rem 1.5rem;
+        }
+        header h1 { font-size: 1.75rem; font-weight: 700; }
+        header p { color: #b0cfe8; margin-top: 0.25rem; font-size: 0.95rem; }
+        .meta {
+            display: flex; gap: 2rem; margin-top: 1rem; font-size: 0.85rem; color: #93b8d8;
+        }
+        .meta span { display: flex; align-items: center; gap: 0.35rem; }
+        .meta strong { color: white; }
+        nav {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        nav h3 { font-size: 0.8rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .nav-grid {
+            display: flex; flex-wrap: wrap; gap: 0.4rem;
+        }
+        .nav-grid a {
+            font-size: 0.8rem; padding: 0.25rem 0.6rem;
+            background: #e8edf2; border-radius: 4px;
+            color: var(--intel-blue); text-decoration: none;
+            transition: background 0.15s;
+        }
+        .nav-grid a:hover { background: var(--intel-blue); color: white; }
+        main { max-width: 1200px; margin: 2rem auto; padding: 0 1.5rem; }
+        .intro {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 2rem;
+        }
+        .intro h2 { color: var(--intel-dark); font-size: 1.2rem; margin-bottom: 0.75rem; }
+        .intro ul { margin-left: 1.25rem; }
+        .intro li { margin-bottom: 0.3rem; font-size: 0.92rem; }
+        .category-title {
+            font-size: 1.1rem; font-weight: 700; color: var(--intel-dark);
+            margin: 2rem 0 1rem; padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--intel-blue);
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .card-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: #f8fafc; border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+        .card-header h3 { font-size: 1rem; color: var(--intel-dark); }
+        .badge {
+            font-size: 0.7rem; padding: 0.15rem 0.5rem;
+            border-radius: 10px; font-weight: 600; text-transform: uppercase;
+        }
+        .badge-timing { background: #dbeafe; color: #1d4ed8; }
+        .badge-voltage { background: #fef3c7; color: #92400e; }
+        .badge-quality { background: #d1fae5; color: #065f46; }
+        .card-body { padding: 1.5rem; }
+        .card-body p { font-size: 0.92rem; margin-bottom: 0.75rem; }
+        .card-body img {
+            width: 100%; border: 1px solid var(--border);
+            border-radius: 6px; margin-top: 0.75rem;
+        }
+        .interpretation {
+            background: #f0f7ff; border-left: 3px solid var(--intel-blue);
+            padding: 0.75rem 1rem; border-radius: 0 6px 6px 0;
+            margin-top: 1rem; font-size: 0.88rem;
+        }
+        .interpretation strong { color: var(--intel-dark); }
+        .signals-table {
+            width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.88rem;
+        }
+        .signals-table th {
+            background: var(--intel-dark); color: white;
+            padding: 0.5rem 0.75rem; text-align: left;
+        }
+        .signals-table td {
+            padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border);
+        }
+        .signals-table tr:nth-child(even) { background: #f8fafc; }
+        footer {
+            text-align: center; padding: 2rem; color: var(--muted);
+            font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 3rem;
+        }
+        .legend-box {
+            display: flex; gap: 1.5rem; flex-wrap: wrap;
+            padding: 0.75rem 1rem; background: #fafbfc;
+            border: 1px solid var(--border); border-radius: 6px;
+            margin-top: 0.75rem; font-size: 0.85rem;
+        }
+        .legend-item { display: flex; align-items: center; gap: 0.3rem; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .dot-fast { background: #e63946; }
+        .dot-high { background: #f4a261; }
+        .dot-typ  { background: #2a9d8f; }
+        .dot-low  { background: #264653; }
+        .dot-slow { background: #457b9d; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>THC_SPI Signal Integrity — Variability Chart Report</h1>
+    <p>NVL-Hx (Nova Lake) Post-Silicon Validation Results</p>
+    <div class="meta">
+        <span>&#128204; <strong>Platform:</strong> RVP01-NVL Hx</span>
+        <span>&#9889; <strong>Interface:</strong> THC_SPI @ 42 MHz Quad</span>
+        <span>&#128203; <strong>Signals:</strong> Clock, TXIO0–3, ChipSelect</span>
+        <span>&#128197; <strong>Data:</strong> 2026-01-15</span>
+    </div>
+</header>
+
+<nav>
+    <h3>Jump to measurement</h3>
+    <div class="nav-grid">
+        <a href="#period">Period</a>
+        <a href="#dutycycle">DutyCycle</a>
+        <a href="#hightime">HighTime</a>
+        <a href="#lowtime">LowTime</a>
+        <a href="#t180a">t180a</a>
+        <a href="#tR">tR</a>
+        <a href="#tF">tF</a>
+        <a href="#setuptime">SetupTime</a>
+        <a href="#holdtime">HoldTime</a>
+        <a href="#setupR">SetupR</a>
+        <a href="#setupF">SetupF</a>
+        <a href="#holdR">HoldR</a>
+        <a href="#holdF">HoldF</a>
+        <a href="#vmax">Vmax</a>
+        <a href="#vmin">Vmin</a>
+        <a href="#overshoot">Overshoot</a>
+        <a href="#undershoot">Undershoot</a>
+    </div>
+</nav>
+
+<main>
+    <!-- INTRO -->
+    <section class="intro">
+        <h2>How to Read These Charts</h2>
+        <p>Each chart is a <strong>Variability Chart</strong> showing the <code>mean</code> value of a measurement across all tested signals and VT corners. Outliers (beyond 1.5×IQR) have been removed.</p>
+        <ul>
+            <li><strong>Y axis</strong> — Mean measured value (units depend on measurement: seconds for timing, volts for voltage).</li>
+            <li><strong>X axis</strong> — Grouped by <strong>Signal</strong> (Clock, TXIO0–3, ChipSelect) and then by <strong>VT Corner</strong>.</li>
+            <li><strong>Each dot</strong> — One measurement instance (one test run / one unit).</li>
+            <li><strong>Group means</strong> — Horizontal lines showing the average per group.</li>
+            <li><strong>Spread (vertical scatter)</strong> — Indicates variability; tight clusters = consistent, wide spread = high variation.</li>
+        </ul>
+        <div class="legend-box">
+            <strong>VT Corner Legend:</strong>
+            <span class="legend-item"><span class="dot dot-fast"></span> Fast (high V, low T)</span>
+            <span class="legend-item"><span class="dot dot-high"></span> High (high T)</span>
+            <span class="legend-item"><span class="dot dot-typ"></span> Typ (nominal)</span>
+            <span class="legend-item"><span class="dot dot-low"></span> Low (low T)</span>
+            <span class="legend-item"><span class="dot dot-slow"></span> Slow (low V, high T)</span>
+        </div>
+
+        <h2 style="margin-top:1.25rem;">Signal Reference</h2>
+        <table class="signals-table">
+            <tr><th>Signal</th><th>Description</th></tr>
+            <tr><td><strong>Clock</strong></td><td>SPI clock signal (SCK). Drives the bus timing. All timing measurements reference this signal.</td></tr>
+            <tr><td><strong>TXIO0</strong></td><td>SPI data line 0 (MOSI in single mode). Primary data output from controller.</td></tr>
+            <tr><td><strong>TXIO1</strong></td><td>SPI data line 1 (MISO in single mode). Primary data input to controller.</td></tr>
+            <tr><td><strong>TXIO2</strong></td><td>SPI data line 2. Used in Quad mode for parallel data transfer.</td></tr>
+            <tr><td><strong>TXIO3</strong></td><td>SPI data line 3. Used in Quad mode for parallel data transfer.</td></tr>
+            <tr><td><strong>ChipSelect</strong></td><td>SPI chip select (CS#). Active-low signal that enables the target device on the bus.</td></tr>
+        </table>
+    </section>
+
+    <!-- ==================== CLOCK TIMING ==================== -->
+    <h2 class="category-title">&#9201; Clock Timing Measurements</h2>
+
+    <div class="card" id="period">
+        <div class="card-header">
+            <h3>Period</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The time duration of one complete clock cycle (rising edge to rising edge). For a 42 MHz SPI clock, the expected period is approximately <strong>23.8 ns</strong>.</p>
+            <p><strong>Why it matters:</strong> Clock period determines the data rate of the SPI bus. Variation in period means jitter, which can cause setup/hold violations at the receiver.</p>
+            <img src="charts/Variability_Period.jpg" alt="Period Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> All corners should cluster tightly around the nominal period. A significant shift between Fast and Slow corners indicates the clock source is sensitive to PVT (Process-Voltage-Temperature) variation. Wide spread within a corner suggests jitter issues.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="dutycycle">
+        <div class="card-header">
+            <h3>DutyCycle</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The ratio of clock high time to total period, expressed as a percentage or fraction. Ideal duty cycle is <strong>50%</strong>.</p>
+            <p><strong>Why it matters:</strong> An asymmetric duty cycle (far from 50%) reduces the timing margin for both setup and hold on both clock edges, which is critical in DDR or dual-edge clocking schemes.</p>
+            <img src="charts/Variability_DutyCycle.jpg" alt="DutyCycle Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Values should be centered around 0.5 (50%). Deviations beyond ±5% may indicate clock buffer imbalance. Check if any specific VT corner consistently pulls the duty cycle in one direction.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="hightime">
+        <div class="card-header">
+            <h3>HighTime</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The duration the clock signal stays at logic HIGH in one cycle.</p>
+            <p><strong>Why it matters:</strong> Defines the valid data window for sampling on the falling clock edge. Too short = insufficient time for data to stabilize before capture.</p>
+            <img src="charts/Variability_HighTime.jpg" alt="HighTime Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Should be approximately half the period (~11.9 ns for 42 MHz). Compare across corners: Fast corner typically produces shorter times, Slow corner longer. Verify it meets the SPI spec minimum high time.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="lowtime">
+        <div class="card-header">
+            <h3>LowTime</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The duration the clock signal stays at logic LOW in one cycle.</p>
+            <p><strong>Why it matters:</strong> Defines the valid data window for sampling on the rising clock edge. Together with HighTime, these two determine the duty cycle balance.</p>
+            <img src="charts/Variability_LowTime.jpg" alt="LowTime Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Should be complementary to HighTime. If HighTime is short but LowTime is long (or vice versa), there is a duty cycle distortion. Both should meet SPI specification minimums.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="t180a">
+        <div class="card-header">
+            <h3>t180a (180° Phase Alignment)</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The time between rising and falling edges, expected to be exactly half the period (180° phase). Deviation from ideal indicates duty cycle distortion.</p>
+            <p><strong>Why it matters:</strong> Critical for synchronous SPI communication where data is latched on both edges or where clock symmetry is assumed by the protocol.</p>
+            <img src="charts/Variability_t180a.jpg" alt="t180a Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Should equal Period/2. Deviation indicates clock asymmetry. Compare this across signals — only the Clock signal should show this measurement.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== EDGE TIMING ==================== -->
+    <h2 class="category-title">&#9889; Edge Rate Measurements</h2>
+
+    <div class="card" id="tR">
+        <div class="card-header">
+            <h3>tR (Rise Time)</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The time for a signal to transition from LOW to HIGH (typically measured between 30% and 70% of the voltage swing).</p>
+            <p><strong>Why it matters:</strong> Faster rise times produce cleaner digital signals but can cause electromagnetic interference (EMI) and overshoot/ringing. Too slow = risk of setup time violations.</p>
+            <img src="charts/Variability_tR.jpg" alt="Rise Time Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Compare rise times across signals — TXIO lines should be similar. Clock may differ due to different driver strength. Fast corner should produce the shortest tR (strongest drive), Slow corner the longest. Watch for signals with anomalously slow edges.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="tF">
+        <div class="card-header">
+            <h3>tF (Fall Time)</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The time for a signal to transition from HIGH to LOW (typically 70% to 30% of voltage swing).</p>
+            <p><strong>Why it matters:</strong> Same as rise time but for falling edges. Asymmetry between tR and tF indicates pull-up vs. pull-down driver imbalance in the I/O buffer.</p>
+            <img src="charts/Variability_tF.jpg" alt="Fall Time Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Should be close to tR for each signal. Large tR/tF asymmetry indicates buffer design issues. Compare across TXIO0–3 — they share the same buffer design, so they should be similar.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SETUP & HOLD ==================== -->
+    <h2 class="category-title">&#128274; Setup &amp; Hold Timing</h2>
+
+    <div class="card" id="setuptime">
+        <div class="card-header">
+            <h3>SetupTime</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The time the data signal is stable <strong>before</strong> the active clock edge. This is the combined (worst-case) setup time.</p>
+            <p><strong>Why it matters:</strong> If setup time is too short, the receiver may latch incorrect data (metastability). This is one of the most critical SPI validation parameters.</p>
+            <img src="charts/Variability_SetupTime.jpg" alt="SetupTime Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Must exceed the specification minimum for the endpoint device. Slow corner typically has the worst (smallest) setup time. If any point approaches zero or goes negative, there is a <strong>timing violation</strong>. Only data signals (TXIO, ChipSelect) have meaningful setup times.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="holdtime">
+        <div class="card-header">
+            <h3>HoldTime</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The time the data signal remains stable <strong>after</strong> the active clock edge.</p>
+            <p><strong>Why it matters:</strong> If hold time is too short, the receiver may sample the transitioning data instead of the stable value. Along with setup, these form the critical timing window.</p>
+            <img src="charts/Variability_HoldTime.jpg" alt="HoldTime Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Must exceed the specification minimum. Fast corner typically has the worst (smallest) hold time (data changes too quickly after clock edge). Negative values = <strong>hold violation</strong>.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="setupR">
+        <div class="card-header">
+            <h3>SetupR (Setup on Rising Edge)</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> Setup time measured specifically with respect to the <strong>rising edge</strong> of the clock.</p>
+            <p><strong>Why it matters:</strong> In SPI CPHA=0, data is sampled on the rising edge. This measurement directly determines if data will be captured correctly on that edge.</p>
+            <img src="charts/Variability_SetupR.jpg" alt="SetupR Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Compare with SetupF — if one is significantly worse, it indicates duty cycle distortion is affecting timing margins on one edge more than the other.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="setupF">
+        <div class="card-header">
+            <h3>SetupF (Setup on Falling Edge)</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> Setup time measured specifically with respect to the <strong>falling edge</strong> of the clock.</p>
+            <p><strong>Why it matters:</strong> In SPI CPHA=1, data is sampled on the falling edge. Also relevant in Quad mode where both edges may carry information.</p>
+            <img src="charts/Variability_SetupF.jpg" alt="SetupF Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Same criteria as SetupR. Compare the two to assess clock symmetry impact on timing margins. The worse of SetupR/SetupF determines the actual system margin.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="holdR">
+        <div class="card-header">
+            <h3>HoldR (Hold on Rising Edge)</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> Hold time measured specifically after the <strong>rising edge</strong> of the clock.</p>
+            <p><strong>Why it matters:</strong> Ensures data remains stable long enough after the rising clock edge for reliable capture.</p>
+            <img src="charts/Variability_HoldR.jpg" alt="HoldR Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Must exceed spec minimum. Compare with HoldF for clock edge symmetry assessment. Fast corner is typically worst case.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="holdF">
+        <div class="card-header">
+            <h3>HoldF (Hold on Falling Edge)</h3>
+            <span class="badge badge-timing">Timing</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> Hold time measured specifically after the <strong>falling edge</strong> of the clock.</p>
+            <p><strong>Why it matters:</strong> Complementary to HoldR. Together they provide the complete hold margin picture for both clock phases.</p>
+            <img src="charts/Variability_HoldF.jpg" alt="HoldF Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Same criteria as HoldR. The minimum of HoldR and HoldF determines the actual system hold margin.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== VOLTAGE ==================== -->
+    <h2 class="category-title">&#9879; Voltage Level Measurements</h2>
+
+    <div class="card" id="vmax">
+        <div class="card-header">
+            <h3>Vmax (Maximum Voltage)</h3>
+            <span class="badge badge-voltage">Voltage</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The highest voltage reached by the signal, including any overshoot. Measured in <strong>Volts</strong>.</p>
+            <p><strong>Why it matters:</strong> Must not exceed the absolute maximum rating of the receiving device (typically V<sub>IH</sub> spec or pad voltage limit). Exceeding it risks oxide damage and long-term reliability failures.</p>
+            <img src="charts/Variability_Vmax.jpg" alt="Vmax Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Nominal is ~1.8V for this I/O rail (1.8V CMOS). Values should stay within spec (typically ≤ 1.98V for 10% margin). Fast corner pushes Vmax higher. Look for signals with Vmax significantly above the rail voltage — these have overshoot problems.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="vmin">
+        <div class="card-header">
+            <h3>Vmin (Minimum Voltage)</h3>
+            <span class="badge badge-voltage">Voltage</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The lowest voltage reached by the signal, including any undershoot. Measured in <strong>Volts</strong>.</p>
+            <p><strong>Why it matters:</strong> Should not go below the absolute minimum (typically GND – 0.3V or spec limit). Negative voltages can forward-bias ESD protection diodes and inject current into the substrate, causing latch-up.</p>
+            <img src="charts/Variability_Vmin.jpg" alt="Vmin Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Should be near 0V for the low state. Negative values indicate undershoot. Fast corner typically shows worst undershoot. Values below -0.3V are typically a concern for reliability.
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SIGNAL QUALITY ==================== -->
+    <h2 class="category-title">&#128200; Signal Quality Measurements</h2>
+
+    <div class="card" id="overshoot">
+        <div class="card-header">
+            <h3>Overshoot</h3>
+            <span class="badge badge-quality">Signal Quality</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The amount by which the signal exceeds the high voltage rail during a rising transition. Expressed in <strong>Volts above V<sub>DD</sub></strong> or as a percentage.</p>
+            <p><strong>Why it matters:</strong> Excessive overshoot stresses the I/O pad, causes EMI, and can trigger ESD protection diodes. It is primarily caused by impedance mismatches and excessive edge rates.</p>
+            <img src="charts/Variability_Overshoot.jpg" alt="Overshoot Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Lower is better. Typical spec limits allow 10–20% of V<sub>DD</sub>. Fast corner is worst case (fastest edges, highest drive). If a specific signal is consistently worse, check its trace routing and termination. Compare TXIO0–3 — they should be similar if the layout is symmetric.
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="undershoot">
+        <div class="card-header">
+            <h3>Undershoot</h3>
+            <span class="badge badge-quality">Signal Quality</span>
+        </div>
+        <div class="card-body">
+            <p><strong>What it measures:</strong> The amount by which the signal goes below GND during a falling transition. Expressed in <strong>Volts below GND</strong> or as a percentage.</p>
+            <p><strong>Why it matters:</strong> Same reliability concerns as overshoot but on the low side. Can cause substrate current injection and latch-up in severe cases.</p>
+            <img src="charts/Variability_Undershoot.jpg" alt="Undershoot Variability Chart">
+            <div class="interpretation">
+                <strong>What to look for:</strong> Should be as close to zero as possible. Fast corner is typically worst. Values exceeding -0.3V or 15–20% of V<sub>DD</sub> below GND are a reliability risk. Correlate with tF — faster fall times usually correlate with more undershoot.
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <p>Generated from <code>Data_WBIO_NVL_Hx_THC_SPI_20260115_113704.csv</code> — THC_SPI Validation, NVL-Hx Platform</p>
+    <p>Charts produced with JMP Pro 17 | Outliers filtered (IQR × 1.5)</p>
+</footer>
+
+</body>
+</html>

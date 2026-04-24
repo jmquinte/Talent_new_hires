@@ -1,0 +1,59 @@
+//! JMP Headless Analysis Template
+//  Auto-generated script — replace $PLACEHOLDERS$ before execution
+Names Default To Here(1);
+
+/* ========== CONFIGURATION ========== */
+csv_path    = "$CSVPATH$";
+output_path = "$OUTPUT_PATH$";
+
+/* ========== OPEN CSV ========== */
+dt = Open(
+    csv_path,
+    Import Settings(
+        End Of Line( CRLF ),
+        End Of Field( Comma ),
+        Column Names Start( 1 ),
+        Data Starts( 2 ),
+        Lines To Read( "All" )
+    ),
+    Invisible
+);
+
+/* Force numeric columns if needed */
+// Column(dt, "Mean") << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous);
+
+/* ========== ANALYSIS ========== */
+// Replace this block with the desired analysis
+
+// --- Variability Chart Example ---
+/*
+vc = Variability Chart(
+    Y( :Data ),
+    X( :GroupCol1, :GroupCol2 ),
+    By( :PanelCol ),
+    Std Dev Chart( 0 ),
+    SendToReport(
+        Dispatch( {}, "2", ScaleBox, {
+            Label Row( {Show Major Grid(1), Show Minor Grid(1)} )
+        })
+    )
+);
+*/
+
+/* ========== EXPORT AS IMAGES ========== */
+// Uncomment and adapt for your analysis object (vc, dist, etc.)
+/*
+report = vc << Report;
+pic_list = report << Get Pictures;
+For(i = 1, i <= N Items(pic_list), i++,
+    pic_list[i] << Save Picture(
+        output_path || "chart_" || Char(i) || ".jpg",
+        JPEG
+    );
+);
+*/
+
+/* ========== CLEANUP ========== */
+Close All( Data Tables, No Save );
+Close All( Reports, No Save );
+Exit();
