@@ -40,6 +40,9 @@ Intel Data Analysis repository. Contains tools for semiconductor validation data
 - **PIO_ReadWrite_PostSi_THC0.py:** Uses Intel `namednodes`/`sv` for register access. Functions: Init_DataRegisters, pollSTSAndPrint, PIO_Read, PIO_Write. Supports Single/Dual/Quad/QuadParallel modes. SPI frequencies: 42/30/24/20/17 MHz.
 - **GPIO_Config_SPI_1.json:** Oscilloscope/signal analyzer config for eSPI clock/data channels. Measurement thresholds, trigger settings, sample rates.
 - Results folders contain JMP data tables (.jmp), CSV files, and variability chart reports (.jrp).
+- **Results2/variability_chart.jsl** — Headless JSL script that generates per-measurement variability charts with IQR×1.5 outlier filtering.
+- **Results2/charts/** — 17 exported JPG variability charts (one per measurement: Period, DutyCycle, tR, tF, SetupTime, HoldTime, Vmax, Vmin, Overshoot, Undershoot, etc.).
+- **Results2/report.html** — Interactive HTML report with chart interpretation, signal reference table, and VT corner legend.
 
 ### 3. UtilitiesTools
 - **ResultTable_Editer.jsl:** GUI tool to update isValid and Comment columns in database records. Uses EV_User environment variable for access control.
@@ -60,6 +63,9 @@ Intel Data Analysis repository. Contains tools for semiconductor validation data
 - Scripts are pluggable functions with signature `Function({dt, pntr}, ...)`
 - Config-driven (config.json for DSN, labs, teams, projects)
 - Python-JSL interop via PythonInit/PythonSend/PythonSubmit
+
+## Skills
+- **jmp-csv-analysis** (`.github/skills/jmp-csv-analysis/SKILL.md`) — Copilot skill for analyzing CSV data with JMP Pro. Covers: CSV inspection, JSL script generation, variability charts, 3-sigma, outlier removal (IQR×1.5), image export (JPG), and HTML report generation with chart interpretation.
 
 ## Environment
 - **JMP Pro 17** — `C:\Program Files\SAS\JMPPRO\17\jmp.exe`
