@@ -1,0 +1,14 @@
+# Microsoft Office temporary/lock files
+~$*
+
+# JMP temporary files
+*.jrp~
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# OS-specific
+.DS_Store
+Thumbs.db
