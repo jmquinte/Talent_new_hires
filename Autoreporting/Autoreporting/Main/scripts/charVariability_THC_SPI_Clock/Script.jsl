@@ -28,6 +28,9 @@ script = Function( { dt, pntr },
 		Throw( "[charVariability_THC_SPI_Clock] No rows found for Signal = 'Clock'" )
 	);
 
+	/* --- Remove outliers: rows beyond 3-sigma per (Signal x Measurement) --- */
+	clock_dt = CM:exclude_outliers( clock_dt, { "Signal", "Measurement" }, "mean", 3 );
+
 	/* --- Helper: safe reference line (skips "n/a" or missing values) --- */
 	_add_refline = Function( { sb, val_col, label, color },
 		{ Default Local },

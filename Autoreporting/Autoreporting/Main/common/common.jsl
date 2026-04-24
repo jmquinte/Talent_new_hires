@@ -174,3 +174,92 @@ CM:parse_XML = Function( { Array, Name },
 	);
 	Return( string );
 );
+
+// -->
+/*  CM:exclude_outliers
+ *  Removes rows where the value column is farther than n_sigma standard
+ *  deviations from the per-group mean.  Groups are defined by the list
+ *  of column name strings in group_cols.
+ *
+ *  Parameters:
+ *    dt         - source JMP data table
+ *    group_cols - list of column name strings, e.g. { "Signal", "Measurement" }
+ *    val_col    - column name string to evaluate, e.g. "mean"
+ *    n_sigma    - sigma threshold (default 3 if missing)
+ *
+ *  Returns:
+ *    A new invisible data table with outlier rows removed.
+ */
+CM:exclude_outliers = Function( { dt, group_cols, val_col, n_sigma },
+	{ Default Local },
+	If( Is Missing( n_sigma ), n_sigma = 3 );
+
+	nrows = N Rows( dt );
+
+	/* ---- Step 1: build a group-key string for every row ---- */
+	row_keys = {};
+	For( r = 1, r <= nrows, r++,
+		key = "";
+		For( i = 1, i <= NItems( group_cols ), i++,
+			key = key || Char( Column( dt, group_cols[i] )[r] ) || "|";
+		);
+		row_keys = Insert( row_keys, key );
+	);
+
+	/* ---- Step 2: collect unique keys ---- */
+	unique_aa = [=>];
+	For( r = 1, r <= nrows, r++,
+		unique_aa[ row_keys[r] ] = 1;
+	);
+	unique_keys = unique_aa << GetKeys;
+
+	/* ---- Step 3: compute per-group mean and std dev ---- */
+	groups = [=>];
+	For( k = 1, k <= NItems( unique_keys ), k++,
+		key  = unique_keys[k];
+		vals = {};
+		For( r = 1, r <= nrows, r++,
+			If( row_keys[r] == key,
+				vals = Insert( vals, Column( dt, val_col )[r] );
+			);
+		);
+		groups[key] = { Mean( vals ), Std Dev( vals ) };
+	);
+
+	/* ---- Step 4: keep only rows within n_sigma of their group mean ---- */
+	rows_keep = {};
+	For( r = 1, r <= nrows, r++,
+		key    = row_keys[r];
+		val    = Column( dt, val_col )[r];
+		g_mean = groups[key][1];
+		g_std  = groups[key][2];
+		If( Is Missing( g_std ) | g_std == 0,
+			/* single-point group or zero variance — always keep */
+			rows_keep = Insert( rows_keep, r );
+		,
+			If( Abs( val - g_mean ) <= n_sigma * g_std,
+				rows_keep = Insert( rows_keep, r );
+			);
+		);
+	);
+
+	/* ---- Step 5: subset to clean table ---- */
+	dt << Clear Select;
+	dt << Select Rows( rows_keep );
+	clean = dt << Subset(
+		Output Table( val_col || "_NoOutliers" ),
+		Selected Rows( 1 ),
+		Invisible
+	);
+	dt << Clear Select;
+
+	n_removed = nrows - N Rows( clean );
+	print(
+		"  [exclude_outliers] Kept " || Char( N Rows( clean ) ) ||
+		" / " || Char( nrows ) || " rows  (" ||
+		Char( n_removed ) || " outliers removed, threshold >" ||
+		Char( n_sigma ) || "\[sigma])"
+	);
+
+	Return( clean );
+);

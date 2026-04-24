@@ -28,6 +28,9 @@ script = Function( { dt, pntr },
 		Throw( "[charVariability_THC_SPI_DataLines] No rows found for Signal containing 'TXIO'" )
 	);
 
+	/* --- Remove outliers: rows beyond 3-sigma per (Signal x Measurement) --- */
+	io_dt = CM:exclude_outliers( io_dt, { "Signal", "Measurement" }, "mean", 3 );
+
 	/* ------------------------------------------------------------------ */
 	/*  Per-measurement reference lines require a "By" dispatch.            */
 	/*  The SendToReport block below applies the same Spec columns          */

@@ -28,6 +28,9 @@ script = Function( { dt, pntr },
 		Throw( "[charVariability_THC_SPI_CS] No rows found for Signal = 'ChipSelect'" )
 	);
 
+	/* --- Remove outliers: rows beyond 3-sigma per (Signal x Measurement) --- */
+	cs_dt = CM:exclude_outliers( cs_dt, { "Signal", "Measurement" }, "mean", 3 );
+
 	vc = cs_dt << Variability Chart(
 		Y( :mean ),
 		X( :pch_vid, :vt_corner ),

@@ -162,6 +162,10 @@ If( !Directory Exists( out_dir ),
 );
 
 out_dir_win = ConvertFilePath( out_dir, Windows );
+/* Ensure trailing backslash after Windows path conversion */
+If( !EndsWith( out_dir_win, "\" ),
+	out_dir_win = out_dir_win || "\";
+);
 print( "Output folder: " || out_dir );
 
 /* ========================================================================
@@ -191,7 +195,7 @@ slides[ 1 ] = CM:generate_slidetitle(
 order = pntr << GetKeys;
 For( i = 1, i <= NItems( order ), i++,
 	img_name = order[ i ] || ".jpg";
-	pntr[ order[ i ] ] << Save Capture( out_dir_win || img_name, "JPG" );
+	pntr[ order[ i ] ] << SaveCapture( out_dir_win || img_name, "JPG" );
 	slides[ i + 1 ] = CM:generate_slide(
 		order[ i ],
 		configs[ "description" ],
@@ -206,10 +210,9 @@ xml = CM:parse_XML( presentation, "" );
 Save Text File( out_dir_win || "test.xml", xml );
 
 /* Invoke VBS to assemble the PPTX */
-options = path_script || " " || out_dir_win;
 rp = RunProgram(
 	Executable( "CSCRIPT.EXE" ),
-	Options( options ),
+	Options( { path_script, out_dir_win } ),
 	Read Function( "text" )
 );
 print( rp );
