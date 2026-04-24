@@ -1,0 +1,6722 @@
+{
+    "eSPI_CLK_Init": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "1",
+        "TriggerLevel": "1.64",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "8.8e-6",
+        "TriggerThreshold": "1.64",
+        "HorizontalScale": "500e-9",
+        "HorizontalPos": "2.5e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Init_Period Clock"
+            ],
+            "Frequency": [
+                "Clock,Init_Freq Clock"
+            ],
+            "PWidth": [
+                "Clock,Init_Thigh Clock"
+            ],
+            "NWidth": [
+                "Clock,Init_Tlow Clock"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "330e-9"
+    },
+    "eSPI_ChipSelect_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,4",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "120e-9",
+        "HorizontalPos": "-500e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,tSLCH ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,tCLSH ChipSelect"
+            ],
+            "Risetime": [
+                "ChipSelect,RiseTime ChipSelect"
+            ],
+            "Falltime": [
+                "ChipSelect,FallTime ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_Clock_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "10e-9",
+        "HorizontalPos": "-145e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,tCK Clock"
+            ],
+            "Frequency": [
+                "Clock,Freq Clock"
+            ],
+            "PWidth": [
+                "Clock,tCKH Clock"
+            ],
+            "NWidth": [
+                "Clock,tCKL Clock"
+            ],
+            "Risetime": [
+                "Clock,RiseTime Clock"
+            ],
+            "Falltime": [
+                "Clock,FallTime Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_ALL": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2,3,4,5,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "120e-9",
+        "HorizontalPos": "-440e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect",
+                "TXIO0,Vmax TXIO0",
+                "TXIO1,Vmax TXIO1",
+                "TXIO2,Vmax TXIO2",
+                "TXIO3,Vmax TXIO3"
+                
+            ],
+            "Vmin": [
+                "ChipSelect,Vmin ChipSelect",                
+                "Clock,Vmin Clock",
+                "TXIO0,Vmin TXIO0",
+                "TXIO1,Vmin TXIO1",
+                "TXIO2,Vmin TXIO2",
+                "TXIO3,Vmin TXIO3"
+                
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "ChipSelect,Overshoot ChipSelect",
+                "TXIO0,Overshoot TXIO0",
+                "TXIO1,Overshoot TXIO1",
+                "TXIO2,Overshoot TXIO2",
+                "TXIO3,Overshoot TXIO3"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "ChipSelect,Undershoot ChipSelect",
+                "TXIO0,Undershoot TXIO0",
+                "TXIO1,Undershoot TXIO1",
+                "TXIO2,Undershoot TXIO2",
+                "TXIO3,Undershoot TXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATATx_IO_0_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO0,RIS,Clock,RIS,tDVCH_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tDVCH_Fall TXIO0"
+            ],
+            "Holdtime": [
+                "TXIO0,RIS,Clock,RIS,tCHDX_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tCHDX_Fall TXIO0"
+            ],
+            "Risetime": [
+                "TXIO0,RiseTimeTx TXIO0"
+            ],
+            "Falltime": [
+                "TXIO0,FallTimeTx TXIO0"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATARx_IO_0_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO0,FALL,Clock,RIS,tCLQV_Rise RXIO0",
+                "RXIO0,FALL,Clock,FALL,tCLQV_Fall RXIO0"
+            ],
+            "Holdtime": [
+                "RXIO0,RIS,Clock,FALL,tCLQX_Rise RXIO0",
+                "RXIO0,FALL,Clock,FALL,tCLQX_Fall RXIO0"
+            ],
+            "Risetime": [
+                "RXIO0,RiseTimeRx RXIO0"
+            ],
+            "Falltime": [
+                "RXIO0,FallTimeRx RXIO0"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATATx_IO_1_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO1,RIS,Clock,RIS,tDVCH_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tDVCH_Fall TXIO1"
+            ],
+            "Holdtime": [
+                "TXIO1,RIS,Clock,RIS,tCHDX_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tCHDX_Fall TXIO1"
+            ],
+            "Risetime": [
+                "TXIO1,RiseTimeTx TXIO1"
+            ],
+            "Falltime": [
+                "TXIO1,FallTimeTx TXIO1"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATARx_IO_1_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO1,FALL,Clock,RIS,tCLQV_Rise RXIO1",
+                "RXIO1,FALL,Clock,FALL,tCLQV_Fall RXIO1"
+            ],
+            "Holdtime": [
+                "RXIO1,RIS,Clock,FALL,tCLQX_Rise RXIO1",
+                "RXIO1,FALL,Clock,FALL,tCLQX_Fall RXIO1"
+            ],
+            "Risetime": [
+                "RXIO1,RiseTimeRx RXIO1"
+            ],
+            "Falltime": [
+                "RXIO1,FallTimeRx RXIO1"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATATx_IO_2_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO2,RIS,Clock,RIS,tDVCH_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tDVCH_Fall TXIO2"
+            ],
+            "Holdtime": [
+                "TXIO2,RIS,Clock,RIS,tCHDX_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tCHDX_Fall TXIO2"
+            ],
+            "Risetime": [
+                "TXIO2,RiseTimeTx TXIO2"
+            ],
+            "Falltime": [
+                "TXIO2,FallTimeTx TXIO2"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATARx_IO_2_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO2,FALL,Clock,RIS,tCLQV_Rise RXIO2",
+                "RXIO2,FALL,Clock,FALL,tCLQV_Fall RXIO2"
+            ],
+            "Holdtime": [
+                "RXIO2,RIS,Clock,FALL,tCLQX_Rise RXIO2",
+                "RXIO2,FALL,Clock,FALL,tCLQX_Fall RXIO2"
+            ],
+            "Risetime": [
+                "RXIO2,RiseTimeRx RXIO2"
+            ],
+            "Falltime": [
+                "RXIO2,FallTimeRx RXIO2"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATATx_IO_3_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO3,RIS,Clock,RIS,tDVCH_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tDVCH_Fall TXIO3"
+            ],
+            "Holdtime": [
+                "TXIO3,RIS,Clock,RIS,tCHDX_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tCHDX_Fall TXIO3"
+            ],
+            "Risetime": [
+                "TXIO3,RiseTimeTx TXIO3"
+            ],
+            "Falltime": [
+                "TXIO3,FallTimeTx TXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "eSPI_DATARx_IO_3_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO3,FALL,Clock,RIS,tCLQV_Rise RXIO3",
+                "RXIO3,FALL,Clock,FALL,tCLQV_Fall RXIO3"
+            ],
+            "Holdtime": [
+                "RXIO3,RIS,Clock,FALL,tCLQX_Rise RXIO3",
+                "RXIO3,FALL,Clock,FALL,tCLQX_Fall RXIO3"
+            ],
+            "Risetime": [
+                "RXIO3,RiseTimeRx RXIO3"
+            ],
+            "Falltime": [
+                "RXIO3,FallTimeRx RXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+
+    "DeSPI_CLK_Init": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "1",
+        "TriggerLevel": "1.64",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "8.8e-6",
+        "TriggerThreshold": "1.64",
+        "HorizontalScale": "500e-9",
+        "HorizontalPos": "2.5e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Init_Period Clock"
+            ],
+            "Frequency": [
+                "Clock,Init_Freq Clock"
+            ],
+            "PWidth": [
+                "Clock,Init_Thigh Clock"
+            ],
+            "NWidth": [
+                "Clock,Init_Tlow Clock"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "330e-9"
+    },
+    "DeSPI_ChipSelect_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,4",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "120e-9",
+        "HorizontalPos": "-500e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,tSLCH ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,tCLSH ChipSelect"
+            ],
+            "Risetime": [
+                "ChipSelect,RiseTime ChipSelect"
+            ],
+            "Falltime": [
+                "ChipSelect,FallTime ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_Clock_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "10e-9",
+        "HorizontalPos": "-145e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,tCK Clock"
+            ],
+            "Frequency": [
+                "Clock,Freq Clock"
+            ],
+            "PWidth": [
+                "Clock,tCKH Clock"
+            ],
+            "NWidth": [
+                "Clock,tCKL Clock"
+            ],
+            "Risetime": [
+                "Clock,RiseTime Clock"
+            ],
+            "Falltime": [
+                "Clock,FallTime Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_ALL": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2,3,4,5,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "120e-9",
+        "HorizontalPos": "-440e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect",
+                "TXIO0,Vmax TXIO0",
+                "TXIO1,Vmax TXIO1",
+                "TXIO2,Vmax TXIO2",
+                "TXIO3,Vmax TXIO3"
+                
+            ],
+            "Vmin": [
+                "ChipSelect,Vmin ChipSelect",                
+                "Clock,Vmin Clock",
+                "TXIO0,Vmin TXIO0",
+                "TXIO1,Vmin TXIO1",
+                "TXIO2,Vmin TXIO2",
+                "TXIO3,Vmin TXIO3"
+                
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "ChipSelect,Overshoot ChipSelect",
+                "TXIO0,Overshoot TXIO0",
+                "TXIO1,Overshoot TXIO1",
+                "TXIO2,Overshoot TXIO2",
+                "TXIO3,Overshoot TXIO3"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "ChipSelect,Undershoot ChipSelect",
+                "TXIO0,Undershoot TXIO0",
+                "TXIO1,Undershoot TXIO1",
+                "TXIO2,Undershoot TXIO2",
+                "TXIO3,Undershoot TXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATATx_IO_0_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO0,RIS,Clock,RIS,tDVCH_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tDVCH_Fall TXIO0"
+            ],
+            "Holdtime": [
+                "TXIO0,RIS,Clock,RIS,tCHDX_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tCHDX_Fall TXIO0"
+            ],
+            "Risetime": [
+                "TXIO0,RiseTimeTx TXIO0"
+            ],
+            "Falltime": [
+                "TXIO0,FallTimeTx TXIO0"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATARx_IO_0_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO0,FALL,Clock,RIS,tCLQV_Rise RXIO0",
+                "RXIO0,FALL,Clock,FALL,tCLQV_Fall RXIO0"
+            ],
+            "Holdtime": [
+                "RXIO0,RIS,Clock,FALL,tCLQX_Rise RXIO0",
+                "RXIO0,FALL,Clock,FALL,tCLQX_Fall RXIO0"
+            ],
+            "Risetime": [
+                "RXIO0,RiseTimeRx RXIO0"
+            ],
+            "Falltime": [
+                "RXIO0,FallTimeRx RXIO0"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATATx_IO_1_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO1,RIS,Clock,RIS,tDVCH_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tDVCH_Fall TXIO1"
+            ],
+            "Holdtime": [
+                "TXIO1,RIS,Clock,RIS,tCHDX_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tCHDX_Fall TXIO1"
+            ],
+            "Risetime": [
+                "TXIO1,RiseTimeTx TXIO1"
+            ],
+            "Falltime": [
+                "TXIO1,FallTimeTx TXIO1"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATARx_IO_1_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO1,FALL,Clock,RIS,tCLQV_Rise RXIO1",
+                "RXIO1,FALL,Clock,FALL,tCLQV_Fall RXIO1"
+            ],
+            "Holdtime": [
+                "RXIO1,RIS,Clock,FALL,tCLQX_Rise RXIO1",
+                "RXIO1,FALL,Clock,FALL,tCLQX_Fall RXIO1"
+            ],
+            "Risetime": [
+                "RXIO1,RiseTimeRx RXIO1"
+            ],
+            "Falltime": [
+                "RXIO1,FallTimeRx RXIO1"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATATx_IO_2_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO2,RIS,Clock,RIS,tDVCH_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tDVCH_Fall TXIO2"
+            ],
+            "Holdtime": [
+                "TXIO2,RIS,Clock,RIS,tCHDX_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tCHDX_Fall TXIO2"
+            ],
+            "Risetime": [
+                "TXIO2,RiseTimeTx TXIO2"
+            ],
+            "Falltime": [
+                "TXIO2,FallTimeTx TXIO2"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATARx_IO_2_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO2,FALL,Clock,RIS,tCLQV_Rise RXIO2",
+                "RXIO2,FALL,Clock,FALL,tCLQV_Fall RXIO2"
+            ],
+            "Holdtime": [
+                "RXIO2,RIS,Clock,FALL,tCLQX_Rise RXIO2",
+                "RXIO2,FALL,Clock,FALL,tCLQX_Fall RXIO2"
+            ],
+            "Risetime": [
+                "RXIO2,RiseTimeRx RXIO2"
+            ],
+            "Falltime": [
+                "RXIO2,FallTimeRx RXIO2"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATATx_IO_3_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-905e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO3,RIS,Clock,RIS,tDVCH_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tDVCH_Fall TXIO3"
+            ],
+            "Holdtime": [
+                "TXIO3,RIS,Clock,RIS,tCHDX_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tCHDX_Fall TXIO3"
+            ],
+            "Risetime": [
+                "TXIO3,RiseTimeTx TXIO3"
+            ],
+            "Falltime": [
+                "TXIO3,FallTimeTx TXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "DeSPI_DATARx_IO_3_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "TIM",
+        "TriggerTime": "1.06e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-320e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "5",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "330e-3",
+        "VerticalOffset": "1.0",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO3,FALL,Clock,RIS,tCLQV_Rise RXIO3",
+                "RXIO3,FALL,Clock,FALL,tCLQV_Fall RXIO3"
+            ],
+            "Holdtime": [
+                "RXIO3,RIS,Clock,FALL,tCLQX_Rise RXIO3",
+                "RXIO3,FALL,Clock,FALL,tCLQX_Fall RXIO3"
+            ],
+            "Risetime": [
+                "RXIO3,RiseTimeRx RXIO3"
+            ],
+            "Falltime": [
+                "RXIO3,FallTimeRx RXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+	
+    "SPI_ChipSelect_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"TXIO0": "CHAN2",
+			"TXIO1": "CHAN3",
+			"TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,4",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "330e-9",
+        "HorizontalPos": "-1.55e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Risetime": [
+                "ChipSelect,RiseTime ChipSelect"
+            ],
+            "Falltime": [
+                "ChipSelect,FallTime ChipSelect"
+            ],
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,tSLCH ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,tCHSH ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "SPI_CLK_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"TXIO0": "CHAN2",
+			"TXIO1": "CHAN3",
+			"TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "30e-9",
+        "HorizontalPos": "-300e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Period Clock"
+            ],
+            "Frequency": [
+                "Clock,Frequency Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ],
+            "Risetime": [
+                "Clock,RiseTime Clock"
+            ],
+            "Falltime": [
+                "Clock,FallTime Clock"
+            ],
+            "PWidth": [
+                "Clock,tCLH Clock"
+            ],
+            "NWidth": [
+                "Clock,tCLL Clock"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "SPI_IO0_Tx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"TXIO0": "CHAN2",
+			"TXIO1": "CHAN3",
+			"TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "29e-9",
+        "HorizontalPos": "228e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO0,RIS,Clock,RIS,tCHDX_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tCHDX_Fall TXIO0"
+            ],
+            "Setuptime": [
+                "TXIO0,RIS,Clock,RIS,tDVCH_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tDVCH_Fall TXIO0"
+            ],
+            "Risetime": [
+                "TXIO0,RiseTimeTx TXIO0"
+            ],
+            "Falltime": [
+                "TXIO0,FallTimeTx TXIO0"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "2",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.015",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO1_Tx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"TXIO0": "CHAN2",
+			"TXIO1": "CHAN3",
+			"TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "29e-9",
+        "HorizontalPos": "228e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO1,RIS,Clock,RIS,tCHDX_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tCHDX_Fall TXIO1"
+            ],
+            "Setuptime": [
+                "TXIO1,RIS,Clock,RIS,tDVCH_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tDVCH_Fall TXIO1"
+            ],
+            "Risetime": [
+                "TXIO1,RiseTimeTx TXIO1"
+            ],
+            "Falltime": [
+                "TXIO1,FallTimeTx TXIO1"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.015",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO2_Tx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"TXIO0": "CHAN2",
+			"TXIO1": "CHAN3",
+			"TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "29e-9",
+        "HorizontalPos": "228e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO2,RIS,Clock,RIS,tCHDX_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tCHDX_Fall TXIO2"
+            ],
+            "Setuptime": [
+                "TXIO2,RIS,Clock,RIS,tDVCH_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tDVCH_Fall TXIO2"
+            ],
+            "Risetime": [
+                "TXIO2,RiseTimeTx TXIO2"
+            ],
+            "Falltime": [
+                "TXIO2,FallTimeTx TXIO2"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "2",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO3_Tx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"TXIO0": "CHAN2",
+			"TXIO1": "CHAN3",
+			"TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "29e-9",
+        "HorizontalPos": "228e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO3,RIS,Clock,RIS,tCHDX_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tCHDX_Fall TXIO3"
+            ],
+            "Setuptime": [
+                "TXIO3,RIS,Clock,RIS,tDVCH_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tDVCH_Fall TXIO3"
+            ],
+            "Risetime": [
+                "TXIO3,RiseTimeTx TXIO3"
+            ],
+            "Falltime": [
+                "TXIO3,FallTimeTx TXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO0_Rx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"RXIO0": "CHAN2",
+			"RXIO1": "CHAN3",
+			"RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "80e-9",
+        "HorizontalPos": "-1e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO0,RIS,Clock,FALL,HoldTimeRxRising RXIO0",
+                "RXIO0,FALL,Clock,FALL,HoldTimeRxFalling RXIO0"
+            ],
+            "Setuptime": [
+                "RXIO0,RIS,Clock,FALL,SetupTimeRxRising RXIO0",
+                "RXIO0,FALL,Clock,FALL,SetupTimeRxFalling RXIO0"
+            ],
+            "Risetime": [
+                "RXIO0,RiseTimeRx RXIO0"
+            ],
+            "Falltime": [
+                "RXIO0,FallTimeRx RXIO0"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO1_Rx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"RXIO0": "CHAN2",
+			"RXIO1": "CHAN3",
+			"RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "80e-9",
+        "HorizontalPos": "-1e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO1,RIS,Clock,FALL,HoldTimeRxRising RXIO1",
+                "RXIO1,FALL,Clock,FALL,HoldTimeRxFalling RXIO1"
+            ],
+            "Setuptime": [
+                "RXIO1,RIS,Clock,FALL,SetupTimeRxRising RXIO1",
+                "RXIO1,FALL,Clock,FALL,SetupTimeRxFalling RXIO1"
+            ],
+            "Risetime": [
+                "RXIO1,RiseTimeRx RXIO1"
+            ],
+            "Falltime": [
+                "RXIO1,FallTimeRx RXIO1"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO2_Rx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"RXIO0": "CHAN2",
+			"RXIO1": "CHAN3",
+			"RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "80e-9",
+        "HorizontalPos": "-1e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO2,RIS,Clock,FALL,HoldTimeRxRising RXIO2",
+                "RXIO2,FALL,Clock,FALL,HoldTimeRxFalling RXIO2"
+            ],
+            "Setuptime": [
+                "RXIO2,RIS,Clock,FALL,SetupTimeRxRising RXIO2",
+                "RXIO2,FALL,Clock,FALL,SetupTimeRxFalling RXIO2"
+            ],
+            "Risetime": [
+                "RXIO2,RiseTimeRx RXIO2"
+            ],
+            "Falltime": [
+                "RXIO2,FallTimeRx RXIO2"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO3_Rx_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"RXIO0": "CHAN2",
+			"RXIO1": "CHAN3",
+			"RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "80e-9",
+        "HorizontalPos": "-1e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO3,RIS,Clock,FALL,HoldTimeRxRising RXIO3",
+                "RXIO3,FALL,Clock,FALL,HoldTimeRxFalling RXIO3"
+            ],
+            "Setuptime": [
+                "RXIO3,RIS,Clock,FALL,SetupTimeRxRising RXIO3",
+                "RXIO3,FALL,Clock,FALL,SetupTimeRxFalling RXIO3"
+            ],
+            "Risetime": [
+                "RXIO3,RiseTimeRx RXIO3"
+            ],
+            "Falltime": [
+                "RXIO3,FallTimeRx RXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_All_50": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+			"TXIO0": "CHAN2",
+			"TXIO1": "CHAN3",
+			"TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2,3,4,5,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3.04e-6",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "330e-9",
+        "HorizontalPos": "-1.55e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "350e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+			"TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "TXIO0,Vmax TXIO0",
+                "TXIO1,Vmax TXIO1",
+				"TXIO2,Vmax TXIO2",
+				"TXIO3,Vmax TXIO3",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "TXIO0,Vmin TXIO0",
+                "TXIO1,Vmin TXIO1",
+				"TXIO2,Vmin TXIO2",
+                "TXIO3,Vmin TXIO3",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+				"ChipSelect,Overshoot ChipSelect",
+                "TXIO0,Overshoot TXIO0",
+                "TXIO1,Overshoot TXIO1",
+				"TXIO2,Overshoot TXIO2",
+                "TXIO3,Overshoot TXIO3"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+				"ChipSelect,Undershoot ChipSelect",
+                "TXIO0,Undershoot TXIO0",
+                "TXIO1,Undershoot TXIO1",
+				"TXIO2,Undershoot TXIO2",
+                "TXIO3,Undershoot TXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+ 
+    "SPI_ChipSelect_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,4",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "230e-9",
+        "HorizontalPos": "-1.04e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Risetime": [
+                "ChipSelect,RiseTime ChipSelect"
+            ],
+            "Falltime": [
+                "ChipSelect,FallTime ChipSelect"
+            ],
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,tSLCH ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,tCHSH ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "SPI_CLK_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "35e-9",
+        "HorizontalPos": "-280e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Period Clock"
+            ],
+            "Frequency": [
+                "Clock,Frequency Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ],
+            "Risetime": [
+                "Clock,RiseTime Clock"
+            ],
+            "Falltime": [
+                "Clock,FallTime Clock"
+            ],
+            "PWidth": [
+                "Clock,tCLH Clock"
+            ],
+            "NWidth": [
+                "Clock,tCLL Clock"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L"
+    },
+    "SPI_IO0_Tx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "19e-9",
+        "HorizontalPos": "175e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO0,RIS,Clock,RIS,tCHDX_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tCHDX_Fall TXIO0"
+            ],
+            "Setuptime": [
+                "TXIO0,RIS,Clock,RIS,tDVCH_Rise TXIO0",
+                "TXIO0,FALL,Clock,RIS,tDVCH_Fall TXIO0"
+            ],
+            "Risetime": [
+                "TXIO0,RiseTimeTx TXIO0"
+            ],
+            "Falltime": [
+                "TXIO0,FallTimeTx TXIO0"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "2",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.015",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO1_Tx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "19e-9",
+        "HorizontalPos": "175e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO1,RIS,Clock,RIS,tCHDX_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tCHDX_Fall TXIO1"
+            ],
+            "Setuptime": [
+                "TXIO1,RIS,Clock,RIS,tDVCH_Rise TXIO1",
+                "TXIO1,FALL,Clock,RIS,tDVCH_Fall TXIO1"
+            ],
+            "Risetime": [
+                "TXIO1,RiseTimeTx TXIO1"
+            ],
+            "Falltime": [
+                "TXIO1,FallTimeTx TXIO1"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.015",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO2_Tx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "19e-9",
+        "HorizontalPos": "175e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO2,RIS,Clock,RIS,tCHDX_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tCHDX_Fall TXIO2"
+            ],
+            "Setuptime": [
+                "TXIO2,RIS,Clock,RIS,tDVCH_Rise TXIO2",
+                "TXIO2,FALL,Clock,RIS,tDVCH_Fall TXIO2"
+            ],
+            "Risetime": [
+                "TXIO2,RiseTimeTx TXIO2"
+            ],
+            "Falltime": [
+                "TXIO2,FallTimeTx TXIO2"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "2",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO3_Tx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "EDGE",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "19e-9",
+        "HorizontalPos": "175e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO3,RIS,Clock,RIS,tCHDX_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tCHDX_Fall TXIO3"
+            ],
+            "Setuptime": [
+                "TXIO3,RIS,Clock,RIS,tDVCH_Rise TXIO3",
+                "TXIO3,FALL,Clock,RIS,tDVCH_Fall TXIO3"
+            ],
+            "Risetime": [
+                "TXIO3,RiseTimeTx TXIO3"
+            ],
+            "Falltime": [
+                "TXIO3,FallTimeTx TXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO0_Rx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-330e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO0,RIS,Clock,FALL,HoldTimeRxRising RXIO0",
+                "RXIO0,FALL,Clock,FALL,HoldTimeRxFalling RXIO0"
+            ],
+            "Setuptime": [
+                "RXIO0,RIS,Clock,FALL,SetupTimeRxRising RXIO0",
+                "RXIO0,FALL,Clock,FALL,SetupTimeRxFalling RXIO0"
+            ],
+            "Risetime": [
+                "RXIO0,RiseTimeRx RXIO0"
+            ],
+            "Falltime": [
+                "RXIO0,FallTimeRx RXIO0"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO1_Rx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-300e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "370e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO1,RIS,Clock,FALL,HoldTimeRxRising RXIO1",
+                "RXIO1,FALL,Clock,FALL,HoldTimeRxFalling RXIO1"
+            ],
+            "Setuptime": [
+                "RXIO1,RIS,Clock,FALL,SetupTimeRxRising RXIO1",
+                "RXIO1,FALL,Clock,FALL,SetupTimeRxFalling RXIO1"
+            ],
+            "Risetime": [
+                "RXIO1,RiseTimeRx RXIO1"
+            ],
+            "Falltime": [
+                "RXIO1,FallTimeRx RXIO1"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO2_Rx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-330e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO2,RIS,Clock,FALL,HoldTimeRxRising RXIO2",
+                "RXIO2,FALL,Clock,FALL,HoldTimeRxFalling RXIO2"
+            ],
+            "Setuptime": [
+                "RXIO2,RIS,Clock,FALL,SetupTimeRxRising RXIO2",
+                "RXIO2,FALL,Clock,FALL,SetupTimeRxFalling RXIO2"
+            ],
+            "Risetime": [
+                "RXIO2,RiseTimeRx RXIO2"
+            ],
+            "Falltime": [
+                "RXIO2,FallTimeRx RXIO2"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO3_Rx_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-330e-9",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO3,RIS,Clock,FALL,HoldTimeRxRising RXIO3",
+                "RXIO3,FALL,Clock,FALL,HoldTimeRxFalling RXIO3"
+            ],
+            "Setuptime": [
+                "RXIO3,RIS,Clock,FALL,SetupTimeRxRising RXIO3",
+                "RXIO3,FALL,Clock,FALL,SetupTimeRxFalling RXIO3"
+            ],
+            "Risetime": [
+                "RXIO3,RiseTimeRx RXIO3"
+            ],
+            "Falltime": [
+                "RXIO3,FallTimeRx RXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_All_80": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2,3,4,5,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1e-6",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "230e-9",
+        "HorizontalPos": "-1.04e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "0.9",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "TXIO0,Vmax TXIO0",
+                "TXIO1,Vmax TXIO1",
+                "TXIO2,Vmax TXIO2",
+                "TXIO3,Vmax TXIO3",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "TXIO0,Vmin TXIO0",
+                "TXIO1,Vmin TXIO1",
+                "TXIO2,Vmin TXIO2",
+                "TXIO3,Vmin TXIO3",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "ChipSelect,Overshoot ChipSelect",
+                "TXIO0,Overshoot TXIO0",
+                "TXIO1,Overshoot TXIO1",
+                "TXIO2,Overshoot TXIO2",
+                "TXIO3,Overshoot TXIO3"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "ChipSelect,Undershoot ChipSelect",
+                "TXIO0,Undershoot TXIO0",
+                "TXIO1,Undershoot TXIO1",
+                "TXIO2,Undershoot TXIO2",
+                "TXIO3,Undershoot TXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerWidth": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+
+    "SPI_ChipSelect_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,4",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "174e-9",
+        "HorizontalPos": "-781.9e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Risetime": [
+                "ChipSelect,tR ChipSelect"
+            ],
+            "Falltime": [
+                "ChipSelect,tF ChipSelect"
+            ],
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,tSLCH ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,tCHSH ChipSelect"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_CLK_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "-300e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Period Clock"
+            ],
+            "Frequency": [
+                "Clock,FR1 Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ],
+            "Risetime": [
+                "Clock,tR Clock"
+            ],
+            "Falltime": [
+                "Clock,tF Clock"
+            ],
+            "PWidth": [
+                "Clock,tCLH Clock"
+            ],
+            "NWidth": [
+                "Clock,tCLL Clock"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO0_Tx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "15e-9",
+        "HorizontalPos": "130e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO0,RIS,Clock,RIS,tCHDX TXIO0",
+                "TXIO0,FALL,Clock,RIS,tCHDX TXIO0"
+            ],
+            "Setuptime": [
+                "TXIO0,RIS,Clock,RIS,tDVCH TXIO0",
+                "TXIO0,FALL,Clock,RIS,tDVCH TXIO0"
+            ],
+            "Risetime": [
+                "TXIO0,tR TXIO0"
+            ],
+            "Falltime": [
+                "TXIO0,tF TXIO0"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO1_Tx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "15e-9",
+        "HorizontalPos": "130e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO1,RIS,Clock,RIS,tCHDX TXIO1",
+                "TXIO1,FALL,Clock,RIS,tCHDX TXIO1"
+            ],
+            "Setuptime": [
+                "TXIO1,RIS,Clock,RIS,tDVCH TXIO1",
+                "TXIO1,FALL,Clock,RIS,tDVCH TXIO1"
+            ],
+            "Risetime": [
+                "TXIO1,tR TXIO1"
+            ],
+            "Falltime": [
+                "TXIO1,tF TXIO1"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO2_Tx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "15e-9",
+        "HorizontalPos": "130e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO2,RIS,Clock,RIS,tCHDX TXIO2",
+                "TXIO2,FALL,Clock,RIS,tCHDX TXIO2"
+            ],
+            "Setuptime": [
+                "TXIO2,RIS,Clock,RIS,tDVCH TXIO2",
+                "TXIO2,FALL,Clock,RIS,tDVCH TXIO2"
+            ],
+            "Risetime": [
+                "TXIO2,tR TXIO2"
+            ],
+            "Falltime": [
+                "TXIO2,tF TXIO2"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO3_Tx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "15e-9",
+        "HorizontalPos": "130e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "TXIO3,RIS,Clock,RIS,tCHDX TXIO3",
+                "TXIO3,FALL,Clock,RIS,tCHDX TXIO3"
+            ],
+            "Setuptime": [
+                "TXIO3,RIS,Clock,RIS,tDVCH TXIO3",
+                "TXIO3,FALL,Clock,RIS,tDVCH TXIO3"
+            ],
+            "Risetime": [
+                "TXIO3,tR TXIO3"
+            ],
+            "Falltime": [
+                "TXIO3,tF TXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO0_Rx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-731e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO0,RIS,Clock,FALL,HoldTimeRxRising RXIO0",
+                "RXIO0,FALL,Clock,FALL,HoldTimeRxFalling RXIO0"
+            ],
+            "Setuptime": [
+                "RXIO0,RIS,Clock,FALL,SetupTimeRxRising RXIO0",
+                "RXIO0,FALL,Clock,FALL,SetupTimeRxFalling RXIO0"
+            ],
+            "Risetime": [
+                "RXIO0,tR RXIO0"
+            ],
+            "Falltime": [
+                "RXIO0,tF RXIO0"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO1_Rx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-731e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO1,RIS,Clock,FALL,HoldTimeRxRising RXIO1",
+                "RXIO1,FALL,Clock,FALL,HoldTimeRxFalling RXIO1"
+            ],
+            "Setuptime": [
+                "RXIO1,RIS,Clock,FALL,SetupTimeRxRising RXIO1",
+                "RXIO1,FALL,Clock,FALL,SetupTimeRxFalling RXIO1"
+            ],
+            "Risetime": [
+                "RXIO1,tR RXIO1"
+            ],
+            "Falltime": [
+                "RXIO1,tF RXIO1"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO2_Rx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-731e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO2,RIS,Clock,FALL,HoldTimeRxRising RXIO2",
+                "RXIO2,FALL,Clock,FALL,HoldTimeRxFalling RXIO2"
+            ],
+            "Setuptime": [
+                "RXIO2,RIS,Clock,FALL,SetupTimeRxRising RXIO2",
+                "RXIO2,FALL,Clock,FALL,SetupTimeRxFalling RXIO2"
+            ],
+            "Risetime": [
+                "RXIO2,tR RXIO2"
+            ],
+            "Falltime": [
+                "RXIO2,tF RXIO2"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_IO3_Rx_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "RXIO0": "CHAN2",
+            "RXIO1": "CHAN3",
+            "RXIO2": "CHAN5",
+            "RXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "-731e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "RXIO3,RIS,Clock,FALL,HoldTimeRxRising RXIO3",
+                "RXIO3,FALL,Clock,FALL,HoldTimeRxFalling RXIO3"
+            ],
+            "Setuptime": [
+                "RXIO3,RIS,Clock,FALL,SetupTimeRxRising RXIO3",
+                "RXIO3,FALL,Clock,FALL,SetupTimeRxFalling RXIO3"
+            ],
+            "Risetime": [
+                "RXIO3,tR RXIO3"
+            ],
+            "Falltime": [
+                "RXIO3,tF RXIO3"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "SPI_All_100": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2,3,4,5,6",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "1.5e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "4",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "174e-9",
+        "HorizontalPos": "-781.9e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "TXIO0,Vmax TXIO0",
+                "TXIO1,Vmax TXIO1",
+                "TXIO2,Vmax TXIO2",
+                "TXIO3,Vmax TXIO3",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "TXIO0,Vmin TXIO0",
+                "TXIO1,Vmin TXIO1",
+                "TXIO2,Vmin TXIO2",
+                "TXIO3,Vmin TXIO3",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "TXIO0,Overshoot TXIO0",
+                "TXIO1,Overshoot TXIO1",
+                "TXIO2,Overshoot TXIO2",
+                "TXIO3,Overshoot TXIO3",
+                "ChipSelect,Overshoot ChipSelect"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "TXIO0,Undershoot TXIO0",
+                "TXIO1,Undershoot TXIO1",
+                "TXIO2,Undershoot TXIO2",
+                "TXIO3,Undershoot TXIO3",
+                "ChipSelect,Undershoot ChipSelect"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+
+    "Touch_SPI_IO0_Tx": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "95e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO0,RIS,Clock,RIS,SetupR TXIO0",
+                "TXIO0,FALL,Clock,RIS,SetupF TXIO0"
+            ],
+            "Holdtime": [
+                "TXIO0,RIS,Clock,RIS,HoldR TXIO0",
+                "TXIO0,FALL,Clock,RIS,HoldF TXIO0"
+            ],
+            "Risetime": [
+                "TXIO0,tR TXIO0"
+            ],
+            "Falltime": [
+                "TXIO0,tF TXIO0"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_IO1_Tx": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "95e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO1,RIS,Clock,RIS,SetupR TXIO1",
+                "TXIO1,FALL,Clock,RIS,SetupF TXIO1"
+            ],
+            "Holdtime": [
+                "TXIO1,RIS,Clock,RIS,HoldR TXIO1",
+                "TXIO1,FALL,Clock,RIS,HoldF TXIO1"
+            ],
+            "Risetime": [
+                "TXIO1,tR TXIO1"
+            ],
+            "Falltime": [
+                "TXIO1,tF TXIO1"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_IO2_Tx": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,5",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "95e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO2,RIS,Clock,RIS,SetupR TXIO2",
+                "TXIO2,FALL,Clock,RIS,SetupF TXIO2"
+            ],
+            "Holdtime": [
+                "TXIO2,RIS,Clock,RIS,HoldR TXIO2",
+                "TXIO2,FALL,Clock,RIS,HoldF TXIO2"
+            ],
+            "Risetime": [
+                "TXIO2,tR TXIO2"
+            ],
+            "Falltime": [
+                "TXIO2,tF TXIO2"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_IO3_Tx": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+        },
+        "ChannelsEnabled": "1,6",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "95e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "TXIO3,RIS,Clock,RIS,SetupR TXIO3",
+                "TXIO3,FALL,Clock,RIS,SetupF TXIO3"
+            ],
+            "Holdtime": [
+                "TXIO3,RIS,Clock,RIS,HoldR TXIO3",
+                "TXIO3,FALL,Clock,RIS,HoldF TXIO3"
+            ],
+            "Risetime": [
+                "TXIO3,tR TXIO3"
+            ],
+            "Falltime": [
+                "TXIO3,tF TXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_ChipSelect": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,4",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "110e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,SetupTime ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,HoldTime ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_Clock": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "110e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Period Clock"
+            ],
+            "Frequency": [
+                "Clock,t180a Clock"
+            ],
+            "PWidth": [
+                "Clock,HighTime Clock"
+            ],
+            "NWidth": [
+                "Clock,LowTime Clock"
+            ],
+            "Risetime": [
+                "Clock,tR Clock"
+            ],
+            "Falltime": [
+                "Clock,tF Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_IO_0_1Rx": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,2,3",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "6.45e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "70e-9",
+        "HorizontalPos": "1e-6",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO0,RIS,Clock,FALL,SetupTimeRiseRx RXIO0",
+                "RXIO0,FALL,Clock,FALL,SetupTimeFallRx RXIO0",
+                "RXIO1,RIS,Clock,FALL,SetupTimeRiseRx RXIO1",
+                "RXIO1,FALL,Clock,FALL,SetupTimeFallRx RXIO1"
+            ],
+            "Holdtime": [
+                "RXIO0,RIS,Clock,FALL,HoldTimeRiseRx RXIO0",
+                "RXIO0,FALL,Clock,FALL,HoldTimeFallRx RXIO0",
+                "RXIO1,RIS,Clock,FALL,HoldTimeRiseRx RXIO1",
+                "RXIO1,FALL,Clock,FALL,HoldTimeFallRx RXIO1"
+            ],
+            "Risetime": [
+                "RXIO0,tR RXIO0",
+                "RXIO1,tR RXIO1"
+            ],
+            "Falltime": [
+                "RXIO0,tF RXIO0",
+                "RXIO1,tF RXIO1"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_IO_2_3Rx": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,2,3",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "6.45e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "70e-9",
+        "HorizontalPos": "1e-6",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO2,RIS,Clock,FALL,SetupTimeRiseRx RXIO2",
+                "RXIO2,FALL,Clock,FALL,SetupTimeFallRx RXIO2",
+                "RXIO3,RIS,Clock,FALL,SetupTimeRiseRx RXIO3",
+                "RXIO3,FALL,Clock,FALL,SetupTimeFallRx RXIO3"
+            ],
+            "Holdtime": [
+                "RXIO2,RIS,Clock,FALL,HoldTimeRiseRx RXIO2",
+                "RXIO2,FALL,Clock,FALL,HoldTimeFallRx RXIO2",
+                "RXIO3,RIS,Clock,FALL,HoldTimeRiseRx RXIO3",
+                "RXIO3,FALL,Clock,FALL,HoldTimeFallRx RXIO3"
+            ],
+            "Risetime": [
+                "RXIO2,tR RXIO2",
+                "RXIO3,tR RXIO3"
+            ],
+            "Falltime": [
+                "RXIO2,tF RXIO2",
+                "RXIO3,tF RXIO3"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_IO_1_Rx": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "1.586e-6",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "RXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Setuptime": [
+                "RXIO1,RIS,Clock,FALL,SetupTimeRiseRx RXIO1",
+                "RXIO1,FALL,Clock,FALL,SetupTimeFallRx RXIO1"
+            ],
+            "Holdtime": [
+                "RXIO1,RIS,Clock,FALL,HoldTimeRiseRx RXIO1",
+                "RXIO1,FALL,Clock,FALL,HoldTimeFallRx RXIO1"
+            ],
+            "Risetime": [
+                "RXIO1,tR RXIO1"
+            ],
+            "Falltime": [
+                "RXIO1,tF RXIO1"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_ALL_IO0_IO1": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,2,3,4",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "110e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "TXIO0,Vmax TXIO0",
+                "TXIO1,Vmax TXIO1",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "TXIO0,Vmin TXIO0",
+                "TXIO1,Vmin TXIO1",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "TXIO0,Overshoot TXIO0",
+                "TXIO1,Overshoot TXIO1",
+                "ChipSelect,Overshoot ChipSelect"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "TXIO0,Undershoot TXIO0",
+                "TXIO1,Undershoot TXIO1",
+                "ChipSelect,Undershoot ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_ALL_IO2_IO3": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+        },
+        "ChannelsEnabled": "1,4,5,6",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "110e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "TXIO2,Vmax TXIO2",
+                "TXIO3,Vmax TXIO3",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "TXIO2,Vmin TXIO2",
+                "TXIO3,Vmin TXIO3",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "TXIO2,Overshoot TXIO2",
+                "TXIO3,Overshoot TXIO3",
+                "ChipSelect,Overshoot ChipSelect"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "TXIO2,Undershoot TXIO2",
+                "TXIO3,Undershoot TXIO3",
+                "ChipSelect,Undershoot ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "Touch_SPI_ALL": {
+        "ChannelsNumber": "1,2,3,4,5,6",
+        "ChannelSAsig": {
+           "Clock": "CHAN1",
+            "TXIO0": "CHAN2",
+            "TXIO1": "CHAN3",
+            "ChipSelect": "CHAN4",
+            "TXIO2": "CHAN5",
+            "TXIO3": "CHAN6"
+            
+        },
+        "ChannelsEnabled": "1,2,3,4,5,6",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "3e-6",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "0.9",
+        "TriggerThreshold": "0.9",
+        "HorizontalScale": "110e-9",
+        "HorizontalPos": "440e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "400e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO1": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO0": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO3": [
+                "70",
+                "50",
+                "30"
+            ],
+            "TXIO2": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "TXIO0,Vmax TXIO0",
+                "TXIO1,Vmax TXIO1",
+                "TXIO2,Vmax TXIO2",
+                "TXIO3,Vmax TXIO3",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "TXIO0,Vmin TXIO0",
+                "TXIO1,Vmin TXIO1",
+                "TXIO2,Vmin TXIO2",
+                "TXIO3,Vmin TXIO3",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "TXIO0,Overshoot TXIO0",
+                "TXIO1,Overshoot TXIO1",
+                "TXIO2,Overshoot TXIO2",
+                "TXIO3,Overshoot TXIO3",
+                "ChipSelect,Overshoot ChipSelect"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "TXIO0,Undershoot TXIO0",
+                "TXIO1,Undershoot TXIO1",
+                "TXIO2,Undershoot TXIO2",
+                "TXIO3,Undershoot TXIO3",
+                "ChipSelect,Undershoot ChipSelect"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "ISH_Clock_ChipSelect_25": {
+        "ChannelsNumber": "1,2,3,4",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "MISO": "CHAN4",
+            "MOSI": "CHAN2",
+            "ChipSelect": "CHAN3"
+        },
+        "ChannelsEnabled": "1,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "600e-9",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "3",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "180e-9",
+        "HorizontalPos": "-807.69e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MISO": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MOSI": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Period Clock"
+            ],
+            "Frequency": [
+                "Clock,Frequency Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ],
+            "Risetime": [
+                "Clock,tR Clock",
+                "ChipSelect,tR ChipSelect"
+            ],
+            "Falltime": [
+                "Clock,tF Clock",
+                "ChipSelect,tF ChipSelect"
+            ],
+            "PWidth": [
+                "Clock,HighTime Clock"
+            ],
+            "NWidth": [
+                "Clock,LowTime Clock"
+            ],
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,tSLCH ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,tCHSH ChipSelect"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "ISH_IO0_Tx_25": {
+        "ChannelsNumber": "1,2,3,4",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "MISO": "CHAN4",
+            "MOSI": "CHAN2",
+            "ChipSelect": "CHAN3"
+        },
+        "ChannelsEnabled": "1,2,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "600e-9",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "3",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "180e-9",
+        "HorizontalPos": "-807.69e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MISO": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MOSI": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "MOSI,RIS,Clock,RIS,t185p_r MOSI",
+                "MOSI,FALL,Clock,RIS,t185p_f MOSI"
+            ],
+            "Setuptime": [
+                "MOSI,RIS,Clock,RIS,t184p_r MOSI",
+                "MOSI,FALL,Clock,RIS,t184p_f MOSI"
+            ],
+            "Risetime": [
+                "MOSI,tR MOSI"
+            ],
+            "Falltime": [
+                "MOSI,tF MOSI"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "ISH_All_25": {
+        "ChannelsNumber": "1,2,3,4",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "MISO": "CHAN4",
+            "MOSI": "CHAN2",
+            "ChipSelect": "CHAN3"
+        },
+        "ChannelsEnabled": "1,2,3",
+        "TriggerMode": "PWIDTH",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "600e-9",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "3",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "180e-9",
+        "HorizontalPos": "-807.69e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MISO": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MOSI": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "MOSI,Vmax MOSI",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "MOSI,Vmin MOSI",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "MOSI,Overshoot MOSI"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "MOSI,Undershoot MOSI"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+
+    "gSPI_Clock_ChipSelect_25": {
+        "ChannelsNumber": "1,2,3,4",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "MISO": "CHAN3",
+            "MOSI": "CHAN2",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,4",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "600e-9",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "50e-9",
+        "HorizontalPos": "166.91e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MISO": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MOSI": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Period": [
+                "Clock,Period Clock"
+            ],
+            "Frequency": [
+                "Clock,Frequency Clock"
+            ],
+            "Dutycycle": [
+                "Clock,DutyCycle Clock"
+            ],
+            "Risetime": [
+                "Clock,tR Clock",
+                "ChipSelect,tR ChipSelect"
+            ],
+            "Falltime": [
+                "Clock,tF Clock",
+                "ChipSelect,tF ChipSelect"
+            ],
+            "PWidth": [
+                "Clock,HighTime Clock"
+            ],
+            "NWidth": [
+                "Clock,LowTime Clock"
+            ],
+            "Setuptime": [
+                "ChipSelect,FALL,Clock,RIS,t186o ChipSelect"
+            ],
+            "Holdtime": [
+                "ChipSelect,RIS,Clock,FALL,t187o ChipSelect"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "gSPI_IO0_Tx_25": {
+        "ChannelsNumber": "1,2,3,4",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "MISO": "CHAN3",
+            "MOSI": "CHAN2",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "POS",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "600e-9",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "2",
+        "TriggerLevel": "1.26",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "20e-9",
+        "HorizontalPos": "25.27e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MISO": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MOSI": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Holdtime": [
+                "MOSI,RIS,Clock,RIS,t185o_r MOSI",
+                "MOSI,FALL,Clock,RIS,t185o_f MOSI"
+            ],
+            "Setuptime": [
+                "MOSI,RIS,Clock,RIS,t184o_r MOSI",
+                "MOSI,FALL,Clock,RIS,t184o_f MOSI"
+            ],
+            "Risetime": [
+                "MOSI,tR MOSI"
+            ],
+            "Falltime": [
+                "MOSI,tF MOSI"
+            ]
+        },
+        "TriggerSlope": "POS",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    },
+    "gSPI_All_25": {
+        "ChannelsNumber": "1,2,3,4",
+        "ChannelSAsig": {
+            "Clock": "CHAN1",
+            "MISO": "CHAN3",
+            "MOSI": "CHAN2",
+            "ChipSelect": "CHAN4"
+        },
+        "ChannelsEnabled": "1,2,4",
+        "TriggerMode": "EDGE",
+        "TriggerPolarity": "NEG",
+        "TriggerOnDirection": "GTHAN",
+        "TriggerPoint": "EPULSE",
+        "TriggerTime": "600e-9",
+        "SeqTriggerParams": "L",
+        "TriggerWidth": "3e-6",
+        "MeasOnAllEdgesEnabled": "ON",
+        "TriggerSource": "1",
+        "TriggerLevel": "1.65",
+        "TriggerThreshold": "1.65",
+        "HorizontalScale": "40e-9",
+        "HorizontalPos": "122.69e-9",
+        "AcqMode": "RTIMe",
+        "SegmentsNumber": "10",
+        "SampleRate": "20e9",
+        "Interpolate": "OFF",
+        "VerticalScale": "300e-3",
+        "VerticalOffset": "900e-3",
+        "ThresholdUnit": "PERCENT",
+        "MeasThreshold": {
+            "Clock": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MISO": [
+                "70",
+                "50",
+                "30"
+            ],
+            "MOSI": [
+                "70",
+                "50",
+                "30"
+            ],
+            "ChipSelect": [
+                "70",
+                "50",
+                "30"
+            ]
+        },
+        "Measurements": {
+            "Vmax": [
+                "MOSI,Vmax MOSI",
+                "Clock,Vmax Clock",
+                "ChipSelect,Vmax ChipSelect"
+            ],
+            "Vmin": [
+                "MOSI,Vmin MOSI",
+                "Clock,Vmin Clock",
+                "ChipSelect,Vmin ChipSelect"
+            ],
+            "Overshoot": [
+                "Clock,Overshoot Clock",
+                "MOSI,Overshoot MOSI"
+            ],
+            "Undershoot": [
+                "Clock,Undershoot Clock",
+                "MOSI,Undershoot MOSI"
+            ]
+        },
+        "TriggerSlope": "NEG",
+        "TriggerSeqMode": "PWIDTH",
+        "TriggerSource1": "4",
+        "TriggerSource2": "3",
+        "TriggerLevel1": "1.65",
+        "TriggerLevel2": "3.12",
+        "TriggerPolarity1": "NEG",
+        "TriggerPolarity2": "POS",
+        "TriggerOnDirection1": "GTHAN",
+        "TriggerOnDirection2": "LTHAN",
+        "TriggerPoint1": "EPULSE",
+        "TriggerPoint2": "EPULSE",
+        "TriggerTime1": "2.79e-6",
+        "TriggerTime2": "20e-9"
+    }
+}

@@ -1,0 +1,28 @@
+<Project name="HSPI_Driver" id="c_hspi_driver_22106" >
+<ServerUrl>https://amrprotex007.devtools.intel.com</ServerUrl>
+<LastAnalyzed>03 Mar, 2022 07:18:50 PM</LastAnalyzed>
+<ScanFileInfo>
+	<Analyzed>52</Analyzed>
+	<Skipped>2</Skipped>
+	<PendingID>0</PendingID>
+	<NoDiscoveries>38</NoDiscoveries>
+	<Declared>0</Declared>
+	<Disapproved>0</Disapproved>
+</ScanFileInfo>
+<Components>
+	<DiscoveredComponents>59</DiscoveredComponents>
+</Components>
+<BOM>
+	<TotalComponents>6</TotalComponents>
+	<TotalLicenses>5</TotalLicenses>
+	<LicenseList>
+		<License>Microsoft Public License</License>
+		<License>Intel OBL Software License Agreement (OEM/IHV/ISV Distribution amp; Single User) (v. 11.2.2017)</License>
+		<License>Microsoft Visual Studio 2017 Enterprise, Professional, Test Professional and Trial Edition</License>
+		<License>Microsoft Windows 10 ADK HLK WDK Software License</License>
+	</LicenseList>
+	<PendingReview>0</PendingReview>
+	<LicenseViolations>0</LicenseViolations>
+</BOM>
+</Project>
+

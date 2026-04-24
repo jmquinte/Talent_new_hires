@@ -1,0 +1,201 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 2017-2019 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+;
+;
+; IntelQuickSPI.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=HIDClass
+ClassGuid={745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Provider=%INTEL%
+DriverVer = 03/03/2022,4.0.0.30
+CatalogFile=IntelQuickSPI.cat
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[SourceDisksFiles]
+IntelQuickSPI.sys  = 1,,
+
+;*****************************************
+; IntelQuickSPI  Install Section
+;*****************************************
+
+[Manufacturer]
+%StdMfg%=Standard,NTamd64.10.0...21354
+
+
+
+;---Separate section to setup filter filters on 19H1 and later OS builds
+[Standard.NTamd64.10.0...21354]
+%IntelQuickSPI.DeviceDescP1%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_7A50		; ADL-LP IP FPGA Port #1
+%IntelQuickSPI.DeviceDescP1%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_51D0		; ADL-LP/RPL-P/Px Port #1
+;%IntelQuickSPI.DeviceDescP1%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_7AD8		; ADL-H  Port #1
+%IntelQuickSPI.DeviceDescP1%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_54D0		; ADL-N  Port #1
+%IntelQuickSPI.DeviceDescP1%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_7A58		; RPL-S/RPL-SBGA  Port #1
+%IntelQuickSPI.DeviceDescP1%=IntelQuickSPI_Device_MTL_Cobalt, PCI\VEN_8086&DEV_7E49		; MTL 0.8 Model Port #1 Simics
+%IntelQuickSPI.DeviceDescP1%=IntelQuickSPI_Device_MTL_Cobalt, PCI\VEN_8086&DEV_7E48		; MTL 
+
+
+%IntelQuickSPI.DeviceDescP2%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_7A51		; ADL-LP IP FPGA Port #2
+%IntelQuickSPI.DeviceDescP2%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_51D1		; ADL-LP/RPL-P/Px Port #2
+;%IntelQuickSPI.DeviceDescP2%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_7AD9		; ADL-H  Port #2
+%IntelQuickSPI.DeviceDescP2%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_54D1		; ADL-N  Port #2
+%IntelQuickSPI.DeviceDescP2%=IntelQuickSPI_Device_ADL_Cobalt, PCI\VEN_8086&DEV_7A59		; RPL-S/RPL-SBGA  Port #2
+%IntelQuickSPI.DeviceDescP2%=IntelQuickSPI_Device_MTL_Cobalt, PCI\VEN_8086&DEV_7E4B		; MTL 0.8 Model Port #2 Simics
+%IntelQuickSPI.DeviceDescP2%=IntelQuickSPI_Device_MTL_Cobalt, PCI\VEN_8086&DEV_7E4A		; MTL 
+
+
+;================ Cobalt OS  and above ======================
+[IntelQuickSPI_Device_ADL_Cobalt.NT]
+CopyFiles=Drivers_Dir
+
+[IntelQuickSPI_Device_ADL_Cobalt.NT.Filters]  
+AddFilter = mshidkmdf, 0, HidLevelSection_ADL
+
+[HidLevelSection_ADL]
+FilterLevel="HidLevel"
+
+[IntelQuickSPI_Device_ADL_Cobalt.NT.HW]
+AddReg=IntelQuickSPI_Device_ADL.NT.AddReg
+AddReg=IntelQuickSPI_Device_Filters_ADL.AddReg
+;Include=pci.inf
+;Needs=PciD3ColdSupported
+Include = input.inf
+Needs = WakeScreenOnTouch.HW
+
+
+[IntelQuickSPI_Device_Filters_ADL.AddReg]
+HKR,,UpperFilterLevels,%REG_MULTI_SZ%,"GpuLevel","HidLevel"
+HKR,,UpperFilterDefaultLevel,,"HidLevel" 
+
+[IntelQuickSPI_Device_ADL.NT.AddReg]   
+HKR,,"EnhancedPowerManagementEnabled", %REG_DWORD%, 1
+HKR,,"DeviceResetNotificationEnabled", %REG_DWORD%, 1
+HKR, Interrupt Management,,               0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties,, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported, %REG_DWORD%, 1
+HKR,, ADLA1Platf, %REG_DWORD%, 1
+HKR,,"UseD3HotPowerPolicy", %REG_DWORD%,1
+
+;-------------- Service installation
+[IntelQuickSPI_Device_ADL_Cobalt.NT.Services]
+AddService = IntelQuickSPI,%SPSVCINST_ASSOCSERVICE%, IntelQuickSPI_Service_Inst, IntelQuickSPI_Logging
+
+;================ Cobalt OS  and MTL above ======================
+[IntelQuickSPI_Device_MTL_Cobalt.NT]
+CopyFiles=Drivers_Dir
+
+[IntelQuickSPI_Device_MTL_Cobalt.NT.Filters]  
+AddFilter = mshidkmdf, 0, HidLevelSection_MTL
+
+[HidLevelSection_MTL]
+FilterLevel="HidLevel"
+
+[IntelQuickSPI_Device_MTL_Cobalt.NT.HW]
+AddReg=IntelQuickSPI_Device_MTL.NT.AddReg
+AddReg=IntelQuickSPI_Device_Filters_MTL.AddReg
+;Include=pci.inf
+;Needs=PciD3ColdSupported
+Include = input.inf
+Needs = WakeScreenOnTouch.HW
+
+[IntelQuickSPI_Device_Filters_MTL.AddReg]
+HKR,,UpperFilterLevels,%REG_MULTI_SZ%,"GpuLevel","HidLevel"
+HKR,,UpperFilterDefaultLevel,,"HidLevel" 
+
+[IntelQuickSPI_Device_MTL.NT.AddReg]   
+HKR,,"EnhancedPowerManagementEnabled",    %REG_DWORD%, 1
+HKR,,"DeviceResetNotificationEnabled", %REG_DWORD%,1
+HKR, Interrupt Management,,               0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties,, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported, %REG_DWORD%, 1
+HKR,,"UseD3HotPowerPolicy", %REG_DWORD%,1
+
+
+;-------------- Service installation
+[IntelQuickSPI_Device_MTL_Cobalt.NT.Services]
+AddService = IntelQuickSPI,%SPSVCINST_ASSOCSERVICE%, IntelQuickSPI_Service_Inst, IntelQuickSPI_Logging
+
+[Drivers_Dir]
+IntelQuickSPI.sys
+
+; -------------- IntelQuickSPI driver install sections
+[IntelQuickSPI_Service_Inst]
+DisplayName    = %IntelQuickSPI.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START 
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\IntelQuickSPI.sys
+LoadOrderGroup = Extended Base
+AddReg=IntelQuickSPI_Service_Inst.AddReg
+
+[IntelQuickSPI_Service_Inst.AddReg]
+HKR,Parameters,LogPages,%REG_DWORD%,0x10
+HKR,Parameters,VerboseOn,%REG_DWORD%,0x1
+
+[IntelQuickSPI_Logging]
+AddReg = IntelQuickSPI.ETW.addreg, IntelQuickSPI.EventLog.addreg
+
+[IntelQuickSPI.ETW.addreg]
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Publishers\{937AD94E-CA8D-4B8E-8143-3FCE4ACCB8CB}",, 0x0, "IntelQuickSPI"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Publishers\{937AD94E-CA8D-4B8E-8143-3FCE4ACCB8CB}","ResourceFileName",0x00020000,"%13%\IntelQuickSPI.sys"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Publishers\{937AD94E-CA8D-4B8E-8143-3FCE4ACCB8CB}","MessageFileName",0x00020000,"%13%\IntelQuickSPI.sys"
+HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Publishers\{937AD94E-CA8D-4B8E-8143-3FCE4ACCB8CB}","Enabled",%REG_DWORD%,1
+
+[IntelQuickSPI.EventLog.addreg]
+HKR, , EventMessageFile, 0x00020000, %EventLogMessageDllPath%
+HKR, , TypesSupported,   %REG_DWORD%, 7
+
+;
+;--- IntelQuickSPI_Device WDF Coinstaller installation ------
+;
+[IntelQuickSPI_Device_ADL_Cobalt.NT.Wdf]
+KmdfService = IntelQuickSPI, IntelQuickSPI_wdfsect
+
+[IntelQuickSPI_Device_MTL_Cobalt.NT.Wdf]
+KmdfService = IntelQuickSPI, IntelQuickSPI_wdfsect
+
+
+[IntelQuickSPI_wdfsect]
+KmdfLibraryVersion = 1.11
+
+
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+INTEL = "Intel"
+StdMfg = "(Standard system devices)"
+DiskId1 = "Intel QuickSPI Installation Disk #1"
+IntelQuickSPI.DeviceDescP1 = "Intel QuickSPI Host Controller - Port #1"
+IntelQuickSPI.DeviceDescP2 = "Intel QuickSPI Host Controller - Port #2"
+IntelQuickSPI.SVCDESC = "Intel QuickSPI Host Controller"
+EventLogMessageDllPath	= "%%SystemRoot%%\System32\IoLogMsg.dll;%13%\IntelQuickSPI.sys"
+
+
+REG_BINARY          = 0x00000001
+REG_MULTI_SZ		= 0x00010000
+REG_DWORD           = 0x00010001
