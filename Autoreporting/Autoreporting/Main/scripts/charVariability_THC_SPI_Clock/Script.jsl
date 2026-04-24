@@ -1,0 +1,97 @@
+script = Function( { dt, pntr },
+	{ Default Local },
+
+	/* ------------------------------------------------------------------ */
+	/*  charVariability_THC_SPI_Clock                                       */
+	/*  Generates a Variability Chart for the Clock signal of THC_SPI       */
+	/*  - Y     : mean measurement value (numeric)                          */
+	/*  - X     : pch_vid  x  vt_corner                                     */
+	/*  - By    : Signal  x  Measurement                                    */
+	/*  - Limits: spec_min / spec_max read dynamically from each row group  */
+	/* ------------------------------------------------------------------ */
+
+	/* --- Column type coercion --- */
+	CM:col_to_num( dt, "mean"     );
+	CM:col_to_num( dt, "spec_min" );
+	CM:col_to_num( dt, "spec_max" );
+
+	/* --- Filter: keep only Clock signal --- */
+	dt << Select Where( :Signal == "Clock" );
+	clock_dt = dt << Subset(
+		Output Table( "Clock_Data" ),
+		Selected Rows( 1 ),
+		Invisible
+	);
+	dt << Clear Select;
+
+	If( N Rows( clock_dt ) == 0,
+		Throw( "[charVariability_THC_SPI_Clock] No rows found for Signal = 'Clock'" )
+	);
+
+	/* --- Helper: safe reference line (skips "n/a" or missing values) --- */
+	_add_refline = Function( { sb, val_col, label, color },
+		{ Default Local },
+		val = Try( Num( Column( clock_dt, val_col )[1] ), . );
+		If( !Is Missing( val ),
+			sb << Add Ref Line(
+				val,
+				"Dashed",
+				color,
+				label || " " || Char( Format( val, "Engineering SI", 3 ) ),
+				3
+			)
+		);
+	);
+
+	/* --- Build Variability Chart --- */
+	vc = clock_dt << Variability Chart(
+		Y( :mean ),
+		X( :pch_vid, :vt_corner ),
+		Std Dev Chart( 0 ),
+		By( :Signal, :Measurement ),
+		SendToReport(
+			Dispatch(
+				{},
+				"2",
+				ScaleBox,
+				{
+					Label Row( { Show Major Grid( 1 ), Show Minor Grid( 1 ) } ),
+					Add Ref Line(
+						Num( Column( clock_dt, "spec_min" )[1] ),
+						"Dashed",
+						"Medium Dark Red",
+						"MinSpec " || Char( Format( Num( Column( clock_dt, "spec_min" )[1] ), "Engineering SI", 3 ) ),
+						3
+					),
+					Add Ref Line(
+						Num( Column( clock_dt, "spec_max" )[1] ),
+						"Dashed",
+						"Medium Dark Red",
+						"MaxSpec " || Char( Format( Num( Column( clock_dt, "spec_max" )[1] ), "Engineering SI", 3 ) ),
+						3
+					)
+				}
+			),
+			Dispatch(
+				{},
+				"Variability Chart",
+				FrameBox,
+				{
+					Marker Size( 5 ),
+					Row Legend(
+						vt_corner,
+						Color( 1 ),
+						Color Theme( "JMP Default" ),
+						Marker( 0 ),
+						Marker Theme( "" ),
+						Continuous Scale( 0 ),
+						Reverse Scale( 0 ),
+						Excluded Rows( 0 )
+					)
+				}
+			)
+		)
+	);
+
+	Return( vc );
+);

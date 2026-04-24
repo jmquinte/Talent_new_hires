@@ -1,0 +1,223 @@
+//!
+ClearSymbols();
+ClearLog();
+NamesDefaultToHere( 1 );
+pref( ODBC Hide Connection String( 1 ) );
+
+/* ========================================================================
+   main_THC_SPI.jsl — Fully Automated THC_SPI Electrical Validation Report
+   ========================================================================
+   Usage:
+     Open this file in JMP from the Main/ folder.
+     It will:
+       1. Prompt ONCE for the input CSV file
+       2. Apply THC_SPI / SIV / Quad / Single filters automatically
+       3. Run Clock, DataLines, and ChipSelect variability charts
+       4. Export all charts to a dated .pptx folder next to the CSV
+   ======================================================================== */
+
+/* -----------------------------------------------------------------------
+   PATH VARIABLES  (identical to main.jsl — file must live in Main/)
+   ----------------------------------------------------------------------- */
+Global = NewNamespace( "Global Scope" );
+
+Global:MAIN_PATH = SetPathVariable( "MAIN_PATH", GetDefaultDirectory()   );
+Global:COMP_PATH = SetPathVariable( "COMP_PATH", "$MAIN_PATH/components" );
+Global:HELP_PATH = SetPathVariable( "HELP_PATH", "$MAIN_PATH/helpers"    );
+Global:METH_PATH = SetPathVariable( "METH_PATH", "$MAIN_PATH/methods"    );
+Global:CONF_PATH = SetPathVariable( "CONF_PATH", "$MAIN_PATH/config"     );
+Global:SCPT_PATH = SetPathVariable( "SCPT_PATH", "$MAIN_PATH/scripts"    );
+Global:CMMN_PATH = SetPathVariable( "CMMN_PATH", "$MAIN_PATH/common"     );
+Global:PRFL_PATH = SetPathVariable( "PRFL_PATH", "$MAIN_PATH/profiles"   );
+
+/* -----------------------------------------------------------------------
+   LIBRARIES  (only methods + helpers, no GUI class elements needed)
+   ----------------------------------------------------------------------- */
+/* DB namespace  — needed for DB:get_configs() used in PPTX export */
+DB = NewNamespace( "Section Database Scope" );
+Include( "$METH_PATH/Section_DB_methods.jsl"      );
+Include( "$HELP_PATH/Section_DB_helpers.jsl"      );
+
+/* SC namespace  — needed for SC:execute_jsl / SC:get_ext_files */
+SC = NewNamespace( "Section Scripts Scope" );
+Include( "$METH_PATH/Section_Scripts_methods.jsl" );
+Include( "$HELP_PATH/Section_Scripts_helpers.jsl" );
+
+/* FL namespace  — needed for FL:filter_engine */
+FL = NewNamespace( "Section Filters Scope" );
+Include( "$METH_PATH/Section_Filters_methods.jsl" );
+Include( "$HELP_PATH/Section_Filters_helpers.jsl" );
+
+/* CM namespace  — common utilities (CM:col_to_num, CM:parse_XML, …) */
+Include( "$CMMN_PATH/common.jsl" );
+
+/* ========================================================================
+   STEP 1 — Select CSV
+   ======================================================================== */
+print( "=== THC_SPI Auto-Report: Step 1 — Loading CSV ===" );
+
+csv_path = Pick File(
+	"Select THC_SPI CSV file",
+	{ "CSV Files|*.csv", "All Files|*.*" }
+);
+
+If( csv_path == "" | Is Missing( csv_path ),
+	Throw( "[main_THC_SPI] No file selected — execution cancelled." )
+);
+
+dt = Open(
+	csv_path,
+	Invisible,
+	Worksheet Settings( Suppress Empty Columns( 0 ) )
+);
+
+Try( dt << Set Name( "Data" ) );
+Try( Column( dt, "isValid" ) << Data Type( Character ) );
+
+print( "CSV loaded: " || csv_path );
+print( "Total rows: " || Char( N Rows( dt ) ) );
+
+/* ========================================================================
+   STEP 2 — Apply THC_SPI filters automatically
+   Mirrors FL:filter_engine logic: intersecting row selections per filter
+   ======================================================================== */
+print( "=== Step 2 — Applying filters ===" );
+
+/* Build filters associative array (same structure as profile.json FILTERS) */
+filters = [ => ];
+filters[ "1" ] = [ => ];   filters[ "1" ][ "interface_name" ] = { "THC_SPI" };
+filters[ "2" ] = [ => ];   filters[ "2" ][ "discipline"      ] = { "SIV"     };
+filters[ "3" ] = [ => ];   filters[ "3" ][ "mode"            ] = { "Quad"    };
+filters[ "4" ] = [ => ];   filters[ "4" ][ "data_rate"       ] = { "Single"  };
+
+FL:filter_engine( dt, filters );
+
+subset = dt << Subset(
+	Output Table( "Subset" ),
+	Selected Rows( 1 ),
+	Selected Columns( 0 ),
+	Invisible
+);
+dt << Clear Select;
+
+n_rows = N Rows( subset );
+print( "Rows after filtering: " || Char( n_rows ) );
+
+If( n_rows == 0,
+	Throw(
+		"[main_THC_SPI] Filter returned 0 rows.\!n" ||
+		"Verify the CSV contains: interface_name=THC_SPI, discipline=SIV, " ||
+		"mode=Quad, data_rate=Single."
+	)
+);
+
+/* ========================================================================
+   STEP 3 — Run analysis scripts and accumulate chart pointers
+   ======================================================================== */
+print( "=== Step 3 — Running analysis scripts ===" );
+
+analysis_scripts = {
+	"charVariability_THC_SPI_Clock",
+	"charVariability_THC_SPI_DataLines",
+	"charVariability_THC_SPI_CS"
+};
+
+pntr = [ => ];
+
+For( i = 1, i <= NItems( analysis_scripts ), i++,
+	dir = analysis_scripts[ i ];
+	print( "  Running: " || dir );
+	files = SC:get_ext_files( dir, { ".jsl" } );
+	If( NItems( files ) > 0,
+		pntr = SC:execute_jsl( subset, dir, files[ 1 ], pntr );
+	);
+);
+
+print( "Charts generated: " || Char( NItems( pntr << GetKeys ) ) );
+
+/* ========================================================================
+   STEP 4 — Derive output folder from CSV path (no user prompt needed)
+   ======================================================================== */
+print( "=== Step 4 — Preparing output folder ===" );
+
+/* Normalize to forward slashes for path manipulation */
+csv_norm = Substitute( csv_path, "\", "/" );
+
+/* Extract directory: everything up to and including the last "/" */
+last_slash = 0;
+For( k = Length( csv_norm ), k >= 1, k--,
+	If( Substr( csv_norm, k, 1 ) == "/",
+		last_slash = k;
+		k = -1;   /* break */
+	);
+);
+csv_dir = Substr( csv_norm, 1, last_slash );   /* includes trailing "/" */
+
+/* Build date-stamped subfolder: THC_SPI_Report_YYYY-MM-DD/ */
+today   = Format( Today(), "yyyy-mm-dd" );
+out_dir = csv_dir || "THC_SPI_Report_" || today || "/";
+
+If( !Directory Exists( out_dir ),
+	Create Directory( out_dir )
+);
+
+out_dir_win = ConvertFilePath( out_dir, Windows );
+print( "Output folder: " || out_dir );
+
+/* ========================================================================
+   STEP 5 — Export to PPTX
+   Same logic as save_as_pptx/Script.jsl, fully automated
+   ======================================================================== */
+print( "=== Step 5 — Exporting to PPTX ===" );
+
+path_script = "$SCPT_PATH/save_as_pptx/script.vbs";
+path_script  = ConvertFilePath( path_script, Windows );
+
+configs = DB:get_configs();
+
+/* Extract metadata from first data row for slide title */
+product_str  = Try( Char( Column( subset, "product_name" )[1] ),   "Nova Lake" );
+stepping_str = Try( Char( Column( subset, "pch_stepping" )[1] ),   "A0"        );
+freq_str     = Try( Char( Column( subset, "data_rate"    )[1] ),   "Single"    );
+
+/* Build slide list */
+slides = {};
+slides[ 1 ] = CM:generate_slidetitle(
+	"THC_SPI Electrical Validation",
+	product_str || " | Stepping: " || stepping_str ||
+	" | Interface: THC_SPI 42 MHz Quad | Generated: " || today
+);
+
+order = pntr << GetKeys;
+For( i = 1, i <= NItems( order ), i++,
+	img_name = order[ i ] || ".jpg";
+	pntr[ order[ i ] ] << Save Capture( out_dir_win || img_name, "JPG" );
+	slides[ i + 1 ] = CM:generate_slide(
+		order[ i ],
+		configs[ "description" ],
+		img_name
+	);
+);
+
+/* Generate XML manifest for VBS script */
+presentation = [ => ];
+presentation[ "PRESENTATION" ] = slides;
+xml = CM:parse_XML( presentation, "" );
+Save Text File( out_dir_win || "test.xml", xml );
+
+/* Invoke VBS to assemble the PPTX */
+options = path_script || " " || out_dir_win;
+rp = RunProgram(
+	Executable( "CSCRIPT.EXE" ),
+	Options( options ),
+	Read Function( "text" )
+);
+print( rp );
+
+/* ========================================================================
+   DONE
+   ======================================================================== */
+print( "============================================"      );
+print( "=== THC_SPI Report complete!             ===" );
+print( "=== Output: " || out_dir                         );
+print( "============================================"      );

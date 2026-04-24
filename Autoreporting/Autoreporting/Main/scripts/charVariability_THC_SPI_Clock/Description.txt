@@ -1,0 +1,17 @@
+Variability chart for THC_SPI Clock signal measurements (NVL-Hx / SIV).
+
+Signals covered : Clock
+Measurements    : tF, tR, DutyCycle, LowTime, HighTime, Period, t180a (Frequency)
+
+Data columns used from CSV:
+  Y-axis  -> :mean  (converted to numeric)
+  X-axis  -> :pch_vid, :vt_corner
+  By      -> :Signal, :Measurement
+  Limits  -> :spec_min  / :spec_max  (read dynamically per measurement)
+             "n/a" values are treated as no-limit (no reference line added)
+
+Requirements:
+  - CSV must contain columns: Signal, Measurement, pch_vid, vt_corner,
+    mean, spec_min, spec_max
+  - Filter the data to Signal = "Clock" before running this script,
+    OR let the script filter internally (it does so automatically).

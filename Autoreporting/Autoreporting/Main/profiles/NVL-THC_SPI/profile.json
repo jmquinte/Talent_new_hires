@@ -1,0 +1,25 @@
+{
+    "OBJECT": {
+        "DSN": "Local",
+        "Obj": "",
+        "Schema": "",
+        "Type": "Local"
+    },
+    "PREFILTERS": {
+        "Date": [],
+        "Filter": null,
+        "Interfaces": ["THC_SPI"]
+    },
+    "FILTERS": {
+        "1": {"interface_name": ["THC_SPI"]},
+        "2": {"discipline":     ["SIV"]},
+        "3": {"mode":           ["Quad"]},
+        "4": {"data_rate":      ["Single"]}
+    },
+    "SCRIPTS": [
+        "charVariability_THC_SPI_Clock",
+        "charVariability_THC_SPI_DataLines",
+        "charVariability_THC_SPI_CS",
+        "save_as_pptx"
+    ]
+}

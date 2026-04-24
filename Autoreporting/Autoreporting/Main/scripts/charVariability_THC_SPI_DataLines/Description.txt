@@ -1,0 +1,16 @@
+Variability chart for THC_SPI Data Lines (IO0-IO3) measurements (NVL-Hx / SIV).
+
+Signals covered : TXIO0, TXIO1, TXIO2, TXIO3
+Measurements    : tF, tR, HoldF, HoldR, SetupF, SetupR
+
+Data columns used from CSV:
+  Y-axis  -> :mean  (converted to numeric)
+  X-axis  -> :pch_vid, :vt_corner
+  By      -> :Signal, :Measurement
+  Limits  -> :spec_min  / :spec_max  (read dynamically per measurement group)
+             "n/a" values are treated as no-limit (no reference line added)
+
+Requirements:
+  - CSV must contain columns: Signal, Measurement, pch_vid, vt_corner,
+    mean, spec_min, spec_max
+  - The script automatically filters rows where Signal starts with "TXIO".
