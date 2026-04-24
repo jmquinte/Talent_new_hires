@@ -1,0 +1,69 @@
+/*  Section's NAMESPACE: SC  */
+SC = NewNameSpace( "Section Scripts Scope" );
+/*  Methods and Helpers libraries  */
+Include( "$METH_PATH/Section_Scripts_methods.jsl" );
+Include( "$HELP_PATH/Section_Scripts_helpers.jsl" );
+/*  Components declaration  */
+
+print( "Section Scripts components ready" );
+
+// Upper section
+// - Script Selection
+SC:cb_scripts 		= ComboBox( {} );
+SC:bb_add 			= ButtonBox( "Add script" );
+SC:bb_add_new 		= ButtonBox( "Add new script" );
+// Mid section
+// - Script Description
+SC:tb_description 	= TextBox( "Script's description" , << SetWrap(200), << SetWidth(250), << BackgroundColor( "white" ) );
+SC:img_description 	= PictureBox();
+// Bottom section
+// - Script Orchestrator
+SC:lb_scripts 		= ListBox( {} , Width(100), NLines(10) );
+SC:bb_delete 		= ButtonBox( "Delete" );
+SC:bb_delete_a 		= ButtonBox( "Delete All" );
+SC:bb_run 			= ButtonBox( "Run" );
+
+// - Description If Box
+SC:ib_description = IfBox( 1,
+	VListBox(
+		TextBox( "Preview" ),
+		SC:img_description
+	)
+);
+
+// Section
+SC:Section = PanelBox(
+	"Script Flow",
+	/* Upper Section */
+	HListBox(
+		Align(Center),
+		SpacerBox( Size(20,20) ),
+		TextBox( "Scripts" ),
+		SC:cb_scripts,
+		SpacerBox( Size(20,20) ),
+		SC:bb_add,
+		SC:bb_add_new;
+	),
+	/* Mid Section */
+	VListBox(
+		TextBox( "Script Description" ),
+		SpacerBox( Size(10,10) ),
+		SC:tb_description,
+		SpacerBox( Size(10,10) ),
+		SC:ib_description
+	),
+	/* Bottom Section */
+	HListBox(
+		Align( Center ),
+		VListBox(
+			TextBox( "Scripts Added" ),
+			SpacerBox( Size(10,10) ),
+			SC:lb_scripts
+		),
+		VListBox(
+			SC:bb_delete,
+			SC:bb_delete_a,
+			SC:bb_run
+		)
+	)
+);

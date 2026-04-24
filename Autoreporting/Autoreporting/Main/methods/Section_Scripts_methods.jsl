@@ -1,0 +1,91 @@
+/*  Using NAMESPACE: SC  */
+SC = Namespace( "Section Scripts Scope" );
+/*  Methods declaration  */
+
+print( "Section Scripts methods ready" );
+
+//Start:
+
+// -->
+SC:init_section = Function( { },
+	{ Default Local },
+	/* Updates scripts list */
+	SC:update_scripts_list();
+	SC:update_description();
+	/* Callbacks assembly */
+	SC:cb_scripts 	<< Script( SC:update_description() );
+	SC:bb_add 		<< Script( SC:bb_add_callback() );
+	SC:bb_delete 	<< Script( SC:bb_delete_callback() );
+	SC:bb_delete_a 	<< Script( SC:bb_delete_a_callback() );
+	SC:bb_run		<< Script( SC:bb_run_callback() );
+	SC:bb_add_new	<< Script( SC:bb_add_new_callback() );
+);
+
+// -->
+SC:get_section = Function( { },
+	{ Default Local },
+	Return( SC:Section );
+);
+
+SC:update_scripts_list = Function( { },
+	{ Default Local },
+	/* Get dirs in scripts */
+	dir_list = SC:get_scripts_dirs();
+	SC:cb_scripts << SetItems( dir_list );
+);
+
+SC:update_description = Function( { },
+	{ Default Local },
+	/* Search for images and description in current script */
+	dir = SC:cb_scripts << GetSelected;
+	img_file = SC:get_ext_files( dir, { ".png", ".jpg", ".jpeg" } );
+	desc_file = SC:get_ext_files( dir, { ".txt" } );
+	/* Update description section */
+	{ image, bool_img } = SC:get_img( dir, img_file );
+	SC:ib_description << Set( bool_img );
+	If( bool_img, SC:img_description << SetImage( image ) );
+	text = SC:get_desc( dir, desc_file );
+	SC:tb_description << SetText( text );
+);
+
+SC:update_selected_scripts = Function( { },
+	{ Default Local },
+	SC:lb_scripts << SetItems( Global:Scripts );
+);
+
+SC:bb_add_callback = Function( { },
+	{ Default Local },
+	/* Inser script into the flow, update section */
+	Global:Scripts = Insert( Global:Scripts, SC:cb_scripts << GetSelected );
+	SC:update_selected_scripts();
+);
+
+SC:bb_delete_callback = Function( { },
+	{ Default Local },
+	/* Drop script from the flow */
+	Global:Scripts = Remove( Global:Scripts, SC:lb_scripts << GetSelectedIndices );
+	SC:update_selected_scripts();
+);
+
+SC:bb_delete_a_callback = Function( { },
+	{ Default Local },
+	Global:Scripts = {};
+	SC:update_selected_scripts();
+);
+
+SC:bb_run_callback = Function( { },
+	{ Default Local },
+	/* Create subset of filtered datatable */
+	If( Try( Global:Data << GetName , "" ) != "",
+		FL:filter_engine( Global:Data, Global:Filters );
+		Global:Subset = Global:Data << Subset( OutputTable( "Subset" ), SelectedRows( 1 ), SelectedColumns( 0 ), Invisible );
+		/* Run orchestrator */
+		SC:script_orchestrator( Global:Subset, Global:Scripts );
+	);
+);
+
+SC:bb_add_new_callback = Function( { },
+	{ Default Local },
+	SC:create_new_script();
+	SC:update_scripts_list();
+);

@@ -1,0 +1,39 @@
+/*  Section's NAMESPACE: DB  */
+DB = NewNameSpace( "Section Database Scope" );
+/*  Methods and Helpers libraries  */
+Include( "$METH_PATH/Section_DB_methods.jsl" );
+Include( "$HELP_PATH/Section_DB_helpers.jsl" );
+/*  Components declaration  */
+print( "Section DB components ready" );
+
+//Inner components
+DB:cb = ComboBox( { } );			/* Databases Combo Box */
+DB:bb = ButtonBox( "Connect" );		/* Connect Button */
+DB:bbloc = ButtonBox("Search Local Data"); /*local Data search Button*/
+
+
+//Section
+DB:Section = PanelBox(
+	"Data Selection",
+	VListBox(
+		Align( Center ),
+		Tab Box("DataBase CCDS",
+			HListBox(
+				Align( Center ),
+				SpacerBox( Size( 10, 10 ) );
+				TextBox( "Database" ),
+				DB:cb,
+				DB:bb,
+				SpacerBox( Size( 10, 10 ) );
+			),
+			"Local Data",
+			HListBox(
+				DB:bbloc
+			)
+		),
+		SpacerBox( Size( 375, 5 ) )
+	);
+);
+
+
+ 

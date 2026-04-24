@@ -1,0 +1,1 @@
+Saves the results from all previous scripts as pictures.

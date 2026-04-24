@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="X-UA-Compatible" content="IE=Edge" /><title>BinScope Results</title><style type="text/css">
+.detailsBlock
+{
+  margin: 1em 0 1em 1em;
+  white-space: pre-wrap;
+}
+.hidden { display: none; }
+.pass
+{
+  font-weight: bold;
+  color: green;
+}
+.fail
+{
+  font-weight: bold;
+  color: red;
+}
+.error
+{
+  font-weight: bold;
+  color: orange;
+}
+body { font-family: 'Segoe UI'; }
+h1 { font-size: 16pt; }
+h2 { font-size: 14pt; }
+li { margin: 0 0 0 1em; padding: 0; }
+ul { margin: 0; padding: 0; }
+input[type=button] { cursor:pointer; margin-right:5px; margin-bottom:5px; }
+        </style><script type="text/javascript">
+function ToggleElement()
+{
+  var detailsElement, classNames, hiddenIndex, lastIndex;
+  detailsElement = this.nextSibling;
+  classNames = detailsElement.className.split(' ');
+  hiddenIndex = classNames.indexOf('hidden');
+  lastIndex = classNames.length - 1;
+  if (hiddenIndex === -1)
+  {
+    // Element is not hidden; hide it
+    classNames.push('hidden');
+  }
+  else
+  {
+    // Element is hidden; show it
+              
+    // Copy the last element over "hidden", and then pop the array
+    classNames[hiddenIndex] = classNames[lastIndex];
+    classNames.pop();
+  }
+
+  // Ok, apply the class names to the element again
+  detailsElement.className = classNames.join(' ');
+}
+
+function HideElement(element)
+{
+  var classNames, hiddenIndex, lastIndex;
+  classNames = element.className.split(' ');
+  hiddenIndex = classNames.indexOf('hidden');
+  lastIndex = classNames.length - 1;
+  if (hiddenIndex !== -1)
+  {
+    return;
+  }
+
+  // Element is not hidden; hide it
+  classNames.push('hidden');
+  // Ok, apply the class names to the element again
+  element.className = classNames.join(' ');
+}
+
+function ShowElement(element)
+{
+  var classNames, hiddenIndex, lastIndex;
+  classNames = element.className.split(' ');
+  hiddenIndex = classNames.indexOf('hidden');
+  lastIndex = classNames.length - 1;
+  if (hiddenIndex === -1)
+  {
+    // Element is not hidden
+    return;
+  }
+
+  // Copy the last element over "hidden", and then pop the array
+  classNames[hiddenIndex] = classNames[lastIndex];
+  classNames.pop();
+
+  // Ok, apply the class names to the element again
+  element.className = classNames.join(' ');
+}
+
+var detailsShown = false;
+function ToggleAllDetails()
+{
+  var detailBlocks, idx, className;
+  detailBlocks = document.querySelectorAll('.additionalDetails');
+  for (idx = 0; idx != detailBlocks.length; ++idx)
+  {
+    if (detailsShown)
+    {
+      HideElement(detailBlocks[idx]);
+    }
+    else
+    {
+      ShowElement(detailBlocks[idx]);
+    }
+  }
+
+  if (detailsShown)
+  {
+    this.value = 'Show All Details';
+    detailsShown = false;
+  }
+  else
+  {
+    this.value = 'Hide All Details';
+    detailsShown = true;
+  }
+}
+        </script></head><body><h1>Results for Microsoft BinScope 2014 run on JFGCMP8025 at 2022-03-04T03:13:38.9856914Z</h1><input id="toggleDetails" type="button" value="Show All Details" onclick="ToggleAllDetails.apply(this)" /><h2>Failed Checks</h2>
+            No failed checks.
+          <h2>Checks Executed:</h2><ul><li>ATLVersionCheck</li><li>ATLVulnCheck</li><li>CompilerVersionCheck</li><li>DBCheck</li><li>DefaultGSCookieCheck</li><li>ExecutableImportsCheck</li><li>GSCheck</li><li>GSFriendlyInitCheck</li><li>GSFunctionSafeBuffersCheck</li><li>HighEntropyVACheck</li><li>NXCheck</li><li>RSA32Check</li><li>SafeSEHCheck</li><li>SharedSectionCheck</li><li>VB6Check</li><li>WXCheck</li></ul><h2>All Scanned Items</h2><ul><li><div onclick="ToggleElement.apply(this)">C:\jenkins\workspace\HSPI\Src\THCBase\Desktop\x64\Release\IntelQuickSPI.sys</div><div class="detailsBlock hidden additionalDetails"><ul><li>path : C:\jenkins\workspace\HSPI\Src\THCBase\Desktop\x64\Release\IntelQuickSPI.sys</li><li>version : 4.0.0.30</li><li>versionString : File:             C:\jenkins\workspace\HSPI\Src\THCBase\Desktop\x64\Release\IntelQuickSPI.sysInternalName:     IntelQuickSPI.sys  EDS0.8OriginalFilename: IntelQuickSPI.sys  EDS0.8FileVersion:      4.0.0.30FileDescription:  Intel(R) QuickSPI Host Controller 4.0Product:          Intel(R) Precise Touch and Stylus (Intel(R) PTS) 3.0 - Base DriverProductVersion:   4.0.0.30Debug:            FalsePatched:          FalsePreRelease:       FalsePrivateBuild:     TrueSpecialBuild:     FalseLanguage:         English (United States)</li><li>length : 133632</li><li>key : 47B826573F34E49656E88062A9E7837D0F864FE5</li><li>description : C:\jenkins\workspace\HSPI\Src\THCBase\Desktop\x64\Release\IntelQuickSPI.sys</li><li>SymbolPath : C:\jenkins\workspace\HSPI\Src\THCBase\Desktop\x64\Release\IntelQuickSPI.pdb</li></ul></div></li></ul></body></html>

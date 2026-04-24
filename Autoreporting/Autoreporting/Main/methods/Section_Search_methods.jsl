@@ -1,0 +1,169 @@
+/*  Using NAMESPACE: SE  */
+SE = Namespace( "Section Search Scope" );
+/*  Methods declaration  */
+
+print( "Section Search methods ready" );
+
+//Start:
+
+// -->
+SE:init_section = Function( { } ,
+	{ Default Local },
+	/* Init essential components callbacks */
+	SE:bb_obj		<< Script( SE:bb_obj_callback() );
+	SE:bb_date		<< Script( SE:bb_date_callback() );
+	SE:bb_inter_u 	<< Script( SE:bb_inter_u_callback() );
+	SE:bb_inter 	<< Script( SE:bb_inter_callback() );
+	SE:bb_data 		<< Script( SE:bb_data_callback() );
+	SE:cb_appendData<< Script( SE:cb_appendData_callback());
+	SE:lb_inter		<< Script( SE:bb_inter_callback() );
+	/* Init nav enhanced components callbacks */
+	if( !Global:nav_mode,
+		SE:neb_from		<< SetFunction( SE:neb_from_to_callback() );
+		SE:neb_to		<< SetFunction( SE:neb_from_to_callback() );
+		SE:cb_inter		<< Script( SE:bb_inter_u_callback() );
+	);
+);
+
+// -->
+SE:get_section = Function( { } ,
+	{ Default Local },
+	/* Get Section Componnet */
+	Return( SE:Section );
+);
+
+SE:clean_section = Function( { },
+	{ Default Local },
+	Global:Date = {};
+	SE:lb_inter << SetItems( { } );
+);
+
+SE:reset_date = Function( { },
+	{ Default Local },
+	SE:neb_from<<Set( AsDate( Today() - InWeeks( 1 ) ) );
+	SE:neb_to<<Set( AsDate( Today() + InDays( 1 ) ) );
+);
+
+SE:update_section = Function( { },
+	{ Default Local },
+	
+);
+
+SE:update_filters_selection = Function( { },
+	{ Default Local },
+	/* Updates changes in the global parameters */
+	string = SE:filters_string( Global:DSN, Global:Schema, Global:Obj, Global:Type, Global:Filter, Global:Date, Global:Interfaces );
+	SE:tb_filters << SetText( string );
+);
+
+SE:reset_globals = Function( { c },
+	{ Default Local },
+	/* Cleans global parameters */
+	If( c < 1,
+		Global:Obj			= .;
+		Global:Schema		= .;
+		Global:Type 		= .;		
+	);
+	If( c < 2,
+		Global:Date			= {};
+	);
+	If( c < 3,
+		Global:Filter		= .;
+	);
+	If( c < 4,
+		Global:Interfaces 	= {};
+	);
+);
+
+SE:bb_obj_callback = Function( { } ,
+	{ Default Local },
+	/* Cleans all globals */
+	SE:reset_globals( 0 );
+	If( Try( Global:Results_Obj << GetName, "" ) != "" ,
+		/* Sets global parameters */
+		{ Global:Obj, Global:Schema, Global:Type } = SE:get_names_from_dt( Global:Results_Obj, SE:cb_obj << Get );
+		/* Checks time availability */
+		bool_date = SE:activity_log_exists( Global:DSN, Global:Schema );
+		/* Checks key value availability */
+		{ bool_inter, inter_list } = SE:interface_col_exists( Global:DSN, Global:Schema, Global:Obj );
+		SE:cb_inter << SetItems( inter_list );
+		/* Clean section */
+		SE:clean_section();
+		/* Display filters available */
+		SE:ib_date << Set( bool_date );
+		SE:ib_inter << Set( bool_inter );
+		
+		/* Enhanced navigation helpers */
+		SE:reset_date();
+		Global:bool_inter 	= bool_inter;
+		Global:bool_date 	= bool_date;
+		/* Update key values list automatically if available */
+		If( !Global:nav_mode, 			
+			If( bool_date, SE:bb_date_callback(); );
+			If( bool_inter, SE:bb_inter_u_callback(); );
+		);
+		
+	);
+	SE:update_filters_selection();
+);
+
+SE:bb_date_callback = Function( { },
+	{ Default Local },
+	/* Clean components */
+	SE:reset_globals( 1 );
+	SE:clean_section();
+	/* Update dates */
+	Global:Date[1] = SE:get_as_date( SE:neb_from << Get );
+	Global:Date[2] = SE:get_as_date( SE:neb_to << Get );
+	SE:update_filters_selection();
+);
+
+SE:bb_inter_u_callback = Function( { }, 
+	{ Default Local },
+	/* Clean components */
+	SE:reset_globals( 2 );
+	/* Get key values from selected column & date if available */
+	col_selected = SE:cb_inter << GetSelected;
+	Global:Filter = col_selected;
+	key_values_list = {};
+	If( NItems( Global:Date ) == 0,
+		key_values_list = SE:get_key_values( Global:DSN, Global:Schema, Global:Obj, col_selected );,
+		key_values_list = SE:get_key_values_by_date( Global:DSN, Global:Schema, Global:Obj, Global:Type, col_selected, Global:Date );
+	);
+	/* Update key values list */
+	SE:lb_inter << SetItems( key_values_list );
+	SE:update_filters_selection();
+);
+
+SE:bb_inter_callback = Function( { },
+	{ Default Local },
+	/* Clear componenets */
+	SE:reset_globals( 3 );
+	/* Update selected key values */
+	selected = SE:lb_inter << GetSelected;
+	Global:Interfaces = selected;
+	SE:update_filters_selection();
+);
+
+SE:bb_data_callback = Function( { },
+	{ Default Local },
+	/* Load data using mux */
+	if(SE:cb_appendData << Get == 0, try(close("Data")), try(data table("Data") << Set Name("data to append")));
+	LoadMetadata = SE:cb_metadata << Get;
+	Global:Data = SE:load_data_mux( Global:DSN, Global:Schema, Global:Obj, Global:Type, Global:Filter, Global:Date, Global:Interfaces, LoadMetadata );
+	Try(Global:Data:isValid << Data Type( Character ););
+	FL:update_filters();
+	FL:clear_selection();
+);
+
+SE:neb_from_to_callback = Function( { },
+	{ Default Local },
+	/* Updates key values list when date changes */
+	If( Global:bool_date, SE:bb_date_callback(); );
+	If( Global:bool_inter, SE:bb_inter_u_callback(); );
+);
+
+SE:cb_appendData_callback = Function( {},
+	{ Default Local },
+	print(SE:cb_appendData << Get);
+);

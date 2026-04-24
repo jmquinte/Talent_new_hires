@@ -1,0 +1,35 @@
+{
+    "navigation_mode": 1,
+    "list_DSN": [
+        "cloudcds",
+        "cloudcds_ts",
+        "cloudcds_dev"
+    ],
+    "udm_configs": {
+        "labs": [ "VL","GM" ],
+        "teams": [ "SIO","WBIO" ],
+        "projects": [ "MTL","PTL_H" ]
+    },
+    "results_search": [
+        "result"
+    ],
+    "object_types": [
+        "V",
+        "P",
+        "U"
+    ],
+    "object_types_dict": [
+        "VIEW",
+        "PROCEDURE",
+        "TABLE"
+    ],
+    "activity_log": "ActivityLog",
+    "prefilter_key_column": [
+        "%product%",
+        "%interface%",
+        "%pchid%"
+    ],
+    "author": "(author)",
+    "title": "Results (title)",
+    "description": "Description"
+}

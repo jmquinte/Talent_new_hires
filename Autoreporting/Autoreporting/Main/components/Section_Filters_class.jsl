@@ -1,0 +1,50 @@
+/*  Section's NAMESPACE: FL  */
+FL = NewNameSpace( "Section Filters Scope" );
+/*  Methods and Helpers libraries  */
+Include( "$METH_PATH/Section_Filters_methods.jsl" );
+Include( "$HELP_PATH/Section_Filters_helpers.jsl" );
+/*  Components declaration  */
+
+print( "Section Filters components ready" );
+
+// Filter selection list boxes
+FL:lb_filters	= ListBox( {}, Width(125), NLines(10), MaxSelected(1) );
+FL:lb_keys 		= ListBox( {}, Width(125), NLines(10) );
+FL:lb_selected 	= ListBox( {}, Width(125), NLines(10) );
+// Search text edit boxes
+FL:teb_filters 	= TextEditBox( "", Hint( "Column's name" ), <<SetWidth(125) );
+FL:teb_keys 	= TextEditBox( "", Hint( "Key value"), <<SetWidth(125) );
+// Button boxes
+FL:bb_add 		= ButtonBox( "Add" );
+FL:bb_delete 	= ButtonBox( "Delete" );
+FL:bb_delete_a 	= ButtonBox( "Delete All" );
+// Section
+FL:Section = PanelBox( "Filters",
+	VListBox(
+		SpacerBox( Size( 375, 10 ) ),
+		HListBox(
+			VListBox(
+				TextBox("Filters"),
+				FL:lb_filters,
+				TextBox("Search column"),
+				FL:teb_filters,
+			),
+			VListBox(
+				TextBox("Filters Selection"),
+				FL:lb_keys,
+				TextBox("Search keys"),
+				FL:teb_keys,
+			),
+			VListBox(
+				TextBox("Selected Filters"),
+				FL:lb_selected,
+			),
+		),
+		HListBox(
+			FL:bb_add,
+			SpacerBox( Size(150,20) ),
+			FL:bb_delete,
+			FL:bb_delete_a
+		)
+	)
+);

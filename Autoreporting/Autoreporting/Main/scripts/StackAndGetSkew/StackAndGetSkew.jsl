@@ -1,0 +1,93 @@
+script = Function( { dt, pntr }, 
+	{ Default Local },
+	dt=current data table();
+	
+	stkTable = dt << Stack(
+		columns( :Minimum, :Mean, :Maximum ),
+		Source Label Column( "Label" ),
+		Stacked Data Column( "Data" )
+	);
+	
+	dt=current data table();
+	dt:Data << data type(numeric)<<format("Best", 12) <<modeling type(continuous);
+	dt:StdDev << data type(numeric)<<format("Best", 12) <<modeling type(continuous);
+	
+	stkTable << Set Name ("Data Stacked");
+	
+	
+	//Get Connection/Interface and Abbreviation
+	database = "DSN=cloudcds_ts; Trusted=True; MARS=True;";
+	dt = current data table();
+	interface = dt:InterfaceName[1];
+	abbreviationName = "MTL P";
+
+
+
+	sqlStatement = "SELECT [IDV_related] FROM [gdc_wbio].[IDV_FloorMap_View] WHERE Abbreviation= '" || abbreviationName || "' AND InterfaceName = '"|| interface ||"';";
+	dbc = Create Database Connection( database );
+	table = Execute SQL( dbc, sqlStatement, "table" );
+	Close Database Connection( dbc );
+	IDV_Related_value = table:IDV_related[1];
+	close(table, no save);
+
+
+	data_sumary = dt<<Summary(Group( :PchVisualId ),);
+	VID= data_sumary:PchVisualId[data_sumary << select where( Excluded(Row State()) != 1 ) << get selected rows()];
+
+
+	items = N items(VID);
+	for(i=1,i<=items,i++,
+		sqlStatement = "SELECT [VID],[Bucketing],[Sigma] FROM [gdc_wbio].[IDV_Catalog_View] WHERE Abbreviation= '" || abbreviationName || "' AND VID = '"|| VID[i] ||"' AND IDV_Name = '"|| IDV_Related_value  ||"';";
+		dbc = Create Database Connection( database );
+		if(i==1,
+			table = Execute SQL( dbc, sqlStatement, "table" );
+			Close Database Connection( dbc );
+		,
+			table2 = Execute SQL( dbc, sqlStatement, "table2" );
+			Close Database Connection( dbc );
+			Data Table( "table" ) << Concatenate( Data Table( "table2" ), append to first table(1) );
+			close(table2, noSave);
+		);
+	);
+
+	close(data_sumary, noSave);
+	DataWithSkew = Data Table(dt) << Join(With(Data Table("table")), By Matching Columns(:PchVisualId = :VID), Drop multiples(0, 0), Include Nonmatches(1, 0), Preserve main table order(1), output table("DataWithSkew"));
+	close(table, noSave);
+
+	Variability Chart(
+		Y( :Data ),
+		X( :Bucketing ),
+		Std Dev Chart( 0 ),
+		By( :InterfaceMode, :InterfaceClockFrequency, :ParameterName ),
+		SendToReport(
+				Dispatch(
+					{},
+					"2",
+					ScaleBox,
+					{
+					//Add Ref Line( 0, "Dotted", "Medium Light Gray", "", 1 ),
+					//Add Ref Line( 0.5, "Dashed", "Red", "0.5 min", 1 )
+					Add Ref Line( Num(:MinimumSpec[1];), Dotted, "Medium Dark Red", "MinSpec "||char(format(num(:MinimumSpec[1]),"Engineering SI",3)), 3 ),
+					Add Ref Line( Num(:MaximumSpec[1];), Dotted,"Medium Dark Red", "MaxSpec "||char(format(num(:MaximumSpec[1]),"Engineering SI",3)), 3 )
+						
+					}
+				),
+				Dispatch(
+					{},
+					"Variability Chart",
+					FrameBox,
+					{Row Legend(
+						corner,
+						Color( 1 ),
+						Color Theme( "JMP Default" ),
+						Marker( 0 ),
+						Marker Theme( "" ),
+						Continuous Scale( 0 ),
+						Reverse Scale( 0 ),
+						Excluded Rows( 0 )
+					)}
+				)
+			)
+	
+	)
+)

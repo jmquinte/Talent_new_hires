@@ -1,0 +1,174 @@
+/*  Using NAMESPACE: SC  */
+SC = Namespace( "Section Scripts Scope" );
+/*  Helpers declaration  */
+
+print( "Section Scripts helpers ready" );
+
+//Start:
+
+// -->
+SC:get_scripts_dirs = Function( { },
+	{ Default Local },
+	/* Get all direcotries in SCPT_PATH  */
+	files = FilesInDirectory( "$SCPT_PATH" );
+	files_aux = {};
+	For( i = 1, i <= NItems( files ), i++,
+		If( IsDirectory( "$SCPT_PATH" || "/" || files[ i ] ),
+			files_aux = Insert( files_aux, files[ i ] );
+		)
+	);
+	Return( files_aux );
+);
+
+// -->
+SC:get_ext_files = Function( { dir, ext_list },
+	{ Default Local },
+	path = "$SCPT_PATH" || "/" || dir;
+	files = FilesInDirectory( path );
+	files_aux = {};
+	/* Gets files with file extension in ext_list */
+	For( i = 1, i <= NItems( files ), i++,
+		For( j = 1, j <= NItems( ext_list ), j++,
+			If( EndsWith( LowerCase( files[ i ] ), ext_list[ j ] ),
+				files_aux = Insert( files_aux, files[ i ] );
+				Break();
+			);
+		);
+	);
+	Return( files_aux );
+);
+
+// -->
+SC:get_img = Function( { dir, img_file },
+	{ Default Local },
+	bool_img = 0;
+	image = .;
+	/* Creates image object from file in path */
+	If( NItems( img_file ) > 0,
+		img_path = "$SCPT_PATH/" || dir || "/" || img_file[1];
+		If( Try( image = NewImage( img_path ), "" ) != "", 
+			image_size = image << GetSize();
+			image << Scale( 250/image_size[1] );
+			bool_img = 1;
+		);	
+	);
+	Return( image, bool_img );
+);
+
+// -->
+SC:get_desc = Function( { dir, desc_file },
+	{ Default Local },
+	text = "No description available";
+	/* Read description file */
+	If( NItems( desc_file ) > 0,
+		desc_path = "$SCPT_PATH/" || dir || "/" || desc_file[1];
+		text = LoadTextFile( desc_path );
+	);
+	Return( text );
+);
+
+// -->
+SC:script_orchestrator = Function( { dt, dir_list },
+	{ Default Local },
+	/* Reports pointer */
+	pntr = [ => ];
+	/* Execute each script in flow */
+	For( i = 1, i <= NItems( dir_list ), i++,
+		dir = dir_list[ i ];
+		/* Get .jsl files */
+		files = SC:get_ext_files( dir, { ".jsl" } );
+		If( NItems( files ) > 0,
+			/* Executes files */
+			pntr = SC:execute_jsl( dt, dir, files[1], pntr );
+		);
+	);
+);
+
+SC:execute_jsl = Function( { dt, dir, file, pntr },
+	{ Default Local },
+	path = "$SCPT_PATH/" || dir || "/" || file;
+	/* Creates local instance of script */
+	Include( path );
+	/* Executes script */
+	pt = script( dt, pntr );
+	/* Add pointer to list */
+	If( !IsNumber(pt),
+		pntr[dir] = pt;
+	);
+	Return( pntr );
+);
+
+// -->
+SC:create_new_script = Function( {  },
+	{ Default Local },
+	/* Text Edit Box components */
+	teb_name 	= TextEditBox( "", Hint( "Ex. Variability_EH" ), << SetWidth( 150 ) );
+	teb_des		= TextEditBox( "", Hint( "Description" ), << SetWidth( 300 ), << SetNLines( 6 ) );
+	teb_src  	= TextEditBox( "", Hint( "Ex. dt << New ... " ), << SetWidth( 300 ), << SetNLines( 15 ) );
+	/* Form */
+	Window = NewWindow(
+		"New Script",
+		<<Modal,
+		VlistBox(
+			Align( Center ),
+			PanelBox(
+				"Description",
+				/* Script name */
+				HListBox( 
+					TextBox( "Name" ),
+					SpacerBox( Size(20,20) ),
+					teb_name
+				),
+				SpacerBox( Size(20,20) ),
+				/* Script Description */
+				teb_des
+			),
+			/* Script source code */
+			PanelBox(
+				"Script",
+				teb_src
+			),
+			ButtonBox( "OK" );
+		)
+	);
+	/* Get each field in form */
+	name = teb_name << GetText;
+	des = teb_des << GetText;
+	src = teb_src << GetText;
+	/* Creates instance */
+	SC:create_script_instance( name, des, src );
+);
+
+SC:create_script_instance = Function( { name, des, src },
+	{ Default Local },
+	If( src != "",
+		/* Check if name is available */
+		path = "$SCPT_PATH/" || name;
+		If( !DirectoryExists( path ),
+			CreateDirectory( path );
+			/* Save source and description */
+			SaveTextFile( path || "/Description.txt", des, mode( "replace" ) );
+			SaveTextFile( path || "/Script.jsl", SC:format_script( src ), mode( "replace" ) );
+		);
+	);
+	
+);
+
+SC:format_script = Function( { src },
+	{ Default Local },
+	header = "script = Function( { dt, pntr }, \!n\!t{ Default Local },\!n";
+	list = Words( src, "\!n" );
+	code = "";
+	/* Indent code */
+	For( i = 1, i <= NItems( list ), i++,
+		code = code || "\!t" || list[i] || "\!n";
+	);
+	footer = "";
+	/* Add Return clause if missing */
+	If( Contains( LowerCase( list[ NItems( list ) ] ), "return" ),
+		footer = ");";,
+		footer = "\!tReturn( 0 );\!n);"
+	);
+	/* Concatenates full script */
+	Return( header || code || footer );
+);

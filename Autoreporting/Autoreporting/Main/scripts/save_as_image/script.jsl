@@ -1,0 +1,9 @@
+script = Function( { dt, pntr },
+	{ Default Local },
+	path = PickDirectory( "Save as" );
+	order = pntr << GetKeys;
+	For( i = 1, i <= NItems( order ), i++,
+		pntr[ order[ i ] ] << SaveCapture( path || order[ i ] || ".jpg", "JPG" );
+	);
+	Return( 0 );
+);

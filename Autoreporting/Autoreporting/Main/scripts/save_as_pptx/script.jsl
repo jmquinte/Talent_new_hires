@@ -1,0 +1,32 @@
+script = Function( { dt, pntr },
+	{ Default Local },
+	
+	/* Source path [script.vbs] */
+	path_script = "$SCPT_PATH/save_as_pptx/script.vbs";
+	path_script = ConvertFilePath( path_script, windows );
+	/* Results path [.pptx, .jpeg, .xml] */
+	path_results = PickDirectory( "Save Results as .pptx" );
+	path_results = ConvertFilePath( path_results, windows );
+	/* Configs */
+	configs = DB:get_configs();
+	/* SLIDE-TITLE */
+	slides = {};
+	slides[ 1 ] = CM:generate_slidetitle( configs[ "title" ], "Author: " || configs[ "author" ] );
+	/* SLIDES */
+	order = pntr << GetKeys;
+	For( i = 1, i <= NItems( order ), i++,
+		pntr[ order[ i ] ] << SaveCapture( path_results || order[ i ] || ".jpg", "JPG" );
+		slides[ i + 1 ] = CM:generate_slide( order[ i ], configs[ "description" ], order[ i ] || ".jpg" );
+	);
+	presentation = [ => ];
+	presentation[ "PRESENTATION" ] = slides;
+	/* XML Parser */
+	xml = CM:parse_XML( presentation, "" );
+	Save Text File( path_results || "test.xml", xml );
+	/* Execute Visual Basic Script */
+	options = path_script || " " || path_results;
+	rp = RunProgram( Executable( "CSCRIPT.EXE" ), Options( options ), Read Function( "text" ) );
+	print( rp );
+	
+	Return( 0 );
+);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Data> 
+<AssessmentScore ScoreName="IntelQuickSPI.x64.SDV.NORUN" ScoreValue="0" ScoreUnit="" />
+
+<AssessmentScore ScoreName="IntelQuickSPI.x64.CodeAnalysis.Summary" ScoreValue="0" ScoreUnit="Types of defects seen" />
+
+<AssessmentScore ScoreName="IntelQuickSPI.x64.Semmle.Summary" ScoreValue="0" ScoreUnit="Types of defects seen" />
+
+<AssessmentScore ScoreName="..General.Checksum" ScoreValue="pkdz8ORFBsAxjdMlKCf9kUF1TEyaPbWIl2kjSYTGGL+US1mnVwhOd3QY6v0e8Ipvv5OPa4gDNiTb9fKMEqRqBQ==" ScoreUnit="DVL Checksum Value" />
+</Data>

@@ -1,0 +1,3 @@
+Variability chart for 'x'_wbio.Result_SIV Schema tables, 
+Stack data from :Minimum, :Mean and :Maximum Column
+Add Automatic Ref Lines uf you have data on :MinimumSpec or :MaximumSpec

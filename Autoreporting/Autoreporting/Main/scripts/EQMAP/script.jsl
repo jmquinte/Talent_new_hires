@@ -1,0 +1,187 @@
+script = Function( { dt, pntr },
+	{ Default Local },
+	/* */
+	type_list = { "MinEH", "AsymEH", "MinEW", "AsymEW" };
+	tf_list = { "Max", "Min", "Max", "Min" };
+	weight_list = { 1, 1, 1, 1 };
+	MAP_list = EQ_MAP_analysis( dt, type_list, tf_list, weight_list );
+	/*  */
+	vb_body = VListBox();
+	win = New Window(
+		"EQ Map",
+		vb_body,
+	);
+	MAP_I = NItems( MAP_list );
+	/*  */
+	For( i = 0 , i < MAP_I / 2 , i++ ,
+		index_1 = 2 * i + 1;
+		index_2 = 2 * i + 2;
+		vb_body << Append( HListBox( 
+			VListBox( Align( Center ), TextBox( type_list[ index_1 ] ) , MAP_list[ index_1 ] << Get As Report ),
+			VListBox( Align( Center ), TextBox( type_list[ index_2 ] ) , MAP_list[ index_2 ] << Get As Report )
+		) );
+		Close( MAP_list[ index_1 ], No Save );
+		Close( MAP_list[ index_2 ], No Save );
+	);
+	/*  */
+	Close( dt, No Save );
+	Return( win );
+);
+
+/* Generator */
+EQ_MAP_generator = Function( { dt, param_label , row_label, col_label, act_func },
+	{ Default Local },
+	/* C list */
+	Cm_list = Associative Array( Column( dt, row_label ) ) << GetKeys;
+	Cp_list = Associative Array( Column( dt, col_label ) ) << GetKeys;
+	/* Num of elements in list */
+	Cm_I = NItems( Cm_list );
+	Cp_I = NItems( Cp_list );
+	/* Init Matrix */
+	EQ_MAP = J( Cm_I, Cp_I, . );
+	/* Iterate through Cm */
+	For( c_cm = 1 , c_cm <= Cm_I , c_cm ++,
+		dt << Clear Select;
+		dt << Select Where( As Column( row_label ) == Cm_list[ c_cm ], Current Selection( "extend" ) );
+		ds = dt << Subset( SelectedRows( 1 ), Invisible, OutputTable( "temp" ) );
+		/* Iterate through Cp */
+		For( c_cp = 1 , c_cp <= Cp_I , c_cp ++,
+			ds << Clear Select;
+			ds << Select Where( As Column( col_label ) == Cp_list[ c_cp ], Current Selection( "extend" ) );
+			/* Selection Cm & Cp */
+			cumulative_list = Column( ds, param_label )[ ds << Get Selected Rows ];
+			/* Activation function AVG, Max, Min ... */
+			EQ_MAP[ c_cm, c_cp ] = Eval( Parse( act_func || "( cumulative_list )" ) );
+		);
+		/* Close subset */
+		Close( ds, NoSave );
+	);
+	Return( EQ_MAP, Cm_list, Cp_list );
+);
+
+/* Format */
+EQ_MAP_format = Function( { EQ_MAP, Cm_list, Cp_list, Mode, name },
+	{ Default Local },
+	/* Num of elements in list */
+	Cm_I = NItems( Cm_list );
+	Cp_I = NItems( Cp_list );
+	/* Auxiliar Matrix */
+	Norm_EQ_MAP = J( Cm_I, Cp_I, . );
+	/* Format columns */
+	dt_EQ = AsTable( EQ_MAP, <<Invisible );
+	dt_EQ << Set Name( name );
+	dt_EQ << Add Multiple Columns ( "Label", 1, Before First, Numeric );
+	col = Column( dt_EQ, 1 );
+	col << Format( "Best", 4 );
+	/* Parse to num */
+	For( c_cp = 1 , c_cp <= Cp_I , c_cp++,
+		col = Column( dt_EQ, c_cp + 1 );
+		col << Format ( "Fixed Dec", 5, 2 );
+		col << Set Name ( Char( Cp_list[ c_cp ] ) );
+	);
+	/* Insert Cm */
+	For( c_cm = 1 , c_cm <= Cm_I , c_cm++,
+		Column( dt_EQ, "Label" )[ c_cm ] = Cm_list[ c_cm ];
+	);
+	/* Normalize data */
+	std_dev = Std Dev( EQ_MAP );
+	mean = Mean( EQ_MAP );
+	/* Amplitude */
+	m_color = 0.5;
+	a_color = 1.0;
+	/* Iterate through Cm & Cp */
+	For( c_cm = 1 , c_cm <= Cm_I , c_cm ++,
+		For( c_cp = 1 , c_cp <= Cp_I , c_cp ++,
+			/* Get Column */
+			col = Column( dt_EQ, c_cp + 1 );
+			/* Get value from column */
+			val = Normal Distribution( col[ c_cm ], mean, std_dev );
+			
+			If( Mode == "Max", val = val; );
+			If( Mode == "Min", val = 1 - val; );
+			Norm_EQ_MAP[ c_cm, c_cp ] = val;
+			r = 0;
+			g = 0;
+			b = 0;
+			
+			/* Set color */
+			If( val > 0.5 ,
+				r = - a_color * ( val - 0.5 ) + 1;
+				g = 1;
+				b = m_color;,
+				r = 1;
+				g = a_color * val + m_color;
+				b = m_color;
+			);
+			/* Color cell */
+			col << Color Cells ( RGB Color( r, g, b ), c_cm );
+		);
+	);
+	Return( dt_EQ, Norm_EQ_MAP );
+);
+
+/* Get Top 5 values */
+EQ_MAP_top = Function( { EQ_MAP, Cm_list, Cp_list },
+	{ Default Local },
+	
+	Cm_I = NItems( Cm_list );
+	Cp_I = NItems( Cp_list );
+	
+	EQ_list = New Table( "EQ_list", Invisible,
+		Add Rows( 0 ),
+		New Column( "Score", Numeric, Continuous, Format( "Fixed Dec", 12, 2 ) ),
+		New Column( "Cm", Numeric, Continuous, Format( "Fixed Dec", 8, 0 ) ),
+		New Column( "Cp", Numeric, Continuous, Format( "Fixed Dec", 8, 0 ) )
+	);
+	
+	For( c_cm = 1 , c_cm <= Cm_I , c_cm ++,
+		For( c_cp = 1 , c_cp <= Cp_I , c_cp ++,
+			EQ_list << Add Rows( { :Score = EQ_MAP[ c_cm, c_cp ], :Cm = c_cm, :Cp = c_cp } );
+		);
+	);
+	
+	EQ_list << Sort( Replace table, By(:Score), Order( Descending ) );
+	cm_values = Column( EQ_list, "Cm" )[ 1::5 ];
+	cp_values = Column( EQ_list, "Cp" )[ 1::5 ];
+	Close( EQ_list, NoSave );
+	Return( cm_values, cp_values );
+);
+
+/*  */
+EQ_MAP_mark_top = Function( { EQ_MAP_list, cm_values, cp_values },
+	{ Default Local },
+	
+	Cm_I = NItems( cm_values );
+	EQ_I = NItems( EQ_MAP_list );
+	For( c_EQ = 1 , c_EQ <= EQ_I , c_EQ ++,
+		For( c_cm = 1 , c_cm <= Cm_I , c_cm ++,
+			col = Column( EQ_MAP_list[ c_EQ ], cp_values[ c_cm ] + 1 );
+				
+			r = 0.9;
+			g = 1.0;
+			b = 1.0;
+				
+			col << Color Cells ( RGB Color( r, g, b ), cm_values[ c_cm ] );
+		);		
+	);
+);
+
+/*  */
+EQ_MAP_analysis = Function( { dt, type_list, tf_list, weight_list },
+	{ Default Local },
+	
+	list_I = NItems( type_list );
+	MAP_list = {};
+	Score_MAP = 0;
+	For( i = 1 , i <= list_I , i++,
+		{ EQ_MAP, Cm_list , Cp_list } = EQ_MAP_generator( dt, type_list[ i ], "Cm_Read", "Cp_Read", "Mean" );
+		{ dt_EQ , Norm_EQ_MAP } = EQ_MAP_format( EQ_MAP , Cm_list, Cp_list, tf_list[ i ], type_list[ i ] );
+		MAP_list = Insert( MAP_list, dt_EQ );
+		Score_MAP = Score_MAP + ( Norm_EQ_MAP * weight_list[ i ] );
+	);
+	//{ _, _ } = EQ_MAP_format( Score_MAP , Cm_list, Cp_list, "Max", "EQ_MAP" );
+	{ cm_values, cp_values } = EQ_MAP_top( Score_MAP, Cm_list, Cp_list );
+	EQ_MAP_mark_top( MAP_list, cm_values, cp_values );
+	
+	Return( MAP_list );
+);

@@ -1,0 +1,229 @@
+// Variability chart with PVT and ChipMcode
+// Y axis = mean, X axis = SKUtype, Temperature, VTCorner
+
+relativePath = Convert File Path( "" );
+dt2 = Open( relativePath||"Data/ParametricIndex.jmp", Invisible );
+script = Function( { dt, pntr }, 
+	{Local Default },
+
+	col = Column( dt2, "name" );
+	saved = col << get values;
+	Close( "ParametricIndex" );	
+	dt=current data table();
+
+
+Legend = Text Box( "To select several columns use ctrl select on the list then click Add" );
+
+
+column = List Box(
+	currentcol = dt << get column names( string ), 
+	
+);	
+
+modeRB = Radio Box( {"Normal", "Stack", "3Sigma"}, 
+	buttonName ="Add Y >>"; 
+	Yvals = {};
+	LegendVals = {};
+	if (modeRB << Get Selected() == "Stack", buttonName ="toStack>>"; Yvals = {"Mean","Maximum","Minimum"}; LegendVals = {"Label"},modeRB << Get Selected() == "3Sigma", buttonName ="M&dev>>";Yvals = {"Mean","StdDev"}; LegendVals = {"Label"}); 
+	AddY << set button Name(buttonName);
+	Ylist << set items(Yvals);
+	Legendlist << set items( LegendVals );
+
+);
+
+AddX = Button Box( "Add X >>",
+	addxselected = column << get Selected();
+	Xlist << set items( addxselected );
+);
+
+Xlist = List Box();
+
+AddY = Button Box( "Add Y >>",
+	addyselected = column << get Selected();
+	Ylist << set items( addyselected );
+);
+
+Ylist = List Box();
+
+AddBy = Button Box( "Add By >>",
+	addbyselected = column << get Selected();
+	Bylist << set items( addbyselected );
+);
+
+Bylist = List Box();
+
+AddLegend = Button Box( "Legend >>",
+	addlegendselected = column << get Selected();
+	Legendlist << set items( addlegendselected );
+);
+
+Legendlist = List Box();
+
+Run = Button Box( "RUN",
+	print("entramos");
+	Xaxis = Xlist << Get Items;
+	if(	modeRB << Get Selected() == "Normal",
+			Yaxis = Ylist << Get Items;,
+		modeRB << Get Selected() == "Stack",
+			Ycolumns = Ylist << Get Items;
+			dt=current data table();
+			stkTable = dt << Stack(
+				columns( Ycolumns ),
+				Source Label Column( "Label" ),
+				Stacked Data Column( "Data" )
+			);
+			Yaxis = {"Data"};,
+		modeRB << Get Selected() == "3Sigma",
+			dt=current data table();
+			dt:Mean << data type(numeric)<<format("Best", 12) <<modeling type(continuous);
+			dt:StdDev << data type(numeric)<<format("Best", 12) <<modeling type(continuous);
+			dt << New Column( "MinimumSTD", formula(:Mean - (:StdDev * 3)  ) );
+			dt << New Column( "MaximumSTD", formula(:Mean + (:StdDev * 3) ) );
+			stkTable = dt << Stack(
+				columns( :MinimumSTD, :Mean, :MaximumSTD ),
+				Source Label Column( "Label" ),
+				Stacked Data Column( "Data" )
+			);
+			stkTable << Set Name ("Data Stacked");
+			Yaxis = {"Data"};,		
+	);
+	XYBy = Bylist << Get items;
+	Legend = Legendlist << Get items;
+	minSpec_sol = MinSpeclist << Get items;
+	//minSpecVal = Column( current data table(), minSpec_sol[1]);
+	maxSpec_sol = MaxSpeclist << Get items;
+	//maxSpecVal = Column( current data table(), maxSpec_sol[1]);
+	print(relativePath);
+	Include(relativePath||"Data/chrVariability_Parametric2.jsl" );
+	result = Parametrics(Yaxis,Xaxis,XYBy,Legend,minSpec_sol,maxSpec_sol)
+);
+
+profilenamebox = Text Edit Box( "", <<Set Width( 250 ) );
+
+saveconfig = Button Box( "  SaveConf >> ",
+	dt2 = Open(  relativePath||"Data/ParametricIndex.jmp", Invisible );
+
+	newconfig = profilenamebox << get text;
+	If( newconfig == "",
+		Throw( "set a name please" )
+	);
+	repeatlist = dt2 << get rows where( :name == newconfig );
+	totalrepeat = N Row( repeatlist );
+	If( totalrepeat >= 1,
+		Throw( "repeated name" ),
+	
+		If( newconfig != "",
+			newY = Ylist << Get Items;
+			newX = Xlist << Get Items;
+			newBy = Bylist << Get items;
+			newLegend = Legendlist << Get items;
+			minSpec_sol = MinSpeclist << Get items;
+			//minSpecVal = Column( current data table(), minSpec_sol[1]);
+			maxSpec_sol = MaxSpeclist << Get items;
+			//maxSpecVal = Column( current data table(), maxSpec_sol[1]);
+			selectedMode = modeRB << Get Selected;
+			dt2 << add Rows(
+				{:name = newconfig, :Y = Char( Concat Items( newY, "," ) ), :X = Char( Concat Items( newX, "," ) ), :By =
+				Char( Concat Items( newBy, "," ) ), :Legend = Char( Concat Items( newLegend, "," ) ),:minSpecVal = Char(Concat Items( minSpec_sol,",")),:maxSpecVal = Char(Concat Items( maxSpec_sol,",")),:mode = SelectedMode}
+			);
+		
+			col = Column( dt2, "name" );
+			saved = col << get values;
+			savedchart << set items( saved );
+			Close( "ParametricIndex" );
+		);
+	);
+);
+
+loadconfig = Button Box( " << LoadConf ",
+	selectedname = savedchart << get selected();
+	dt2 = Open(  relativePath||"Data/ParametricIndex.jmp", Invisible );
+	rowselected = dt2 << get rows where( :name == selectedname[1] );
+	Xlist << set items( Words( Char( :X[rowselected] ), "{}\!"," ) );
+	Ylist << set items( Words( Char( :Y[rowselected] ), "{}\!"," ) );
+	Bylist << set items( Words( Char( :By[rowselected] ), "{}\!"," ) );
+	Legendlist << set items( Words( Char( :Legend[rowselected] ), "{}\!"," ) );
+	minSpeclist << set items( Words( Char( :minSpecVal[rowselected] ), "{}\!",") );
+	maxSpeclist << set items( Words( Char( :maxSpecVal[rowselected] ), "{}\!",") );
+	if(	:mode[rowselected][1] == "Normal" ,modeRB << set (1),
+		:mode[rowselected][1] == "Stack" ,modeRB << set (2),
+		:mode[rowselected][1] == "3Sigma" ,modeRB << set (3)
+	);
+	Close( "ParametricIndex" );
+);
+
+deleteconfig = Button Box( " DeleteConfig ",
+	deleteconfigyes << Visibility( "Visible" );
+	deleteconfigno << Visibility( "Visible" );
+	deleteconfigtext << Visibility( "Visible" );
+);
+
+deleteconfigyes = Button Box( "Yes ",
+	selectedname = savedchart << get selected();
+	dt2 = Open( relativePath||"Data/ParametricIndex.jmp", Invisible );
+	dt2 << select where( :name == selectedname[1] ) << delete rows;
+	col = Column( dt2, "name" );
+	saved = col << get values;
+	savedchart << set items( saved );
+	Close( "ParametricIndex" );
+	deleteconfigyes << Visibility( "Hidden" );
+	deleteconfigno << Visibility( "Hidden" );
+	deleteconfigtext << Visibility( "Hidden" );
+);
+
+
+
+deleteconfigtext = Text Box( "are you sure? " );
+deleteconfigno = Button Box( "Cancel",
+	deleteconfigyes << Visibility( "Hidden" );
+	deleteconfigno << Visibility( "Hidden" );
+	deleteconfigtext << Visibility( "Hidden" );
+);
+
+
+deleteconfigyes << Visibility( "Hidden" );
+deleteconfigno << Visibility( "Hidden" );
+deleteconfigtext << Visibility( "Hidden" );
+
+savedchart = List Box(
+	saved, 
+
+	
+);
+
+
+AddMinSpec = Button Box( "MinSpec >>",
+	addyselected = column << get Selected();
+	MinSpeclist << set items( addyselected );
+);
+
+MinSpeclist = List Box("");
+
+AddMaxSpec = Button Box( "MaxSpec >>",
+	addyselected = column << get Selected();
+	MaxSpeclist << set items( addyselected );
+);
+
+MaxSpeclist = List Box("");
+
+
+New Window( "VarChar_Parametric", 
+
+	H List Box(
+		column,
+		V List Box(modeRB, H List Box( AddX, Xlist ), H List Box( AddY, Ylist ), H List Box( AddBy, Bylist ), H List Box( AddLegend, Legendlist ),H List Box( AddMinSpec, MinSpeclist ),H List Box( AddMaxSpec, MaxSpeclist  ) ),
+		V List Box( saveconfig, loadconfig, deleteconfig, deleteconfigtext, deleteconfigyes, deleteconfigno ),
+		V List Box( profilenamebox, H List Box( savedchart ) )
+	),
+	Run,
+	Legend
+
+);
+
+
+
+		
+);
+
+
+// "Variability Chart for mean";

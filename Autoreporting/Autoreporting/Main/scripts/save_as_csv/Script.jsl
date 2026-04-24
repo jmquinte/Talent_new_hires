@@ -1,0 +1,6 @@
+script = Function( { dt, pntr }, 
+	{ Default Local },
+	path = PickDirectory( "Save data table" ); 
+	dt << SaveAs( path || "table.csv" ); 
+	Return( 0 );                                
+);

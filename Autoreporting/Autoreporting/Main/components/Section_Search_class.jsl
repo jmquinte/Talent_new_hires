@@ -1,0 +1,117 @@
+/*  Section's NAMESPACE: SE  */
+SE = NewNameSpace( "Section Search Scope" );
+/*  Methods and Helpers libraries  */
+Include( "$METH_PATH/Section_Search_methods.jsl" );
+Include( "$HELP_PATH/Section_Search_helpers.jsl" );
+/*  Components declaration  */
+
+print( "Section Search components ready" );
+
+//Inner components
+// - Select Object
+SE:cb_obj 	= ComboBox( { } );
+SE:bb_obj 	= ButtonBox( "Select" );
+// - Select Date
+//SE:cb_date 	= ComboBox( { } );
+SE:neb_from = NumberEditBox( AsDate( Today() - InWeeks( 1 ) ), << SetFormat( "m/d/y" ) );
+SE:neb_to 	= NumberEditBox( AsDate( Today() + InDays( 1 ) ), << SetFormat( "m/d/y" ) );
+SE:bb_date 	= ButtonBox( "Apply" );
+// - Select Interface
+SE:cb_inter = ComboBox( { } );
+SE:lb_inter = ListBox( { }, width( 200 ), nlines( 3 ) );
+SE:bb_inter_u = ButtonBox( "Update" );
+SE:bb_inter	= ButtonBox( "Apply" );
+// - Load Data
+SE:tb_filters = TextBox( "", << SetWrap( 200 ) );
+SE:bb_data = ButtonBox( "Load" );
+SE:cb_appendData = CheckBox({"Append new Data"});
+SE:cb_metadata = CheckBox( { "Include metadata" } );
+
+// - Navigation Mode If Boxes
+configs = DB:get_configs();
+Global:nav_mode		= configs["navigation_mode"];
+Delete Symbols( configs );
+SE:ib_bb_date		= IfBox( Global:nav_mode, SE:bb_date );
+SE:ib_bb_inter_u	= IfBox( Global:nav_mode, SE:bb_inter_u );
+
+//Sub-section
+// - Sub Section Date
+SE:sub_date = VListBox(
+	SpacerBox( Size( 20, 20 ) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Search by date" ),
+		//SE:cb_date
+	),
+	HListBox(
+		Align( Center ),
+		SpacerBox( Size( 20, 10 ) ),
+		TextBox( "From" ),
+		SpacerBox( Size( 5, 10 ) ),
+		SE:neb_from
+	),
+	HListBox(
+		Align( Center ),
+		SpacerBox( Size( 20, 10 ) ),
+		TextBox( "To" ),
+		SpacerBox( Size( 19, 10 ) ),
+		SE:neb_to
+	),
+	HListBox(
+		Align( Bottom ),
+		SpacerBox( Size( 20, 30 ) ),
+		SE:ib_bb_date
+	)
+);
+// - Sub Section Interface
+SE:sub_inter = VListBox(
+	SpacerBox( Size( 10, 10 ) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Search by " ),
+		SE:cb_inter,
+		SE:ib_bb_inter_u
+	),
+	SE:lb_inter,
+	HListBox(
+		Align( Bottom ),
+		SpacerBox( Size( 10, 30 ) ),
+		//SE:bb_inter
+	)
+);
+// - Sub Section If Box
+SE:ib_date	= IfBox( 0, SE:sub_date );
+SE:ib_inter = IfBox( 0, SE:sub_inter );
+
+
+//Section
+SE:Section = PanelBox(
+	"Search Section",
+	VListBox(
+		SpacerBox( Size( 375, 10 ) ),
+		HListBox(
+			Align( Center ),
+			TextBox( "Results Object" ),
+			SE:cb_obj,
+			SE:bb_obj
+		),
+		HListBox(
+			SE:ib_date,
+			SpacerBox( Size( 20, 20 ) ),
+			SE:ib_inter
+		),
+		HListBox(
+			Align( Center ),
+			VListBox(
+				Align( Center ),
+				SE:tb_filters,
+				SpacerBox( Size( 310, 10 ) )				
+			),
+			VListBox(
+				SE:bb_data,
+				SE:cb_appendData,
+				SE:cb_metadata
+			)
+		)
+	)
+);

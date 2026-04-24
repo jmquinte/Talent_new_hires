@@ -1,0 +1,104 @@
+/*  Using NAMESPACE: DB  */
+DB = Namespace( "Section Database Scope" );
+/*  Helpers declaration  */
+
+print( "Section UDM DB helpers ready" );
+
+//Start:
+
+DB:get_configs = Function( {  },
+	{ Default Local },
+	/* Load file as Associative Array */
+	Return( LoadTextFile( "$CONF_PATH/config.json", JSON ) );
+);
+
+DB:get_db_info = Function( { },
+	{ Default Local },
+	configs  = DB:get_configs();
+	labs 	 = configs["udm_configs"][ "labs" ];
+	teams 	 = configs["udm_configs"]["teams"];
+	projects = configs["udm_configs"]["projects"];
+	Return( labs, teams, projects );
+);
+
+DB:alert = Function( { type, msg },
+	{ Default Local },
+	NewWindow(
+		type,
+		<< Modal,
+		VListBox(
+			Align( Center ),
+			TextBox( "<b>" || type || ":</b> " || msg ,<< Markup, <<SetFont( "Calibri Light", 12 ) ),
+			SpacerBox( Size(20,20) ),
+			ButtonBox( "OK" )
+		)
+	);
+);
+
+
+// -->
+DB:compare_lists = Function( { list1, list2 },
+	{ Default Local },
+	return_list = { 0, 0, 0 };
+	/* Iterates through values on list1 and list2 */
+	For( i = 1, i <= NItems( list1 ), i++,
+		For( j = 1, j <= NItems( list2 ), j++,
+			/* Catch equal values on return_list */
+			If( lowercase( list1[ i ] ) == lowercase( list2[ j ] ),
+				return_list[ j ] = 1;
+				Break();
+			);
+		);
+	);
+	Return( return_list );
+);
+
+// -->
+DB:set_filter = Function( { filter_dict, name, val },
+	{ Default Local },
+	If( val != "",
+		If( name == "TestID",
+			testids = {};
+			lines = Words( val, "\!n" );
+			For( i = 1, i <= NItems( lines ), i++,
+				line = lines[ i ];
+				line = Substitute( line, "\!r", "" );
+				testids = Insert( testids, line );
+			);
+			filter_dict[ name ] = testids;
+			,
+			filter_dict[ name ] = val;
+		);
+	);
+	Return( filter_dict );
+);
+
+DB:get_as_date = Function( { time },
+	{ Default Local },
+	/* Creates string in SQL-date format */
+	date = 	Char( Year( time ) ) || "-" ||
+			Char( Month( time ) ) || "-" ||
+			Char( Day( time ) );
+	Return( date );
+);
+
+
+DB:udm_puller = Function( { paramsDict },
+	{ Default Local },
+	print(paramsDict);
+	file = LoadTextFile( "$UDMP_PATH/udm_puller_helper.py" );
+	PythonInit();
+	PythonSubmit( file );
+	PythonSend( paramsDict );
+	PythonSubmit( "\[
+
+import pysvtools.udm_puller.run_udm_puller as rup
+optionDict = getOptionsDict( paramsDict )
+df = rup.get_data( **optionDict )
+dt = df[0]
+
+]\" );
+	dt = PythonGet( "dt" );
+	PythonTerm();
+	Return( dt );
+);

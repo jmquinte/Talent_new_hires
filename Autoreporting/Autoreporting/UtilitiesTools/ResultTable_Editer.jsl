@@ -1,0 +1,439 @@
+// ---- | Init Procedures
+Clear Symbols();
+Clear Log();
+Close All( DataTables, Reports, Journal );
+Batch Interactive( 1 );
+Names Default To Here( 1 );
+
+// ---- | Getting EV_User
+EV_User = Substitute(Get Environment Variable("EV_User"), "\", "_");
+
+// ---- | Getting available InterfaceNames for EV_User
+path_owners = "Settings\OwnersSettings.sas7bdat";
+dt = open(path_owners, Invisible);
+InterfacesList = column(char(EV_User)) << GetAsMatrix();
+sub_query_interfaces = "";
+For(i = 1, i <= N Items(InterfacesList), i++,
+	CurrentInterface = "'" || InterfacesList[i] || "'";
+    If(i < N Items(InterfacesList),
+        sub_query_interfaces = sub_query_interfaces || CurrentInterface || ", ";
+    ,
+        sub_query_interfaces = sub_query_interfaces || CurrentInterface;
+    );
+    
+);
+write(sub_query_interfaces);
+
+// ---- | View table in GUI
+ResultTable = New Table( "Untitled", Invisible, Add Rows( 0 ), New Column( "Column 1", Numeric, "Continuous", Format( "Best", 12 ), Set Values( [] ) ) );
+pTable = Panel Box( "Table", db2 = ResultTable << New Data Box() );
+
+
+// ---- | Functions
+BlockAllColumns = Function( {DtTable}, // Parameteres
+    {index}, // Local variable
+	ColumnNames = DtTable << Get Column Names(); // Get the column names
+	For( index = 1, index <= N Items( ColumnNames ), index += 1,
+			Column( DtTable, ColumnNames[index] ) << Set Lock( 1 )
+		);
+    Return( 1 );
+); 
+
+SetColumToEngFormat = Function( {DtTable}, // Parameteres
+    {index}, // Local variable
+	Column_List = List( "Mean", "Maximum", "Minimum", "MaximumSpec", "MinimumSpec", "StdDev" );
+	For( index = N Items( Column_List ), index > 0, index--,
+		Try(
+			Column( DtTable, Column_List[index] ) << data type( numeric ) << modeling type( continuous ) << Format(
+				Engineering, 9, 6,
+				Keep trailing zeroes( 0 ),
+				Keep all whole digits( 1 )
+			)
+		)
+	);
+    Return( 1 );
+); 
+
+
+// ---- | Global Variables
+fontobj = S = Text Box( "    " );
+database = "DSN=cloudcds_ts; Trusted=True; MARS=True;";
+ResultSelected = "";
+AbbreviationSelected = "";
+InterfaceSelected = "";
+
+
+// ---- | Buttuns funtions
+closeallbutton = Button Box( "Close All", Close All( DataTables, Reports, Journal ) );
+
+RunSQL = Button Box( "UPDATE VALUES",
+	update_sql = ResultTable:UpdateQuery << Get Values();
+	select_sql = ResultTable:SelectQuery << Get Values();
+	aux_index = 0;
+	For( index = 1, index <= N Items( update_sql ), index += 1,
+		SQL_Query = update_sql[index];
+		If( SQL_Query != "",
+			aux_index = aux_index + 1
+		);
+	);
+	Write( aux_index );
+	If( aux_index >= 1, 
+		// **** UPDATE SQL ****
+		Write( "\!n\!n", "----- | UPDATE | -----", "\!n\!n" );
+		database = "DSN=cloudcds_ts; Trusted=True; MARS=True;";
+		dbc = Create Database Connection( database );
+		QUERIES = "";
+		For( index = 1, index <= N Items( update_sql ), index += 1,
+			SQL_Query = update_sql[index];
+			If( SQL_Query != "", 
+				Write( "\!n", SQL_Query, "\!n" );
+				QUERIES = QUERIES || SQL_Query
+			);
+		);
+		Write( "\!n", QUERIES, "\!n" );
+		Try( Execute SQL( dbc, QUERIES ) );
+		Close Database Connection( dbc );
+		
+		// **** SELECT SQL ****
+		//Write( "\!n\!n", "----- | SELECT | -----", "\!n\!n" );
+		SQL_UNION = "";
+		For( index = 1, index <= N Items( select_sql ), index += 1,
+			SQL_Query = select_sql[index];
+			If( SQL_Query != "",
+				SQL_UNION = SQL_UNION || " UNION " || "(" || select_sql[index] || ")"
+			);
+		);
+		SQL_UNION = SQL_UNION || ";";
+		positionA = Contains( SQL_UNION, ";" );
+		SQL_UNION = Substr( SQL_UNION, 8, positionA );
+		Write( "\!n", SQL_UNION, "\!n" );
+		
+		//-------- Delete Result Table
+		db2 << delete();
+		Close( ResultTable, nosave );
+		
+		database = "DSN=cloudcds_ts; Trusted=True; MARS=True;";
+		dbc = Create Database Connection( database );
+		ResultTable = Execute SQL( dbc, SQL_UNION, Invisible, "ResultTable" );
+		Close Database Connection( dbc );
+		
+		pTable << append( db2 = ResultTable << New Data Box() );
+		SetColumToEngFormat(ResultTable);
+		BlockAllColumns(ResultTable);
+		If( N Items( V1H2H2 ) > 1,
+			Remove From( V1H2H2, 2 )
+		);
+		
+	); //-------------------- END IF
+	If( aux_index == 0,
+		If( N Items( V1H2H2 ) > 1,
+			Remove From( V1H2H2, 2 )
+		);
+		ErrorWindows = New Window( "ERROR!!!!", H List Box( Text Box( "  No Rows to be updated, try again or contact Data Analysis Pilar " ) ) );
+		Reset_BN << Click();
+	);
+);
+
+// ---- | --- | Apply Filter Button
+ApplyFilter = Button Box( "Appy Filter",
+	dtNew = ResultTable << subset( selected columns( 0 ), selected rows( 1 ), Invisible );
+	Try( Flag_Exist = Is Missing( dtNew ), Flag_Exist = 0 ); // Verify if exist a table with the filters applied
+	If( Flag_Exist == 1, ErrorWindows = New Window( "ERROR!!!!", H List Box( Text Box( "  No Filter Data Selected, try again or contact Data Analysis Pilar " ) ) ) ); // If not, open a error window
+	
+	If( Flag_Exist == 0,
+		Try( Filter1 << delete() );
+		db2 << delete();
+		Close( ResultTable, nosave );
+		ResultTable = dtNew << subset( selected columns( 0 ), selected rows( 0 ), Invisible );
+		Close( dtNew, nosave );
+		ResultTable << Set Name( "ResultTable" );
+		pTable << append( db2 = ResultTable << New Data Box() );
+		
+		ResultTable << New Column( "OriginalisValid", "Numeric", "Continuous", Width( 1 ) );
+		ResultTable << New Column( "OriginalComment", "Character" );
+		ResultTable:isValid << Set Property( "List Check", {0, 1} );
+		ResultTable:OriginalisValid << Set Values( ResultTable:isValid << Get Values );
+		ResultTable:OriginalComment << Set Values( ResultTable:Comment << Get Values );
+		
+		ResultTable << New Column( "UpdateQuery",
+			"Character",
+			Formula(
+				If( (:Comment != :OriginalComment) | (:isValid != :OriginalisValid),
+					("UPDATE " || ResultSelected || " SET isValid= " || Char( :isValid ) || ", Comment= '" || :Comment || "' WHERE"
+
+					|| " TestId = " || "'" || Char( :TestId ) || "' AND"
+					|| " SubTestId = " || "'" || Char( :SubTestId ) || "' AND"
+					
+					
+					
+					
+					
+					
+					|| " Abbreviation = " || "'" || Char( :Abbreviation ) || "' AND"
+					
+					|| " PlatformName = " || "'" || Char( :PlatformName ) || "' AND"
+					
+					|| " IPName = " || "'" || Char( :IPName ) || "' AND"
+					
+					
+					|| " InterfaceName = " || "'" || Char( :InterfaceName ) || "' AND"
+					|| " InterfaceMode = " || "'" || Char( :InterfaceMode ) || "' AND"
+					|| " InterfaceDataRate = " || "'" || Char( :InterfaceDataRate ) || "' AND"
+					|| " InterfaceClockFrequency = " || "'" || Char( :InterfaceClockFrequency ) || "' AND"
+					|| " PortName = " || "'" || Char( :PortName ) || "' AND"
+					
+					|| " TopologyName = " || "'" || Char( :TopologyName ) || "' AND"
+					|| " PDGVersion = " || "'" || Char( :PDGVersion ) || "' AND"
+					
+					|| " SignalName = " || "'" || Char( :SignalName ) || "' AND"
+					
+					|| " ParameterName = " || "'" || Char( :ParameterName ) || "' AND"
+					
+					|| " Symbol = " || "'" || Char( :Symbol ) || "' AND"
+					
+					|| " CpuVisualId = " || "'" || Char( :CpuVisualId ) || "' AND"
+					
+					|| " PchVisualId = " || "'" || Char( :PchVisualId ) || "' AND"
+					
+					|| " corner = " || "'" || Char( :corner ) || "';")
+				)
+			)
+		);
+		ResultTable << New Column( "SelectQuery",
+			"Character",
+			Formula(
+				If( (:Comment != :OriginalComment) | (:isValid != :OriginalisValid),
+					("SELECT * FROM " || ResultSelected || " WHERE" 
+					
+					|| " TestId = " || "'" || Char( :TestId ) || "' AND"
+					|| " SubTestId = " || "'" || Char( :SubTestId ) || "' AND"
+					
+					
+					
+					
+					
+					
+					|| " Abbreviation = " || "'" || Char( :Abbreviation ) || "' AND"
+					
+					|| " PlatformName = " || "'" || Char( :PlatformName ) || "' AND"
+					
+					|| " IPName = " || "'" || Char( :IPName ) || "' AND"
+					
+					
+					|| " InterfaceName = " || "'" || Char( :InterfaceName ) || "' AND"
+					|| " InterfaceMode = " || "'" || Char( :InterfaceMode ) || "' AND"
+					|| " InterfaceDataRate = " || "'" || Char( :InterfaceDataRate ) || "' AND"
+					|| " InterfaceClockFrequency = " || "'" || Char( :InterfaceClockFrequency ) || "' AND"
+					|| " PortName = " || "'" || Char( :PortName ) || "' AND"
+					
+					|| " TopologyName = " || "'" || Char( :TopologyName ) || "' AND"
+					|| " PDGVersion = " || "'" || Char( :PDGVersion ) || "' AND"
+					
+					|| " SignalName = " || "'" || Char( :SignalName ) || "' AND"
+					
+					|| " ParameterName = " || "'" || Char( :ParameterName ) || "' AND"
+					
+					|| " Symbol = " || "'" || Char( :Symbol ) || "' AND"
+					
+					|| " CpuVisualId = " || "'" || Char( :CpuVisualId ) || "' AND"
+					
+					|| " PchVisualId = " || "'" || Char( :PchVisualId ) || "' AND"
+					|| " corner = " || "'" || Char( :corner ) || "'")
+				)
+			)
+		);
+
+		SetColumToEngFormat(ResultTable);
+		BlockAllColumns(ResultTable);
+		ResultTable:Comment << Set Lock( 0 );
+		ResultTable:isValid << Set Lock( 0 );
+		ResultTable:SelectQuery << Hide( 1 );
+		ResultTable:UpdateQuery << Hide( 1 );
+		ResultTable:OriginalComment << Hide( 1 );
+		ResultTable:OriginalisValid << Hide( 1 );
+		
+		Remove From( V1H2H1, 2 );
+		V1H2H2 << Append( RunSQL );
+	);
+	
+);
+
+Reset_BN = Button Box( "Reset",
+	Try( Filter1 << Delete() );
+	db2 << delete();
+	Close( ResultTable, nosave );
+	
+	SQL_Statement = "SELECT SubTestId.ToString(), * FROM " || ResultSelected || " WHERE Abbreviation = '" || AbbreviationSelected || "' AND InterfaceName = '" || InterfaceSelected || "';";
+	dbc = Create Database Connection( database );
+	ResultTable = Execute SQL( dbc, SQL_Statement, Invisible, "ResultTable" );
+	Close Database Connection( dbc );
+	
+	ResultTable << Delete Columns( "SubTestId" );
+	ResultTable:Column 1 << Set Name( "SubTestId" );
+
+	SetColumToEngFormat(ResultTable);
+	BlockAllColumns(ResultTable);
+		
+	pTable << append( db2 = ResultTable << New Data Box() );
+	V1 << Append(
+		Filter1 = ResultTable << Data Filter( Location( {-1470, -328} ), 
+			Add Filter( 
+				columns( :TestId, :PchVisualId, :isValid, :MinimumEval, :MaximumEval, :MeasurementCount, :Mean, :Minimum, :Maximum, :Comment, :PlatformName, :InterfaceMode, :InterfaceDataRate, :InterfaceClockFrequency, :PortName, :TopologyName, :corner, :SignalName, :ParameterName, :Symbol), 
+				Display( :TestId, Size( 400, 225 ), List Display ), 
+				Display( :Comment, Size( 400, 225 ), List Display ), 
+					
+			) 		
+		)
+	);
+	
+	
+	lb = Filter Col Selector( width( 250 ) );
+	Filter1 << Col Selector( width( 250 ) );
+	
+	
+	Remove From( V1H2H1, 2 );
+	If( N Items( V1H2H2 ) > 1,
+		Remove From( V1H2H2, 2 )
+	);
+	V1H2H1 << Append( ApplyFilter );
+	
+);
+
+// ---- | Drop Downs Menus
+// ---- | --- | Result Table selector
+ResulTable_CB = Combo Box(
+	{"","gdc_wbio.GPIOResult_SIV","mtl_wbio.Result_SIV", "lnl_wbio.Result_SIV"}, 	// Only SIV tables works
+	ResultSelected = ResulTable_CB << get selected();
+	
+	// Get table from BD
+	SQL_Statement = "SELECT DISTINCT Abbreviation FROM " || ResultSelected || ";";
+	dbc = Create Database Connection( database );	// Open Connection
+	Abbreviations = Execute SQL( dbc, SQL_Statement, "Abbreviations" ); // Get table from SQL statement
+	Close Database Connection( dbc ); // Close database Connection
+
+	col = Column( Abbreviations, 1 );
+	Abbreviations_List = col << Get values;
+	Abbreviation_CB << Remove All;
+	Insert Into (Abbreviations_List,  " ", 1);
+	Abbreviation_CB << Set Items(Abbreviations_List);
+	Close(Abbreviations,nosave);
+);
+
+// ---- | --- | Abbreviation selector
+Abbreviation_CB = Combo Box(
+	{""},
+	AbbreviationSelected = Abbreviation_CB << get selected();
+	
+	V1H1H2[1] << Delete();
+	V1H1H2[1] << Delete();
+	V1H1H2 << Append ( Text Box( "Table Selected=   "));
+	V1H1H2 << Append ( Text Box( ResultSelected ));
+	
+	// Get table from BD
+	SQL_Statement = "SELECT DISTINCT InterfaceName FROM " || ResultSelected || " WHERE Abbreviation = '" || AbbreviationSelected || "' AND InterfaceName IN (" || sub_query_interfaces || ");";
+	write(">>>> ", SQL_Statement );
+	dbc = Create Database Connection( database ); // Open Connection
+	Interfaces_CB = Execute SQL( dbc, SQL_Statement, "Interfaces" ); // Get the interface table
+	Close Database Connection( dbc ); // Close Connection
+	
+	col = Column( Interfaces_CB, 1 );
+	Interfaces_List = col << Get values;
+	Insert Into (Interfaces_List,  " ", 1);
+	Interface_CB << Remove All;
+	Interface_CB << Set Items(Interfaces_List);
+	Close(Interfaces_CB,nosave);
+	
+);
+
+// ---- | --- | Interface selector
+Interface_CB = Combo Box(
+	{" "},
+	InterfaceSelected = Interface_CB << get selected();
+	
+	V1H1H3[1] << Delete();
+	V1H1H3[1] << Delete();
+	V1H1H3 << Append ( Text Box(  "Abbreviation Selected=   "));
+	V1H1H3 << Append ( Text Box(  AbbreviationSelected));
+	
+	db2 << delete(); // Delete current table view in GUI
+	Close( ResultTable, nosave ); // Close the result table
+	
+	// Get table from BD
+	SQL_Statement = "SELECT  SubTestId.ToString(), * FROM " || ResultSelected || " WHERE Abbreviation = '" || AbbreviationSelected || "' AND InterfaceName = '" || InterfaceSelected || "';"; // Create SQL statement
+	dbc = Create Database Connection( database ); // Create database connection
+	ResultTable = Execute SQL( dbc, SQL_Statement, Invisible, "ResultTable" ); // Execute SQL statement
+	Close Database Connection( dbc ); // Close database connection
+	
+	ResultTable << Delete Columns( "SubTestId" );
+	ResultTable:Column 1 << Set Name( "SubTestId" );
+	
+	// Set column type for mean, maximum, minimum, std and specs as Engineering Num
+	Column_List = List( "Mean", "Maximum", "Minimum", "MaximumSpec", "MinimumSpec", "StdDev" );
+	For( i = N Items( Column_List ), i > 0, i--,
+		Try(
+			Column( ResultTable, Column_List[i] ) << data type( numeric ) << modeling type( continuous ) << Format(
+				Engineering, 9, 6,
+				Keep trailing zeroes( 0 ),
+				Keep all whole digits( 1 )
+			)
+		)
+	);
+	
+	BlockAllColumns(ResultTable);
+	
+	V1H1H4[1] << Delete();
+	V1H1H4[1] << Delete();
+	V1H1H4 << Append( Text Box( "InterfaceSelected Selected=   " ) );
+	V1H1H4 << Append( Text Box( InterfaceSelected ) );
+	pTable << append( db2 = ResultTable << New Data Box() );
+	
+	V1 << Append(
+		Filter1 = ResultTable << Data Filter( Location( {-1470, -328} ), 
+			Add Filter( 
+				columns( :TestId, :PchVisualId, :isValid, :MinimumEval, :MaximumEval, :MeasurementCount, :Mean, :Minimum, :Maximum, :Comment, :PlatformName, :InterfaceMode, :InterfaceDataRate, :InterfaceClockFrequency, :PortName, :TopologyName, :corner, :SignalName, :ParameterName, :Symbol), 
+				Display( :TestId, Size( 400, 225 ), List Display ), 
+				Display( :Comment, Size( 400, 225 ), List Display ), 
+				Display( :isValid, Check Box Display), 
+					
+			) 		
+		)
+	);
+	V1H2H1 << Append( ApplyFilter );
+	V1H2H3 << Append( Reset_BN );
+	
+);
+
+
+// ---- | GUI Builder
+
+W1 = New Window( "Results Table Editor",
+	V1 = H List Box(
+		V List Box(
+			V1H1 = V List Box(
+				V1H1H1 = H List Box(
+					Text Box( "  Click on Close All Button to close all the avaliable windows ---> " ),
+					S,
+					S,
+					S,
+					S,
+					S,
+					S,
+					S,
+					S,
+					S,
+					S,
+					S,
+					closeallbutton
+				), 
+				V1H1H2 = H List Box(Text Box( "  Select results table ---> " ),ResulTable_CB),
+				V1H1H3 = H List Box(Text Box( "  Select avaliable Abbreviation ---> " ),Abbreviation_CB),
+				V1H1H4 = H List Box( Text Box( "  Select avaliable Interface ---> " ), Interface_CB ),
+
+			),
+			V1H2 = V List Box( V1H2H1 = H List Box( Text Box() ), V1H2H2 = H List Box( Text Box() ), V1H2H3 = H List Box( Text Box() ), ),
+			V1V3 = V List Box( pTable ),
+		),
+	),
+);
+W1 << Size Window(1500,750);
+w1 << MoveWindow (30,50);

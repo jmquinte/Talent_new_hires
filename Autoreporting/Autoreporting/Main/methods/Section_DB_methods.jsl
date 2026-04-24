@@ -1,0 +1,57 @@
+/*  Using NAMESPACE: DB  */
+DB = Namespace( "Section Database Scope" );
+/*  Methods declaration  */
+
+print( "Section DB methods ready" );
+
+//Start:
+
+DB:init_section = Function( { } ,
+	{ Default Local },
+	/* Refresh avialable DSNs */
+	DB:update_section();
+	DB:bb << Script( DB:bb_callback() );
+	DB:bbloc << Script(DB:bbloc_callback() );
+);
+
+DB:get_section = Function( { } ,
+	{ Default Local },
+	Return( DB:Section );
+);
+
+DB:update_section = Function( { } ,
+	{ Default Local },
+	/* Executes DSN searcher, add result to list */
+	dsn_list = DB:get_available_dsn();
+	DB:cb << SetItems( dsn_list );
+);
+
+DB:bb_callback = Function( { } ,
+	{ Default Local },
+	/* Get results objects available in DB */
+	Global:DSN = DB:cb << GetSelected;
+	if( Global:DSN != "",
+		Global:Results_Obj = DB:get_results_objects( Global:DSN );
+		SE:cb_obj << SetItems( DB:get_object_by_schema( Global:Results_Obj ) );
+		,
+		/* Prompt error */
+		DB:alert( "Error", "A database has not been selected" )
+	);
+	Try(Global:Data:isValid << Data Type( Character ););
+	SE:ib_date << Set( 0 );
+	SE:ib_inter << Set( 0 );
+);
+
+DB:bbloc_callback = Function({},
+	{ Default Local },
+	Close All( DataTables );
+	import_filename=Pick File();
+	Global:Data = Open(import_filename,Invisible,Worksheet Settings( Suppress Empty Columns( 0 )));
+	Try(Global:Data:isValid << Data Type( Character ););
+	Try(
+		Global:Data << set name("Data");
+		FL:update_filters();
+		FL:clear_selection();
+		,
+		Throw( "No data table found" ) );
+);

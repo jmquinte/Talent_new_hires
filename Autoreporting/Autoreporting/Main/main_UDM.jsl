@@ -1,0 +1,63 @@
+//!
+ClearSymbols();
+ClearLog();
+NamesDefaultToHere( 1 );
+
+/*  Global NAMESPACE: Global  */
+Global = NewNamespace( "Global Scope" );
+
+/*  PATH VARIABLES Declaration  */
+Global:MAIN_PATH = SetPathVariable( "MAIN_PATH", GetDefaultDirectory()   );
+Global:COMP_PATH = SetPathVariable( "COMP_PATH", "$MAIN_PATH/components" 		);
+Global:HELP_PATH = SetPathVariable( "HELP_PATH", "$MAIN_PATH/helpers" 	 		);
+Global:METH_PATH = SetPathVariable( "METH_PATH", "$MAIN_PATH/methods" 	 		);
+Global:CONF_PATH = SetPathVariable( "CONF_PATH", "$MAIN_PATH/config"	 		);
+Global:SCPT_PATH = SetPathVariable( "SCPT_PATH", "$MAIN_PATH/scripts"	 		);
+Global:CMMN_PATH = SetPathVariable( "CMMN_PATH", "$MAIN_PATH/common"	 		);
+Global:PRFL_PATH = SetPathVariable( "PRFL_PATH", "$MAIN_PATH/profiles" 	 		);
+Global:PRFL_PATH = SetPathVariable( "UDMP_PATH", "$MAIN_PATH/udm_py_scripts" 	);
+
+Global:bool_inter 	= 0;
+Global:bool_date 	= 0;
+Global:nav_mode		= 0;	// False - Hide buttons 	True - Display buttons
+
+Global:Data			= .;
+Global:Subset		= .;
+Global:data_loaded	= 0;
+
+Global:Filters		= [=> ];
+
+Global:Scripts		= {};
+
+/*  Libraries  */
+Include( "$COMP_PATH/Section_UDM_DB_class.jsl" );
+Include( "$COMP_PATH/Section_Filters_class.jsl" );
+Include( "$COMP_PATH/Section_Scripts_class.jsl" );
+Include( "$COMP_PATH/Section_Profile_class.jsl" );
+
+Include( "$CMMN_PATH/common.jsl" );
+/*  User Interface  */
+
+DB:init_section();
+FL:init_section();
+SC:init_section();
+PR:init_section();
+
+ARGUI = NewWindow(
+	"Autoreporting-GUI",
+	HListBox(
+		Align( Center ),
+		VListBox(
+			Align( Center ),
+			DB:get_section(),
+			FL:get_section(),
+			PR:get_section()
+		),
+		SC:get_section()
+	)
+);
+
+ARGUI << OnClose(
+	CloseAll( Data Tables, Private, No Save );
+	CloseAll( Data Tables, Invisible, No Save );
+);

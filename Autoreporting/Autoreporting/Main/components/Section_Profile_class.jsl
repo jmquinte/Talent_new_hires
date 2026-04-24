@@ -1,0 +1,26 @@
+/*  Section's NAMESPACE: PR  */
+PR = NewNameSpace( "Section Profile Scope" );
+/*  Methods and Helpers libraries  */
+Include( "$METH_PATH/Section_Profile_methods.jsl" );
+Include( "$HELP_PATH/Section_Profile_helpers.jsl" );
+/*  Components declaration  */
+
+print( "Section Profile components ready" );
+
+// Load - Save - Selection Boxes
+PR:bb_Save = ButtonBox( "Save profile" );
+PR:bb_Load = ButtonBox( "Load profile" );
+PR:cb_Profile = ComboBox( {} );
+// Section
+PR:Section = PanelBox(
+	"Save profile",
+	VListBox(
+		Align( Center ),
+		HListBox(
+			PR:cb_Profile,
+			PR:bb_Load,
+			PR:bb_Save
+		),
+		SpacerBox( Size( 375,10 ) )
+	);
+);

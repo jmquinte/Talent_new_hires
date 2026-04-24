@@ -1,0 +1,212 @@
+/*  Section's NAMESPACE: DB  */
+DB = NewNameSpace( "Section Database Scope" );
+/*  Methods and Helpers libraries  */
+Include( "$METH_PATH/Section_UDM_DB_methods.jsl" );
+Include( "$HELP_PATH/Section_UDM_DB_helpers.jsl" );
+/*  Components declaration  */
+print( "Section UDM DB components ready" );
+
+//Inner components
+DB:cb 			= ComboBox( { } );			/* To erase Databases Combo Box */
+
+/* Lab Information Section */
+DB:cb_Lab 		= ComboBox( { } );			/* Lab Databases Combo Box */
+DB:cb_Team 		= ComboBox( { } );			/* Team Databases Combo Box */
+DB:cb_Project	= ComboBox( { } );			/* Project Databases Combo Box */
+DB:SubSection_Info = HListBox(
+	Align( Center ),
+	SpacerBox( Size( 10, 10 ) ),
+	TextBox( "Lab" ),
+	DB:cb_Lab,
+	SpacerBox( Size( 10, 10 ) ),
+	TextBox( "Team" ),
+	DB:cb_Team,
+	SpacerBox( Size( 10, 10 ) ),
+	TextBox( "Project" ),
+	DB:cb_Project
+);
+
+/* Filters Section 1 */
+DB:tb_TestId			= TextEditBox( "", 
+		Hint( "Ex. 9af03873-8495-487b-a726-6034d15e0c43 \!n ae22dbdd-cba4-4aba-b27a-16fe89e8885f" ), 
+		<<SetNLines(3), <<SetWidth(300) );
+DB:neb_Inner_Case_Number = TextEditBox( "", Hint( "" ), <<SetWidth(125) );
+DB:neb_Outer_Case_Number = TextEditBox( "", Hint( "" ), <<SetWidth(125) );
+DB:SubSection_Filters_1  = HListBox(
+	Align( Center ),
+	HListBox(
+		Align( Left ),
+		TextBox( "Test Id" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_TestId
+	)
+);
+
+/* Filters Section 2 */
+DB:tb_Indicator_ID 		= TextEditBox( "", Hint( "Ex. ID1556" ), <<SetWidth(125) );
+DB:tb_PlatformName 		= TextEditBox( "", Hint( "Ex. MTL_P_Cfg4_1435" ), <<SetWidth(125) );
+DB:tb_TestName 			= TextEditBox( "", Hint( "Ex. Test Name" ), <<SetWidth(125) );
+DB:tb_Start_Date		= NumberEditBox( AsDate( Today() - InWeeks( 1 ) ), << SetFormat( "m/d/y" ) );
+DB:tb_IFWIVersion		= TextEditBox( "", Hint( "Ex. " ), <<SetWidth(125) );
+DB:tb_ExperimentType 	= TextEditBox( "", Hint( "Ex. SMV" ), <<SetWidth(125) );
+
+DB:SubSection_Filters_2 = VListBox(
+	Align( Right ),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Indicator ID" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_Indicator_ID,
+	),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Platform Name" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_PlatformName
+	),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Test Name" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_TestName
+	),
+	SpacerBox( Size(10,10) ),
+	DB:ib_Start_Date = IfBox( 0,
+		HListBox(
+			Align( Center ),
+			TextBox( "Start Date" ),
+			SpacerBox( Size(10,10) ),
+			DB:tb_Start_Date
+		)
+	),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "IFWI Version" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_IFWIVersion
+	),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Experiment Type" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_ExperimentType
+	)
+);
+
+/* Filters Section 3 */
+
+DB:tb_VisualID 			= TextEditBox( "", Hint( "Ex. GDC1293922" ), <<SetWidth(125) );
+DB:tb_Comment 			= TextEditBox( "", Hint( "Ex. Comments" ), <<SetWidth(125) );
+DB:tb_TestReason 		= TextEditBox( "", Hint( "Ex. Test Reason" ), <<SetWidth(125) );
+DB:tb_End_Date			= NumberEditBox( AsDate( Today() + InDays( 1 ) ), << SetFormat( "m/d/y" ) );
+DB:tb_BiosVersion		= TextEditBox( "", Hint( "Ex. " ), <<SetWidth(125) );
+
+DB:SubSection_Filters_3 = VListBox(
+	Align( Right ),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Visual ID" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_VisualID,
+	),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Comment" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_Comment
+	),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Test Reason" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_TestReason
+	),
+	SpacerBox( Size(10,10) ),
+	DB:ib_End_Date = IfBox( 0,
+		HListBox(
+			Align( Center ),
+			TextBox( "End Date" ),
+			SpacerBox( Size(10,10) ),
+			DB:tb_End_Date
+		)
+	),
+	SpacerBox( Size(10,10) ),
+	HListBox(
+		Align( Center ),
+		TextBox( "Bios Version" ),
+		SpacerBox( Size(10,10) ),
+		DB:tb_BiosVersion
+	)
+);
+
+/* Filters Section 4 */
+DB:cb_Cases			= CheckBox( { "Inner Case Number", "Outer Case Number", "Select Date" } );
+DB:neb_Inner_Case	= NumberEditBox( 0 );
+DB:neb_Outer_Case	= NumberEditBox( 0 );
+DB:ib_Inner			= IfBox( 0, DB:neb_Inner_Case );
+DB:ib_Outer			= IfBox( 0, DB:neb_Outer_Case );
+
+DB:SubSection_Filters_4 = HListBox(
+	Align( Center ),
+	DB:cb_Cases,
+	SpacerBox( Size(10,10) ),
+	VListBox(
+		Align( Right ),
+		DB:ib_Inner,
+		SpacerBox( Size(10,10) ),
+		DB:ib_Outer,
+	)
+);
+
+
+DB:cb_Options		= CheckBox( { "Add Wildcard", "No Invalid Data", "Dev Server" } );
+
+
+DB:bb 			= ButtonBox( "Load" );		/* Connect Button */
+
+//Section
+DB:Section = PanelBox(
+	"Database Selection",
+	VListBox(
+		Align( Center ),
+		DB:SubSection_Info,
+		SpacerBox( Size(10,10) ),
+		DB:SubSection_Filters_1,
+		SpacerBox( Size(10,10) ),
+		HListBox(
+			Align( Top ),
+			DB:SubSection_Filters_2,
+			SpacerBox( Size( 10, 10 ) ),
+			DB:SubSection_Filters_3
+		),
+		SpacerBox( Size(10,10) ),
+		DB:SubSection_Filters_4,
+		SpacerBox( Size(10,10) ),
+		HListBox(
+			Align( Center ),
+			DB:cb_Options,
+			DB:bb,
+			SpacerBox( Size( 10, 10 ) );
+		),
+		SpacerBox( Size( 375, 5 ) );
+	);
+);
+
+
+/*
+DB:init_section();
+Window = NewWindow(
+	"TestFilters",
+	DB:Section
+);
+*/
+
+ 

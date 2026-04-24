@@ -1,0 +1,2 @@
+Variability chart:
+  - HIGH and LOW vs. LANE and TEMPERATURE

@@ -1,0 +1,107 @@
+/*  Using NAMESPACE: FL  */
+FL = Namespace( "Section Filters Scope" );
+/*  Methods declaration  */
+
+print( "Section Filters methods ready" );
+
+// Start:
+
+// --> 
+FL:init_section = Function( { } ,
+	{ Default Local },
+	/* Select column to filter */
+	FL:lb_filters	<< Script( FL:clear_section(2); FL:update_keys(); );
+	/* Search in list */
+	FL:teb_filters 	<< Script( FL:update_filters() );
+	FL:teb_keys 	<< Script( FL:update_keys() );
+	/* Add/Delete buttons */
+	FL:bb_add		<< Script( FL:bb_add_callback() );
+	FL:bb_delete	<< Script( FL:bb_delete_callback() );
+	FL:bb_delete_a 	<< Script( FL:bb_delete_a_callback() );
+);
+
+FL:get_section = Function( { } ,
+	{ Default Local },
+	Return( FL:Section );
+);
+
+FL:clear_section = Function( { n },
+	{ Default Local },
+	/* Cummultive cleanning of section */
+	If( n < 1, // Search box columns
+		FL:teb_filters << SetText( "" );
+	);
+	If( n < 2, // Column list
+		FL:lb_filters << SetItems( {} );
+	);
+	If( n < 3, // Search box keys
+		FL:teb_keys << SetText( "" );
+	);
+	If( n < 4, // Keys list
+		FL:lb_keys << SetItems( {} );
+	);
+);
+
+FL:clear_selection = Function( { },
+	{ Default Local },
+	FL:lb_selected << SetItems( {} );
+);
+
+FL:update_filters = Function( { },
+	{ Default Local },
+	/* Update columns list */
+	FL:clear_section( 1 );
+	{ col_list, Global:data_loaded } = FL:get_columns( Global:Data, FL:teb_filters << GetText );
+	FL:lb_filters << SetItems( col_list );
+);
+
+FL:update_keys = Function( { },
+	{ Default Local },
+	/* Updates keys list */
+	FL:clear_section( 3 );
+	FL:filter_engine( Global:Data, Global:Filters );
+	key_list = FL:get_keys( Global:Data, FL:lb_filters << GetSelected , FL:teb_keys << GetText );
+	print(key_list);
+	FL:lb_keys << SetItems( key_list );
+);
+
+FL:update_selected = Function( { },
+	{ Default Local },
+	/* Update selected filters list */
+	FL:lb_selected << SetItems( FL:get_filter_string( Global:Filters ) );
+);
+
+FL:bb_add_callback = Function( { },
+	{ Default Local },
+	filters = FL:lb_filters << GetSelected;
+	keys = FL:lb_keys << GetSelected;
+	/* Add selected filter */
+	If( NItems( keys ) > 0,
+		Global:Filters = FL:get_filter_array( Global:Filters, filters[1], keys );
+		/* Clears and update section */
+		FL:update_selected();
+		FL:clear_section( 2 );
+		FL:update_keys();
+	);
+);
+
+FL:bb_delete_callback = Function( { },
+	{ Default Local },
+	/* Delete selected filters */
+	selected = FL:lb_selected << GetSelectedIndices;
+	If( NItems( selected ) > 0,
+		Global: Filters = FL:delete_from_array( Global:Filters, selected );
+		FL:update_selected();
+		FL:clear_section( 2 );
+		FL:update_keys();
+	);
+);
+
+FL:bb_delete_a_callback = Function( { },
+	{ Default Local },
+	/* Clears filters objects */
+	Global:Filters = [=> ];
+	FL:update_selected();
+	FL:clear_section( 2 );
+	FL:update_keys();
+);

@@ -1,0 +1,56 @@
+/*  Using NAMESPACE: PR  */
+PR = Namespace( "Section Profile Scope" );
+/*  Methods declaration  */
+
+print( "Section Profile methods ready" );
+
+// Start:
+
+// -->
+PR:init_section = Function( { },
+	{ Default Local },
+	/* Update profiles */
+	PR:update_profiles();
+	/* Assembly callbacks */
+	PR:bb_Save << Script( PR:bb_Save_callback(); );
+	PR:bb_Load << Script( PR:bb_Load_callback(); );
+);
+
+PR:get_section = Function( { },
+	{ Default Local },
+	Return( PR:Section );
+);
+
+PR:bb_Save_callback = Function( { },
+	{ Default Local },
+	/* Form */
+	name = PR:name_profile();
+	If( name != "",
+		path = "$PRFL_PATH/" || name;
+		/* Create instance */
+		If( !DirectoryExists( path ),
+			CreateDirectory( path );
+			PR:save_profile( Global:DSN, Global:Obj, Global:Schema, Global:Type,
+							 GLobal:Filter, Global:Date, Global:Interfaces,
+							 Global:Filters, Global:Scripts, path );
+			PR:update_profiles();
+		);
+	);
+);
+
+PR:bb_Load_callback = Function( { },
+	{ Default Local },
+	profile = PR:cb_Profile << GetSelected;
+	path = "$PRFL_PATH/" || profile;
+	/* Load selected profile */
+	{ Global:DSN, Global:Obj, Global:Schema, Global:Type, GLobal:Filter, Global:Date, Global:Interfaces, Global:Filters, Global:Scripts } = PR:load_profile( path );
+	/* Update all sections */
+	SE:bb_data_callback();
+	FL:update_selected();
+	SC:update_selected_scripts();
+);
+
+PR:update_profiles = Function( { },
+	{ Default Local },
+	PR:cb_Profile << SetItems( PR:get_profiles() );
+);

@@ -1,0 +1,56 @@
+script = Function( { dt, pntr }, 
+	{ Default Local },
+	dt=current data table();
+	dt:Mean << data type(numeric)<<format("Best", 12) <<modeling type(continuous);
+	dt:StdDev << data type(numeric)<<format("Best", 12) <<modeling type(continuous);
+	
+	dt << New Column( "MinimumSTD", formula(:Mean - (:StdDev * 3)  ) );
+	dt << New Column( "MaximumSTD", formula(:Mean + (:StdDev * 3) ) );
+	
+	stkTable = dt << Stack(
+		columns( :MinimumSTD, :Mean, :MaximumSTD ),
+		Source Label Column( "Label" ),
+		Stacked Data Column( "Data" )
+	);
+	
+	
+	stkTable << Set Name ("Data Stacked");
+	
+	Variability Chart(
+		Y( :Data ),
+		X( :CpuVisualId, :corner ),
+		Std Dev Chart( 0 ),
+		By( :InterfaceMode, :InterfaceClockFrequency, :ParameterName ),
+		SendToReport(
+				Dispatch(
+					{},
+					"2",
+					ScaleBox,
+					{
+					//Add Ref Line( 0, "Dotted", "Medium Light Gray", "", 1 ),
+					//Add Ref Line( 0.5, "Dashed", "Red", "0.5 min", 1 )
+					Label Row( {Show Major Grid( 1 ), Show Minor Grid( 1 )} ),
+					Add Ref Line( Num(:MinimumSpec[1];), Dotted, "Medium Dark Red", "MinSpec "||char(format(num(:MinimumSpec[1]),"Engineering SI",3)), 3 ),
+					Add Ref Line( Num(:MaximumSpec[1];), Dotted,"Medium Dark Red", "MaxSpec "||char(format(num(:MaximumSpec[1]),"Engineering SI",3)), 3 )
+						
+					}
+				),
+				Dispatch(
+					{},
+					"Variability Chart",
+					FrameBox,
+					{Row Legend(
+						corner,
+						Color( 1 ),
+						Color Theme( "JMP Default" ),
+						Marker( 0 ),
+						Marker Theme( "" ),
+						Continuous Scale( 0 ),
+						Reverse Scale( 0 ),
+						Excluded Rows( 0 )
+					)}
+				)
+			)
+	
+	)
+);

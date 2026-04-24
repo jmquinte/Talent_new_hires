@@ -1,0 +1,304 @@
+/*  Using NAMESPACE: SE  */
+SE = Namespace( "Section Search Scope" );
+/*  Helpers declaration  */
+
+print( "Section Search helpers ready" );
+
+// -->
+SE:get_names_from_dt = Function( { dt, index },
+	{ Default Local },
+	/* Gets values on first three columns of row[index] */
+	obj_names = Column( dt, 1 ) [ index ];
+	schema_names = Column( dt, 2 ) [ index ];
+	type = Column( dt, 3 ) [ index ];
+	Return( obj_names, schema_names, type );
+);
+
+SE:get_as_date = Function( { time },
+	{ Default Local },
+	/* Creates string in SQL-date format */
+	date = 	Char( Year( time ) ) || "-" ||
+			Char( Month( time ) ) || "-" ||
+			Char( Day( time ) );
+	Return( date );
+);
+
+// -->
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:activity_log_exists = Function( { dsn, schema },
+	{ Default Local },
+	/* Gets activity log keyword [ActivityLog] */
+	configs = DB:get_configs();
+	actlog = configs["activity_log"];
+	/* Consults that [ActivityLog] table exists */
+	sql_statement = "SELECT COUNT( * ) " ||
+					"FROM INFORMATION_SCHEMA.TABLES " ||
+					"WHERE TABLE_NAME = '" || actlog || "' " ||
+					"AND TABLE_SCHEMA = '" || schema || "' ";
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Private, "temp_ActivityLog" );
+	/* TRUE/FALSE */
+	bool = Column( dt, 1 )[ 1 ];
+	Close( dt, NoSave );
+	Return( bool );
+);
+
+// -->
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:interface_col_exists = Function( { dsn, schema, obj },
+	{ Default Local },
+	/* Gets prefilter parameters */
+	configs = DB:get_configs();
+	key_column = configs[ "prefilter_key_column" ];
+	/* Concats prefilter parameters into sql chunck */
+	column_name = "";
+	For( i = 1 , i <= NItems( key_column ), i++,
+		column_name = column_name || " COLUMN_NAME LIKE '" || key_column[ i ] || "' ";
+		If( i != NItems( key_column ),
+			column_name = column_name || "OR";
+			
+		);
+	);
+	/* Gets Columns that relate to prefilter parameters */
+	sql_statement = "SELECT COLUMN_NAME " ||
+					"FROM INFORMATION_SCHEMA.COLUMNS " ||
+					"WHERE TABLE_SCHEMA = '" || schema || "' " ||
+					"AND TABLE_NAME = '" || obj || "' " ||
+					"AND ( " || column_name || " ) ";
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Private, "temp_Prefilter" );
+	/* Columns exists */
+	bool = NRows( dt ) > 0;
+	/* Name of columns */
+	prefilter_col_list = Column( dt, 1 ) << GetAsMatrix;
+	Close( dt, NoSave );
+	Return( bool, prefilter_col_list );
+);
+
+// -->
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:get_key_values_by_date = Function( { dsn, schema, obj, type, column, date },
+	{ Default Local },
+	/* Gets activity log keyword [ActivityLog] */
+	configs = DB:get_configs();
+	actlog = configs[ "activity_log" ];
+	/* Generates an anchor statement depending on obj.type */
+	data_statement = " WHERE TABLE_NAME = ";
+	ref_table = "'"|| obj ||"'";
+	If( type == "V",
+		ref_table = "'Data'";
+	);
+	data_statement = data_statement || ref_table;
+	/* Generates date statement  */
+	date_statement = " AND TIMESTAMP BETWEEN '" || date[1] || "' AND '" || date[2] || "' ";
+	/* Consults distinct filter values by date */
+	sql_statement = "SELECT DISTINCT R.Keys FROM " ||
+					"( SELECT TIMESTAMP, TestId, SubTestId FROM " || schema || "." || actlog ||
+					data_statement || date_statement || " ) A " ||
+					"JOIN ( SELECT TestId, SubTestId, " || column || " AS Keys FROM " || schema || "." || obj ||  " ) R " ||
+					"ON A.TestId = R.TestId AND A.SubTestId = R.SubTestId";
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Private, "temp_Keys" );
+	/* Key values list */
+	key_list = Column( dt, 1 ) << GetAsMatrix;
+	Close( dt, NoSave );
+	Return( key_list );
+);
+
+// -->
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:get_key_values = Function( { dsn, schema, obj, column },
+	{ Default Local },
+	/* Consults distinct filter values */
+	sql_statement = "SELECT DISTINCT " || column || " AS Keys FROM " || schema || "." || obj;
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Invisible, "temp_Keys" );
+	/* Key values list */
+	key_list = Column( dt, 1 ) << GetAsMatrix;
+	Close( dt, NoSave );
+	Return( key_list );
+);
+
+// -->
+SE:filters_string = Function( { dsn, schema, obj, type, filter, date, interfaces },
+	{ Default Local },
+	/* Empty status strings */
+	DSN_string = "";
+	Obj_string = "";
+	Date_string = "";
+	Fil_string = "";
+	/* Ignore empty values otherwise generates strings  */
+	If( !IsMissing( dsn ) , 
+		DSN_string 	= "DSN: " || dsn || "\!n";
+	);
+	If( !IsMissing( schema ) & !IsMissing( obj ) & !IsMissing( type ),
+		Obj_string 	= "Obj: " || schema || "." || obj || " - " || type || "\!n";
+	);
+	If( NItems( date ) > 0,
+		Date_string	= "From: " || date[ 1 ] || "\!n" ||
+					  "To: " || date[ 2 ] || "\!n";
+	);
+	If( NItems( interfaces ) > 0,
+		Fil_string	= filter || ": ";
+		interfaces_string = "";
+		/* Concats each key value selected */
+		For( i = 1 , i <= NItems(interfaces) , i++ ,
+			interfaces_string = interfaces_string || interfaces[ i ] || " ";
+		);
+		Fil_string = Fil_string || interfaces_string
+	);
+	/* Concats status strings */
+	string = DSN_string || Obj_string || Date_string || Fil_string;
+	Return( string );
+);
+
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:load_data_date_filter = Function( { dsn, schema, obj, type, filter, date, interfaces, bool_metadata },
+	{ Default Local },
+	/* Gets activity log keyword [ActivityLog] */
+	configs = DB:get_configs();
+	actlog = configs[ "activity_log" ];
+	/* Generates an anchor statement depending on obj.type */
+	data_statement = " WHERE TABLE_NAME = ";
+	ref_table = "'"|| obj ||"'";
+	If( type == "V",
+		ref_table = "'Data'";
+	);
+	data_statement = data_statement || ref_table;
+	/* Generates time constrains satement */
+	date_statement = " AND TIMESTAMP BETWEEN '" || date[1] || "' AND '" || date[2] || "' ";
+	/* Generates key values filter */
+	inter_statement = "";
+	For( i = 1 , i <= NItems( interfaces ), i++,
+		inter_statement = inter_statement || " '" || interfaces[ i ] || "' ";
+		If( i != NItems( interfaces ),
+			inter_statement = inter_statement || ",";
+		);
+	);
+	filter_statement = " WHERE " || filter || " IN ( " || inter_statement || " ) ";
+	
+	/* Load data with metadata columns */
+	metadata = "";
+	if( bool_metadata,
+		metadata = "A.Date AS ActLogDate,";
+	);
+	/* Load data with time and key value constrains */
+	sql_statement = "SELECT " || metadata || " R.* FROM " ||
+					"( SELECT TIMESTAMP AS Date, TestId, SubTestId FROM " || schema || "." || actlog ||
+					data_statement || date_statement || " ) A " ||
+					"JOIN ( SELECT * FROM " || schema || "." || obj || filter_statement || " ) R " ||
+					"ON A.TestId = R.TestId AND A.SubTestId = R.SubTestId";
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Invisible, "Data" );
+	Return( dt );
+);
+
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:load_data_date = Function( { dsn, schema, obj, type, date, bool_metadata },
+	{ Default Local },
+	/* Gets activity log keyword [ActivityLog] */
+	configs = DB:get_configs();
+	actlog = configs[ "activity_log" ];
+	/* Generates an anchor statement depending on obj.type */
+	data_statement = " WHERE TABLE_NAME = ";
+	ref_table = "'"|| obj ||"'";
+	If( type == "V",
+		ref_table = "'Data'";
+	);
+	data_statement = data_statement || ref_table;
+	/* Generates time constrains */
+	date_statement = " AND TIMESTAMP BETWEEN '" || date[1] || "' AND '" || date[2] || "' ";
+	/* Load data with metadata columns */
+	metadata = "";
+	if( bool_metadata,
+		metadata = "A.Date AS ActLogDate,";
+	);
+	/* Loads data with time constrains */
+	sql_statement = "SELECT " || metadata || " R.* FROM " ||
+					"( SELECT TIMESTAMP AS Date, TestId, SubTestId FROM " || schema || "." || actlog ||
+					data_statement || date_statement || " ) A " ||
+					"JOIN ( SELECT * FROM " || schema || "." || obj || " ) R " ||
+					"ON A.TestId = R.TestId AND A.SubTestId = R.SubTestId";
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Invisible, "Data" );
+	Return( dt );
+);
+
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:load_data_filter = Function( { dsn, schema, obj, type, filter, interfaces },
+	{ Default Local },
+	/* Generates key value constrains */
+	inter_statement = "";
+	For( i = 1 , i <= NItems( interfaces ), i++,
+		inter_statement = inter_statement || " '" || interfaces[ i ] || "' ";
+		If( i != NItems( interfaces ),
+			inter_statement = inter_statement || ",";
+		);
+	);
+	filter_statement = " WHERE " || filter || " IN ( " || inter_statement || " ) ";
+	/* Loads data with key value constrains */
+	sql_statement = "SELECT * FROM " || schema || "." || obj || filter_statement;
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Invisible, "Data" );
+	Return( dt );
+);
+
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:load_data = Function( { dsn, schema, obj, type },
+	{ Default Local },
+	/* Loads data with no constrains */
+	sql_statement = "SELECT * FROM " || schema || "." || obj;
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = OpenDatabase( dsn_statement, sql_statement, Invisible, "Data" );
+	Return( dt );
+);
+
+// -->
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+SE:load_data_mux = Function( { dsn, schema, obj, type, filter, date, interfaces, bool_metadata },
+	{ Default Local },
+	dt = .;
+	/* Load data multiplexer */
+	If( !IsMissing( dsn ) & !IsMissing( schema ) & !IsMissing( obj ) & !IsMissing( type ),
+		/* Case - Time & Key values */
+		If( ( !IsMissing( filter ) & ( NItems( interfaces ) > 0 ) ) & ( NItems( date ) > 0 ),
+			//print( "Loading data - Date and Filter" );
+			dt = SE:load_data_date_filter( dsn, schema, obj, type, filter, date, interfaces, bool_metadata );
+		);
+		/* Case - Time */
+		If( !( !IsMissing( filter ) & ( NItems( interfaces ) > 0 ) ) & ( NItems( date ) > 0 ),
+			//print( "Loading data - Date" );
+			dt = SE:load_data_date( dsn, schema, obj, type, date, bool_metadata );
+		);
+		/* Case - Key values */
+		If( ( !IsMissing( filter ) & ( NItems( interfaces ) > 0 ) ) & !( NItems( date ) > 0 ),
+			//print( "Loading data - Filter" );
+			dt = SE:load_data_filter( dsn, schema, obj, type, filter, interfaces );
+		);
+		/* Case - None */
+		If( !( !IsMissing( filter ) & ( NItems( interfaces ) > 0 ) ) & !( NItems( date ) > 0 ),
+			//print( "Loading data - None" );
+			dt = SE:load_data( dsn, schema, obj, type );
+		);
+	);
+	if(SE:cb_appendData << Get == 1, try( try(data table("Data") << Set Name("new data to append")); dt = data table("new data to append") << Concatenate(data table("data to append"), output table("Data"), Invisible); close("data to append"); close("new data to append");););
+	Return( dt );
+);

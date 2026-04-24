@@ -1,0 +1,176 @@
+CM = NewNamespace( "Common Scope" );
+
+// -->
+CM:import_scripts = Function( { path },
+	{ Default Local },
+	print( "===Importing Python Scripts===" );
+	path = ConvertFilePath( path );
+	path = Right( path, Length( path ) - 1 );
+	PythonInit();
+	PythonSend( path );
+	PythonSubmit( 
+"\[
+import sys
+if not (path in sys.path):
+	sys.path.append( path )
+paths = sys.path
+]\"
+	);
+	print( PythonGet( paths ) );
+	PythonTerm();
+);
+
+// -->
+CM:Stack_Data = Function( { dt, columns, name },
+	{ Default Local },
+	/* Creates Stack of data table */
+	st = dt << Stack(
+		Invisible,
+		Column(
+			columns[1], // Columns to be
+			columns[2]	// stacked
+		),
+		SourceLabel Column( "Label" ),
+		StackedDataColumn( name )
+	);
+	/* Change name */
+	st << SetName( name );
+	Return( st );
+);
+
+// -->
+CM:Only_Valid_Data = Function( { dt, columns, name, treshold },
+	{ Default Local },
+	dt << Clear Select;
+	rows_list = {};
+	c = 1;
+	ForEachRow( dt,
+		bool_pass = 1;
+		For( i = 1, i <= NItems( columns ), i++,
+			column = columns[i];
+			If( Abs( AsColumn( column ) ) > treshold | AsColumn( column ) == 0,
+				bool_pass = 0;
+			);
+		);
+		If( bool_pass,
+			rows_list = Insert( rows_list, c );
+		);
+		c++;
+	);
+	dt << SelectRows( rows_list );
+	nt = dt << Subset( OutputTable( name ), SelectedRows(1), Invisible );
+	Return( nt );
+);
+
+// -->
+CM:prompt_treshold = Function( { msg, dft },
+	{ Default Local },
+	NewWindow(
+		"Limit",
+		<<Modal,
+		VListBox(
+			Align( Center ),
+			HListBox(
+				Align( Center ),
+				TextBox( msg ),
+				SpacerBox( Size( 20,20 ) ),
+				neb = NumberEditBox( dft )
+			),
+			SpacerBox( Size( 20,20 ) ),
+			ButtonBox( "OK" )
+		);
+	);
+	Return( neb << Get );
+);
+
+// -->
+CM:col_to_num = Function( { dt, col },
+	{ Default Local },
+	Try( Column( dt, col ) << DataType( "Numeric" , Format( Best, 12) ) << ModelingType( Continuous ), "" );
+);
+
+/* API to generate XML-slides */
+CM:generate_slidetitle = Function( { title, subtitle },
+	{ Default Local },
+	/* SLIDE TITLE */
+	array = [ => ];
+	array[ "TITLE" ] 	= title;
+	array[ "SUBTITLE" ] = subtitle;
+	slide = [ => ];
+	slide[ "SLIDETITLE" ] = array;
+	Return( slide );
+);
+
+CM:generate_slide = Function( { title, description, image },
+	{ Default Local },
+	/* SLIDE */
+	array = [ => ];
+	array[ "TITLE" ]		= title;
+	array[ "DESCRIPTION" ] 	= description;
+	array[ "IMAGE" ] 		= image;
+	slide = [ => ];
+	slide[ "SLIDE" ] = array;
+	Return( slide );
+);
+
+/* Associative Array to XML Parser */
+CM:quote = Function( { Key, Val },
+	{ Default Local },
+	/* Quote between tags */
+	string = 	"<" || Key || ">\!n" ||
+				Val || "\!n" ||
+				"</" || Key || ">\!n";
+	Return( string );
+);
+
+CM:format_XML = Function( { Sub },
+	{ Default Local },
+	/* Indent selection */
+	lines = Words( Sub, "\!n" );	
+	string = "";
+	For( i = 1, i <= NItems( lines ), i++,
+		string = string || "\!t" || lines[ i ] || "\!n";
+	);
+	string = Remove( string, -1 );
+	Return( string );
+);
+
+CM:parse_XML = Function( { Array, Name },
+	{ Default Local },
+	/* Generates XML */
+	string = "";
+	/* Get Tags */
+	keys = Array << GetKeys;
+	For( i = 1, i <= NItems( keys ), i++,
+		/* Get value for earch tag */
+		val = Array[ keys[ i ] ];
+		sub = "";
+		/* If val is an Associative Array */
+		If( IsAssociativeArray( val ),
+			/* Recursive */
+			sub = CM:parse_XML( val, "" );,
+			/* Else If list */
+			IsList( val ),
+			/* For each item */
+			For( j = 1, j <= NItems( val ), j++,
+				/* Recursive */
+				If( IsAssociativeArray( val[ j ] ),
+				
+					sub = sub || CM:parse_XML( val[ j ], "" );,
+					
+					sub = sub || CM:quote( "ITEM", "\!t" || char( val[ j ] ) );	
+				);
+			);,
+			/* Else quote val */
+			sub = CM:quote( "ITEM", "\!t" || char( val ) );
+		);
+		/* Format and append */
+		sub = CM:format_XML( sub );
+		string = string || CM:quote( keys[ i ], sub );
+	);
+	/* Quote whole string */
+	If( Name != "",
+		string = CM:quote( Name, CM:format_XML( string ) );
+	);
+	Return( string );
+);

@@ -1,0 +1,105 @@
+/*  Using NAMESPACE: PR  */
+PR = Namespace( "Section Profile Scope" );
+/*  Helpers declaration  */
+
+print( "Section Profile helpers ready" );
+
+//Start:
+
+// -->
+PR:get_profiles = Function( { },
+	{ Default Local },
+	dir_list = FilesInDirectory( "$PRFL_PATH/" );
+	list = {};
+	/* Get all direcotries in PRFL_PATH */
+	for( i = 1 , i <= NItems( dir_list ) , i++,
+		If( IsDirectory( "$PRFL_PATH/" || dir_list[ i ] ),
+			list = Insert( list, dir_list[ i ] );
+		);
+	);
+	Return( list );
+);
+
+PR:save_results_object = Function( { dsn, obj, schema, type },
+	{ Default Local },
+	/* Save DSN & Obj information in the same file structure */
+	file = [ => ];
+	file[ "DSN" ] = dsn;
+	file[ "Obj" ] = obj;
+	file[ "Schema" ] = schema;
+	file[ "Type" ] = type;
+	Return( file );
+);
+
+PR:save_prefilters = Function( { filter, date, interfaces },
+	{ Default Local },
+	/* Save preflilters in same file structure */
+	file = [ => ];
+	file[ "Date" ] = date;
+	file[ "Filter" ] = filter;
+	file[ "Interfaces" ] = interfaces;
+	Return( file );
+);
+
+// -->
+PR:save_profile = Function( { dsn, obj, schema, type, filter, date, interfaces, filters, scripts, path },
+	{ Default Local },
+	file = [ => ];
+	/* Separates profile information by section */
+	file[ "OBJECT" ] = PR:save_results_object( dsn, obj, schema, type );
+	file[ "PREFILTERS" ] = PR:save_prefilters( filter, date, interfaces );
+	file[ "FILTERS" ] = filters;
+	file[ "SCRIPTS" ] = scripts;
+	/* Parse file structure as JSON */
+	json = AsJSONExpr( file );
+	/* Save JSON file in path */
+	SaveTextFile( path || "/profile.json", json, mode( "replace" ) );
+);
+
+// -->
+PR:name_profile = Function( { },
+	{ Default Local },
+	/* Form */
+	windows = NewWindow(
+		"Profile",
+		<<Modal,
+		HListBox(
+			Align( Center ),
+			TextBox( "Name" ),
+			SpacerBox( Size( 20, 20 ) ),
+			teb = TextEditBox( "", <<SetWidth( 100 ) ),
+			SpacerBox( Size( 20, 20 ) ),
+			ButtonBox( "OK" )
+		)
+	);
+	name = teb << GetText;
+	Return( name );
+);
+
+// -->
+PR:load_profile = Function( { path },
+{ Default Local },
+	null = .;
+	/* Load profile file */
+	file = LoadTextFile( path || "/profile.json", JSON  );
+	/* Separate OBJECT items */
+	Object 	= file[ "OBJECT" ];
+	dsn 	= Object[ "DSN" ];
+	obj 	= Object[ "Obj" ];
+	schema 	= Object[ "Schema" ];
+	type 	= Object[ "Type" ];
+	/* Separate PREFILTERS items */
+	Prefilters 	= file[ "PREFILTERS" ];
+	filter		= Prefilters[ "Filter" ];
+	date		= Prefilters[ "Date" ];
+	interfaces	= Prefilters[ "Interfaces" ];
+	/* Separate FILTERS items */
+	filters	= file[ "FILTERS" ];
+	If( !( NItems( filters ) > 0 ), filters = [ => ]; );
+	/* Separate SCRIPTS items */
+	scripts	= file[ "SCRIPTS" ];
+	
+	Return( dsn, obj, schema, type,
+			filter, date, interfaces,
+			filters, scripts );
+);

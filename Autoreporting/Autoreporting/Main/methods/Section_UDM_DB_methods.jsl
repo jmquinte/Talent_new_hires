@@ -1,0 +1,81 @@
+/*  Using NAMESPACE: DB  */
+DB = Namespace( "Section Database Scope" );
+/*  Methods declaration  */
+
+print( "Section UDM DB methods ready" );
+
+//Start:
+
+DB:init_section = Function( { } ,
+	{ Default Local },
+	/* Refresh avialable DSNs */
+	DB:update_section();
+	DB:cb_Cases << Script( DB:cb_Cases_callback() );
+	DB:bb 		<< Script( DB:bb_callback() );
+);
+
+DB:get_section = Function( { } ,
+	{ Default Local },
+	Return( DB:Section );
+);
+
+DB:update_section = Function( { } ,
+	{ Default Local },
+	/* Search available labs, teams, projects. Add result to list */
+	{ labs_list, teams_list, projects_list }  = DB:get_db_info();
+	DB:cb_Lab 		<< SetItems( labs_list );
+	DB:cb_Team 		<< SetItems( teams_list );
+	DB:cb_Project 	<< SetItems( projects_list );
+);
+
+DB:bb_callback = Function( { } ,
+	{ Default Local },
+	/* Get results objects available in DB */
+	filter_dict = AssociativeArray();
+	filter_dict = DB:set_filter( filter_dict, "Lab"				, DB:cb_Lab << GetSelected );
+	filter_dict = DB:set_filter( filter_dict, "Team"			, DB:cb_Team << GetSelected );
+	filter_dict = DB:set_filter( filter_dict, "Project"			, DB:cb_Project << GetSelected );
+	filter_dict = DB:set_filter( filter_dict, "TestId"    		, DB:tb_TestID << GetText );
+	filter_dict = DB:set_filter( filter_dict, "Indicator_ID"    , DB:tb_Indicator_ID << GetText );
+	filter_dict = DB:set_filter( filter_dict, "VisualID"        , DB:tb_VisualID << GetText );
+	filter_dict = DB:set_filter( filter_dict, "PlatformName"    , DB:tb_PlatformName << GetText );
+	filter_dict = DB:set_filter( filter_dict, "Comment"         , DB:tb_Comment << GetText );
+	filter_dict = DB:set_filter( filter_dict, "TestName"        , DB:tb_TestName << GetText );
+	filter_dict = DB:set_filter( filter_dict, "TestReason"      , DB:tb_TestReason << GetText );
+	filter_dict = DB:set_filter( filter_dict, "ExperimentType"  , DB:tb_ExperimentType << GetText );
+	
+	filter_dict = DB:set_filter( filter_dict, "IFWIVersion"     , DB:tb_IFWIVersion << GetText );
+	filter_dict = DB:set_filter( filter_dict, "BiosVersion"     , DB:tb_BiosVersion << GetText );
+	
+	states = DB:compare_lists( DB:cb_Cases << GetSelected, {"Inner Case Number", "Outer Case Number", "Select Date"} );
+	If( states[ 1 ], filter_dict = DB:set_filter( filter_dict, "Inner_Case_Number"     , DB:neb_Inner_Case << Get ); );
+	If( states[ 2 ], filter_dict = DB:set_filter( filter_dict, "Outer_Case_Number"     , DB:neb_Outer_Case << Get ); );
+	If( states[ 3 ],
+		filter_dict = DB:set_filter( filter_dict, "Start_Date"	, DB:get_as_date( DB:tb_Start_Date << Get ) );
+		filter_dict = DB:set_filter( filter_dict, "End_Date"    , DB:get_as_date( DB:tb_End_Date << Get ) );
+	);
+	options = DB:compare_lists( DB:cb_Options << GetSelected, { "Add Wildcard", "No Invalid Data", "Dev Server" } );
+	filter_dict = DB:set_filter( filter_dict, "Add_Wildcard"	, options[ 1 ] );
+	filter_dict = DB:set_filter( filter_dict, "No_Invalid_Data"	, options[ 2 ] );
+	filter_dict = DB:set_filter( filter_dict, "dev_server"		, options[ 3 ] );
+	dt = DB:udm_puller( filter_dict );
+	If( !IsEmpty( dt ),
+		dt << SetName( "Data" );
+		dt << NewDataView;
+		dt << ShowWindow( 0 );
+		Global:Data = dt;
+		FL:update_filters();
+		FL:clear_selection();,
+		Global:Data = .;
+	);
+);
+
+DB:cb_Cases_callback = Function( { },
+	{ Default Local },
+	states = DB:compare_lists( DB:cb_Cases << GetSelected, {"Inner Case Number", "Outer Case Number", "Select Date"} );
+	DB:ib_Inner << Set( states[ 1 ] );
+	DB:ib_Outer << Set( states[ 2 ] );
+	DB:ib_Start_Date << Set( states[ 3 ] );
+	DB:ib_End_Date << Set( states[ 3 ] );
+);
+

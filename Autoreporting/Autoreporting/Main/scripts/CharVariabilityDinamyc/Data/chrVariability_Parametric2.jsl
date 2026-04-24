@@ -1,0 +1,162 @@
+Parametrics = Function({Yaxis,Xaxis,XYBy,Legend,minSpecCol,maxSpecCol,maxedFilter,Col_to_compare,CompConditionsAA,LabelsNames},
+	{Local Default },
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////variable management
+	colmin = Column( current data table(), minSpecCol[1]);
+	colmax = Column( current data table(), maxSpecCol[1]);
+	//print(Yaxis,Xaxis,XYBy,Legend,minSpecCol,maxSpecCol,maxedFilter,Col_to_compare,CompConditionsAA);
+	datacol = Column( current data table(), Yaxis[1]);
+	datacol <<data type(numeric)<<modeling type(continuous);
+	
+	/////////////////////////////////////////////////////////////////////////////////////////labeling Formula 
+	if(Col_to_compare!="N/A",
+		N_Objects = CompConditionsAA << get keys();
+		tempcondition_i = "";
+		for( i=1, i<=N items(N_Objects) , i++,
+			N_Filters_P_O = CompConditionsAA[i] << get keys();
+			tempcondition_j = "";
+			for( j=1, j<= N items(N_Filters_P_O), j++,
+				N_Condition_P_F = CompConditionsAA[i][N_Filters_P_O[j]];
+				tempcondition_k = "";
+				for( k=1, k <= N items(N_Condition_P_F), k++,
+					//print(char(N_Objects[i]) || "=>" || char(N_Filters_P_O[j]) || "=>" ||char(N_Condition_P_F[k]));
+					tempcondition_k = tempcondition_k|| "| Contains( \!""|| char(N_Condition_P_F[k] ||"\!",:"|| char(N_Filters_P_O[j]) ||") ");
+				);
+				tempcondition_k = "(" || substr(tempcondition_k,3) || ")" ;
+				tempcondition_j = tempcondition_j || "&" || tempcondition_k ;
+			);
+			tempcondition_i = tempcondition_i || "if("|| substr(tempcondition_j,2) || ", \!""|| LabelsNames[i] ||"\!",     ";
+		);
+		
+		tempcondition_i = tempcondition_i || ", \!"N/A\!"";
+		for( a=1, a<=N items(N_Objects) , a++,
+			tempcondition_i = tempcondition_i ||")";
+		);
+		tempcondition_i = tempcondition_i || ";";
+		
+		
+		Current Data Table() << New Column("Compare",
+			formula(eval(parse(tempcondition_i)))
+		);
+		
+		insert into(Xaxis, "Compare",1);
+		
+		
+	);
+
+	
+	
+	
+	
+	
+	
+/*If( Contains( "ARL P", :Abbreviation ),
+	"ARL",
+	If( Contains( "MTL P", :Abbreviation ) & Contains( "MR", :Comment ),
+		"MR",
+		"MTL P"
+	)
+);
+
+
+	
+	Current Data Table() << New Column("Compare",
+	formula(
+	If(
+		Contains( :Comment, "[MR] LPSS_I3C MTL-H MR 1-Island topology @ 2 MHz on 5 VT Corners" ), "MR",
+		Contains( :Comment, "I3C-LPSS SDR test with 3S parts @1p8V" ) | Contains( :Comment, "LPSS Open Drain I3C" ) |
+		Contains( :Comment, "LPSS_I3C MTL-H MR 1-Island topology @ 2 MHz on 5 VT Corners on PPSM parts" ), "mtlh",
+		"n/a"
+	)));
+*/
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////Maxed Data filter
+	if(N items(maxedFilter) > 0,
+		columnY = Column( current data  table(), Yaxis[1]);
+		Current Data Table() << Data Filter(
+			Location( {-2266, 35} ),
+			Mode( Show( 1 ), Include( 1 ) ),
+			Add Filter(
+			columns( columnY ),
+			Where( columnY <= 1000000000000 ),
+			)
+		);
+	);
+
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////chart secction
+	Variability Chart(
+		Y( eval( Yaxis )),
+		X( eval( Xaxis )),
+		Std Dev Chart( 0 ),
+		By( eval(XYBy) ),
+		SendToReport(
+				Dispatch(
+					{},
+					"2",
+					ScaleBox,
+					{
+					//Add Ref Line( 0, "Dotted", "Medium Light Gray", "", 1 ),
+					//Add Ref Line( 0.5, "Dashed", "Red", "0.5 min", 1 )
+					//Add Ref Line( Num(:MinimumSpec[1];), Dotted, "Medium Dark Red", "MinSpec "||char(format(num(:MinimumSpec[1]),"Engineering SI",3)), 3 ),
+					//Add Ref Line( Num(:MaximumSpec[1];), Dotted,"Medium Dark Red", "MaxSpec "||char(format(num(:MaximumSpec[1]),"Engineering SI",3)), 3 )
+					Label Row( {Show Major Grid( 1 ), Show Minor Grid( 1 )} ),
+					Add Ref Line( Num(:spec_min[1]), Dotted, "Medium Dark Red", "MinSpec "||char(format(num(:spec_min[1]),"Engineering SI",3)), 3 ),
+					Add Ref Line( Num(:spec_max[1]), Dotted,"Medium Dark Red", "MaxSpec "||char(format(num(:spec_max[1]),"Engineering SI",3)), 3 )
+					}
+				),
+				Dispatch(
+					{},
+					"Variability Chart",
+					FrameBox,
+					{Row Legend(
+						eval(Legend),
+						Color( 1 ),
+						Color Theme( "JMP Default" ),
+						Marker( 0 ),
+						Marker Theme( "" ),
+						Continuous Scale( 0 ),
+						Reverse Scale( 0 ),
+						Excluded Rows( 0 )
+					)}
+				)
+			)
+	);
+	
+	
+	if(Col_to_compare!="N/A",
+		Oneway(
+		Y( :Data ),
+		X( :Compare ),
+		Means and Std Dev( 1 ),
+		Box Plots( 1 ),
+		Mean Lines( 1 ),
+		Mean Error Bars( 1 ),
+		Compare Densities( 1 ),
+		Std Dev Lines( 1 ),
+		Connect Means( 1 ),
+		X Axis Proportional( 0 ),
+		Points Jittered( 1 ),
+		Grand Mean( 0 ),
+		By( :SignalName, :ParameterName ),
+		SendToReport(
+			Dispatch(
+				{},
+				"1",
+				ScaleBox,
+				{
+				Add Ref Line( Num(colmin[1]), Dotted, "Medium Dark Red", "MinSpec "||char(format(num(colmin[1]),"Engineering SI",3)), 3 ),
+				Add Ref Line( Num(colmax[1]), Dotted,"Medium Dark Red", "MaxSpec "||char(format(num(colmax[1]),"Engineering SI",3)), 3 )
+				}
+				),	
+			),
+			
+		);
+	);
+);
+
+
+

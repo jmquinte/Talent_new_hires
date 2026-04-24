@@ -1,0 +1,126 @@
+/*  Using NAMESPACE: FL  */
+FL = Namespace( "Section Filters Scope" );
+/*  Helpers declaration  */
+
+print( "Section Filters helpers ready" );
+
+FL:search_list = Function( { column_list, search },
+	{ Default Local },
+	/* Search in list */
+	If( search != "",
+		column_search = {};
+		/* Iterates through each list containing search value */
+		For( i = 1, i <= NItems( column_list ), i++,
+			If( Contains( Lowercase( char(column_list[i]) ), Lowercase( search )  ) > 0,
+				column_search = Insert( column_search, column_list[i] );			
+			);
+		);
+		column_list = column_search;
+	);
+	Return( column_list );
+);
+
+// -->
+FL:get_columns = Function( { dt, search },
+	{ Default Local },
+	column_list = {};
+	data_loaded = 0;
+	/* Get column names in database */
+	If( Try( dt << GetName, "" ) != "",
+		column_list = dt << GetColumnNames( );
+		data_loaded = 1;
+		column_list = FL:search_list( column_list, search );
+	);
+	Return( column_list, data_loaded );
+);
+
+// -->
+FL:get_keys = Function( { dt, filter, search },
+	{ Default Local },
+	key_list = {};
+	rows = dt << GetSelectedRows;
+	/* Get tokens in selected column */
+	If( Try( dt << GetName, "" ) != "",
+		col = Column( dt, filter );
+		key_list = AssociativeArray( col[ rows ] );
+		
+		/* Filters search */
+		key_list = FL:search_list( key_list << GetKeys , search );
+	);
+	Return( key_list );
+);
+
+FL:list_to_num = Function( { list },
+	{ Default Local },
+	num_list = {};
+	/* Converts each value in list to num */
+	For( i = 1, i <= NItems( list ), i++,
+		num_list = Insert( num_list, Num( list[ i ] ) );
+	);
+	Return( num_list );
+);
+
+// -->
+FL:get_filter_array = Function( { array, filter, keys },
+	{ Default Local },
+	/* Generates Associative Array order => filter */
+	order = array << GetKeys;
+	If( NItems( order ) > 0, 
+		/* Get incremental order id */
+		next = Max( FL:list_to_num( order ) ) + 1;,
+		next = 1;
+	);
+	/* Concatenates filter array */
+	new_array = [=> ];
+	new_array[ filter ] = keys;
+	array[ char( next ) ] = new_array;
+	Return( array ); 
+);
+
+FL:array_to_string = Function( { array },
+	{ Default Local },
+	/* Generates string: Filter - Key1 Key2 ... Keyn */
+	filter = array << GetKeys;
+	keys = array[ filter[ 1 ] ];
+	string = filter[ 1 ] || " - ";
+	For( i = 1, i <= NItems( keys ), i++,
+		string = string || keys[ i ] || " ";
+	);
+	Return( string );
+);
+
+// -->
+FL:get_filter_string = Function( { array },
+	{ Default Local },
+	list = {};
+	order = array << GetKeys;
+	/* Creates a list of filter strings */
+	For( i = 1, i <= NItems( order ), i++,
+		aux = array[ order[ i ] ];
+		list = Insert( list, FL:array_to_string( aux ) );
+	);
+	Return( list );
+);
+
+// -->
+FL:delete_from_array = Function( { array, indexes },
+	{ Default Local },
+	order = array << GetKeys;
+	order = order[ indexes ];
+	Return( Remove( array, order ) );
+);
+
+// -->
+FL:filter_engine = Function( { dt, array },	
+	{ Default Local },
+	order = array << GetKeys;
+	dt << SelectAllRows;
+	/* Accumulative selection through each filter */
+	For( i = 1, i <= NItems( order), i++,
+		filter = array[ order[ i ] ];
+		column = filter << GetKeys;
+		column = column[ 1 ];
+		keys = filter[ column ];
+		dt << SelectWhere( Contains( keys, AsColumn(column) ), CurrentSelection( "restrict" ) );
+	);
+);

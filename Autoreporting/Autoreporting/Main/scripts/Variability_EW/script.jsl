@@ -1,0 +1,47 @@
+script = Function( { dt, pntr },
+	{ Default Local },
+	treshold = 10;
+	/* Stack from COMMON scripts */
+	st = CM:Stack_Data( dt, { "Left", "Right" }, "EW" );
+	/* Generate Variability Chart */
+	vc = st << Variability Chart(
+		// Columns
+		Y( :EW ),
+		X( :Lane ),
+		/*  Format */
+		SendToReport(
+			/* Grid format */
+			Dispatch(
+				{ "Variability Chart for EW" },
+				"2",
+				ScaleBox,
+				{ Inc( 2 ), Minor Ticks( 1 ),
+				Add Ref Line( 0, "Dotted", "Medium Light Gray", "", 1 ),
+				Add Ref Line( treshold, "Dashed", "Red", "", 1 ),
+				Add Ref Line( -treshold, "Dashed", "Red", "", 1 ),
+				Label Row( {Show Major Grid( 1 ), Show Minor Grid( 1 )} )}
+			),
+			/* Marker Format */
+			Dispatch(
+				{ "Variability Chart for EW" },
+				"Variability Chart",
+				FrameBox,
+				{Marker Size( 5 ), DispatchSeg(
+					Marker Seg( 1 ),
+					Set Jitter( "Random Uniform", "X", 1, 0, 0 )
+				), Row Legend(
+					PchId,
+					Color( 1 ),
+					Color Theme( "JMP Default" ),
+					Marker( 0 ),
+					Marker Theme( "" ),
+					Continuous Scale( 0 ),
+					Reverse Scale( 0 ),
+					Excluded Rows( 0 )
+				)}
+			)
+		)
+	);
+	/* Return Pointer to Report */
+	Return( vc );
+);

@@ -1,0 +1,173 @@
+/*  Using NAMESPACE: DB  */
+DB = Namespace( "Section Database Scope" );
+/*  Helpers declaration  */
+
+print( "Section DB helpers ready" );
+
+//Start:
+
+DB:alert = Function( { type, msg },
+	{ Default Local },
+	NewWindow(
+		type,
+		<< Modal,
+		VListBox(
+			Align( Center ),
+			TextBox( "<b>" || type || ":</b> " || msg ,<< Markup, <<SetFont( "Calibri Light", 12 ) ),
+			SpacerBox( Size(20,20) ),
+			ButtonBox( "OK" )
+		)
+	);
+);
+
+DB:catch_by_name = Function( { list, id, line },
+	{ Default Local },
+	aux_list = list;
+	/* Catch lines of text which include "id" */
+	If( contains( line, id ) == 1,
+		attribute = substitute( line, id, "");
+		attribute = remove( attribute, -1 );
+		aux_list = Insert( list, attribute );
+	);
+	Return( aux_list );
+);
+
+// -->
+/* Executable-type function
+ * LATENCY EXPECTED
+ */
+DB:machine_data_source_list = function( {  },
+	{ Default Local },
+	/* Executes Get-OdbcDsn.exe on Powershell 	*/
+	/* Stores results as text 					*/
+	dsn_available = RunProgram(
+		Executable( "powershell.exe" ),
+		Options( {"/c", "Get-OdbcDsn\!n" } ),
+		Read Function( "text" )
+	);
+	/* Separates results by lines */
+	results_lines = words( dsn_available, "\!n" );
+	/* Empty lists */
+	names_list = {};
+	dsnType_list = {};
+	platform_list = {};
+	driver_list = {};
+	
+	For( i = 1, i <= NItems( results_lines ), i++,
+		line = results_lines[ i ];
+		/* Removes spaces in the string */
+		line = substitute( line, " ", "" );
+		/* Catch name attribute */
+		names_list 		= DB:catch_by_name( names_list, "Name:", line );
+		dsnType_list 	= DB:catch_by_name( dsnType_list, "DsnType:", line );
+		platform_list 	= DB:catch_by_name( platform_list, "Platform:", line );
+		driver_list 	= DB:catch_by_name( driver_list, "DriverName:", line );
+	);
+	Return( names_list, dsnType_list, platform_list, driver_list );
+);
+
+DB:compare_lists = Function( { list1, list2 },
+	{ Default Local },
+	return_list = {};
+	/* Iterates through values on list1 and list2 */
+	For( i = 1, i <= NItems( list1 ), i++,
+		For( j = 1, j <= NItems( list2 ), j++,
+			/* Catch equal values on return_list */
+			If( lowercase( list1[ i ] ) == lowercase( list2[ j ] ),
+				return_list = Insert( return_list, list1[ i ] );
+				Break();
+			);
+		);
+	);
+	Return( return_list );
+);
+
+
+DB:get_configs = Function( {  },
+	{ Default Local },
+	/* Load file as Associative Array */
+	Return( LoadTextFile( "$CONF_PATH/config.json", JSON ) );
+);
+
+
+// -->
+DB:get_available_dsn = Function( {  },
+	{ Default Local },
+	/* Consults available DSNs and compares them with a owner-reviewed list */
+	{ names, _, _, _ } = DB:machine_data_source_list();
+	configs = DB:get_configs();
+	compared_dsn = DB:compare_lists( names, configs[ "list_DSN" ] );
+	Return( compared_dsn );
+);
+
+DB:get_obj_type_string = Function( {  },
+	{ Default Local },
+	/* Concatenates a list of object types, separed by comma */
+	configs = DB:get_configs();
+	obj_type_list = configs[ "object_types" ];
+	string = "";
+	For( i = 1 , i <= NItems( obj_type_list ) , i++,
+		string = string || "'" || obj_type_list[ i ] || "',";
+	);
+	string = Remove( string, -1 );
+	Return( string );
+);
+
+/* SQL-type function
+ * LATENCY EXPECTED
+ */
+DB:get_objects = Function( { dsn },
+	{ Default Local },
+	sql_types = DB:get_obj_type_string();
+	/* Consults Views & Procedures on current DB */
+	sql_statement = "SELECT OBJ.name 'obj_name', SCH.name 'schema_name', OBJ.type " ||
+					"FROM sys.objects OBJ " ||
+					"JOIN sys.schemas SCH " || 
+					"ON OBJ.schema_id = SCH.schema_id " || 
+					"WHERE OBJ.type IN ( " || sql_types || " )";
+	dsn_statement = "DSN=" || dsn || ";" || "Trusted_Connection=Yes";
+	dt = .;
+	dt = OpenDatabase( dsn_statement, sql_statement, Private, "temp_objects" );
+	Return( dt );
+);
+
+// -->
+DB:get_results_objects = Function( { dsn },
+	{ Default Local },
+	dt = DB:get_objects( dsn );
+	ds = .;
+	If( Try( dt << GetName, "" ) != "",
+		/* Select database containing results_search */
+		configs = DB:get_configs();
+		results_list = configs[ "results_search" ];
+		For( i = 1 , i <= NItems( results_list ), i++,
+			dt << SelectWhere( Contains( Lowercase(dt:obj_name[]), results_list[ i ] ), current selection( "extend" ) );
+		);
+		/* Generates subset from selection */
+		ds = dt << Subset( Private, Selected Rows, OutputTable( "results_objects" ) );
+		Close( dt, NoSave );
+	);
+	Return( ds );
+);
+
+// -->
+DB:get_object_by_schema = Function( { dt },
+	{ Default Local },
+	list = {};
+	configs = DB:get_configs();
+	types_list = configs[ "object_types" ];
+	dict_list = configs[ "object_types_dict" ];
+	If( Try( dt << GetName, "" ) != "",
+		/* Iterates through table to format objects */
+		ForEachRow( dt,
+			obj_type = "";
+			c = Contains( types_list, char( dt:type ) );
+			
+			obj_type = Try( dict_list[ c ], "" );
+			
+			string = char(dt:schema_name) || " - " || char(dt:obj_name) || " - " || obj_type;
+			list = Insert( list, string );
+		);
+	);
+	Return( list );
+);
