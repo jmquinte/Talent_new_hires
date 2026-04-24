@@ -1,6 +1,6 @@
 ---
 name: jmp-csv-analysis
-description: 'Analyze CSV data using JMP Pro. Use when: user provides CSV files and needs variability charts, data analysis, statistical plots, exported images (PNG/JPG), or PPTX reports. Use for: generating Variability Charts, Distribution, Oneway, control charts, stacking data, 3-sigma analysis, exporting results as images or PowerPoint. Triggers: CSV analysis, JMP chart, variability, plot data, generate report, silicon validation data.'
+description: 'Analyze CSV data using JMP Pro. Use when: user provides CSV files and needs variability charts, data analysis, statistical plots, exported images (PNG/JPG), or PPTX reports. Use for: generating Variability Charts, Distribution, Oneway, control charts, stacking data, 3-sigma analysis, exporting results as images or PowerPoint, filtering outliers, generating HTML reports with chart interpretation. Triggers: CSV analysis, JMP chart, variability, plot data, generate report, silicon validation data, outlier removal, HTML report.'
 argument-hint: 'Describe what analysis you need and provide the CSV file path'
 ---
 
@@ -137,6 +137,23 @@ stkTable = dt << Stack(
 );
 ```
 
+#### Outlier Removal (IQR × 1.5 Method)
+Apply per-group before charting. This removes data points beyond Q1 - 1.5·IQR and Q3 + 1.5·IQR:
+```jsl
+/* Remove outliers using IQR method */
+mean_col = Column( sub, "mean" );
+vals = mean_col << Get Values;
+q1 = Quantile( 0.25, vals );
+q3 = Quantile( 0.75, vals );
+iqr = q3 - q1;
+lower_bound = q1 - 1.5 * iqr;
+upper_bound = q3 + 1.5 * iqr;
+sub << Select Where( :mean < lower_bound | :mean > upper_bound );
+sub << Delete Rows;
+sub << Clear Select;
+```
+**When to apply:** Always filter outliers per subset (e.g., per Measurement) rather than on the full dataset, so that each group's distribution is respected.
+
 #### Export as Images
 ```jsl
 /* Save each report frame as JPG */
@@ -177,6 +194,36 @@ Run JMP headless from terminal:
 1. Check that output files were created: `Get-ChildItem "$OUTPUT_PATH$"`
 2. Report file names and sizes to the user
 3. If PPTX was requested, verify the .pptx file was generated
+
+### Step 6: Generate HTML Report (Optional but Recommended)
+
+After exporting chart images, generate an HTML report that embeds the images with interpretation. This provides a self-contained, shareable document.
+
+**HTML Report Structure:**
+1. **Header** — Platform, interface, date, test conditions
+2. **Navigation bar** — Sticky nav with links to each measurement
+3. **How to Read section** — Explains axes, dots, colors, VT corner legend
+4. **Signal reference table** — What each signal is (Clock, TXIO0–3, ChipSelect, etc.)
+5. **Measurement cards** organized by category:
+   - Clock Timing (Period, DutyCycle, HighTime, LowTime, t180a)
+   - Edge Rate (tR, tF)
+   - Setup & Hold (SetupTime, HoldTime, SetupR/F, HoldR/F)
+   - Voltage / Signal Quality (Vmax, Vmin, Overshoot, Undershoot)
+6. **Each card contains:**
+   - Measurement name + badge (Timing/Voltage/Quality)
+   - "What it measures" — plain-language description
+   - "Why it matters" — engineering significance
+   - Embedded chart image (`<img src="charts/Variability_NAME.jpg">`)
+   - "What to look for" — interpretation guidance (worst-case corners, thresholds, red flags)
+7. **Footer** — Source file, tool version, outlier method used
+
+**Key principles:**
+- Images use relative paths (`charts/filename.jpg`) so the HTML is portable alongside the charts folder
+- Style with Intel blue theme (`#0071c5`, `#00285a`)
+- Cards are collapsible-friendly (use `<div class="card">` pattern)
+- Include VT corner color legend matching JMP's color theme
+- Adapt measurement descriptions to the specific interface being tested (SPI, I2C, etc.)
+- Open in browser after creation: `Start-Process "path\to\report.html"`
 
 ## Script Patterns from This Repo
 

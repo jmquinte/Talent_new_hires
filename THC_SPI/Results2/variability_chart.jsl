@@ -1,0 +1,104 @@
+//! Variability Chart — THC_SPI NVL_Hx Results
+Names Default To Here(1);
+
+/* ========== CONFIGURATION ========== */
+csv_path    = "C:\Users\dadelgad\OneDrive - Intel Corporation\Documents\Repo Github Copilot\THC_SPI\Results2\Data_WBIO_NVL_Hx_THC_SPI_20260115_113704.csv";
+output_path = "C:\Users\dadelgad\OneDrive - Intel Corporation\Documents\Repo Github Copilot\THC_SPI\Results2\charts\";
+
+/* ========== OPEN CSV ========== */
+dt = Open(
+	csv_path,
+	Import Settings(
+		End Of Line( CRLF ),
+		End Of Field( Comma ),
+		Column Names Start( 1 ),
+		Data Starts( 2 ),
+		Lines To Read( "All" )
+	),
+	Invisible
+);
+
+/* Force numeric types on key columns */
+Try( Column(dt, "mean")     << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous) );
+Try( Column(dt, "min")      << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous) );
+Try( Column(dt, "max")      << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous) );
+Try( Column(dt, "std dev")  << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous) );
+Try( Column(dt, "spec_min") << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous) );
+Try( Column(dt, "spec_max") << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous) );
+
+/* ========== VARIABILITY CHARTS PER MEASUREMENT ========== */
+meas_col = Column( dt, "Measurement" );
+meas_list = Associative Array( meas_col << Get Values ) << Get Keys;
+n_meas = N Items( meas_list );
+
+For( m = 1, m <= n_meas, m++,
+	meas = meas_list[m];
+	
+	/* Subset for this measurement */
+	dt << Clear Select;
+	dt << Select Where( :Measurement == meas );
+	sub = dt << Subset( Selected Rows(1), Invisible, Output Table( "sub_" || Char(m) ) );
+	dt << Clear Select;
+	
+	/* Force numeric on subset */
+	Try( Column(sub, "mean") << Data Type(Numeric, Format(Best, 12)) << Modeling Type(Continuous) );
+	
+	/* Remove outliers using IQR method (1.5 * IQR) */
+	mean_col = Column( sub, "mean" );
+	vals = mean_col << Get Values;
+	q1 = Quantile( 0.25, vals );
+	q3 = Quantile( 0.75, vals );
+	iqr = q3 - q1;
+	lower_bound = q1 - 1.5 * iqr;
+	upper_bound = q3 + 1.5 * iqr;
+	sub << Select Where( :mean < lower_bound | :mean > upper_bound );
+	sub << Delete Rows;
+	sub << Clear Select;
+	
+	/* Create Variability Chart */
+	vc = sub << Variability Chart(
+		Y( :mean ),
+		X( :Signal, :vt_corner ),
+		Std Dev Chart( 0 ),
+		Show Group Means( 1 ),
+		SendToReport(
+			Dispatch(
+				{},
+				"2",
+				ScaleBox,
+				{Label Row( {Show Major Grid( 1 ), Show Minor Grid( 1 )} )}
+			),
+			Dispatch(
+				{},
+				"Variability Chart",
+				FrameBox,
+				{Row Legend(
+					:vt_corner,
+					Color( 1 ),
+					Color Theme( "JMP Default" ),
+					Marker( 1 ),
+					Marker Theme( "" ),
+					Continuous Scale( 0 ),
+					Reverse Scale( 0 ),
+					Excluded Rows( 0 )
+				)}
+			)
+		)
+	);
+	
+	/* Export as JPG */
+	rpt = vc << Report;
+	safe_name = Substitute( meas, " ", "_", "/", "_" );
+	rpt << Save Picture(
+		output_path || "Variability_" || safe_name || ".jpg",
+		JPEG
+	);
+	
+	/* Close report window, then subset table */
+	Try( vc << Close Window );
+	Try( Close( sub, No Save ) );
+);
+
+/* ========== CLEANUP ========== */
+Try( Close( dt, No Save ) );
+Exit();
